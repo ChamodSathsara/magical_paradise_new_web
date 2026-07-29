@@ -169,11 +169,12 @@ export function Header() {
       <AnimatePresence>
         {menuOpen && (
           <motion.div
+            data-lenis-prevent
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 top-[73px] z-40 overflow-y-auto bg-jungle-deep px-6 pb-16 pt-8 lg:hidden"
+            className="absolute inset-x-0 top-full z-40 h-[calc(100dvh-72px)] overflow-y-auto overscroll-contain bg-jungle-deep px-6 pb-24 pt-8 sm:h-[calc(100dvh-80px)] lg:hidden"
           >
             <nav aria-label="Mobile" className="flex flex-col">
               {NAV_LINKS.map((link, index) => (
