@@ -46,9 +46,7 @@ export function Footer() {
               height={54}
               className="h-12 w-auto"
             />
-            {/* <span className="font-serif text-2xl text-ivory">
-              Magical <span className="text-gold-light">Paradise</span>
-            </span> */}
+
             <p className="mt-5 max-w-sm text-sm leading-relaxed">
               {SITE.tagline}
             </p>
@@ -190,6 +188,14 @@ export function Footer() {
                 </a>
               ))}
             </div>
+
+            {/* Frequently Asked Questions button */}
+            <Link
+              href="/faq"
+              className="mt-6 inline-flex items-center justify-center rounded-full border border-gold/60 px-5 py-2.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-gold-light transition-colors hover:bg-gold hover:text-jungle-deep"
+            >
+              Frequently Asked Questions
+            </Link>
           </div>
         </div>
 
