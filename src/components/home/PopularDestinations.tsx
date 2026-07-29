@@ -28,10 +28,10 @@ export function PopularDestinations() {
           </Reveal>
         </div>
 
-        <div className="mt-12 -mx-6 overflow-x-auto px-6 pb-4 rail-scroll lg:mx-0 lg:px-0">
-          <ul className="flex gap-6 lg:grid lg:grid-cols-4 lg:gap-6">
+        <div className="mt-12">
+          <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {DAY_PACKAGES.map((pkg, index) =>
-            <li key={pkg.id} className="w-[19rem] shrink-0 lg:w-auto">
+            <li key={pkg.id}>
                 <Reveal delay={index % 4 * 0.06} className="h-full">
                   <PackageCard pkg={pkg} className="h-full" />
                 </Reveal>
