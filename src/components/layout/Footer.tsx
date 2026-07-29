@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { FOOTER_DESTINATIONS, FOOTER_SERVICES, SITE } from "../../data/site";
 import Image from "next/image";
+import { useLanguage } from "../../i18n/LanguageProvider";
 
 const LEGAL_LINKS = [
   { label: "FAQ", to: "/faq" },
@@ -23,6 +24,7 @@ const LEGAL_LINKS = [
 ];
 
 export function Footer() {
+  const { t } = useLanguage();
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
 
@@ -56,7 +58,7 @@ export function Footer() {
                 htmlFor="newsletter-email"
                 className="eyebrow mb-3 block text-gold-light"
               >
-                Travel Inspiration, Monthly
+                {t('footer.inspiration')}
               </label>
               {subscribed ? (
                 <p className="inline-flex items-center gap-2 text-sm text-ivory">
@@ -65,7 +67,7 @@ export function Footer() {
                     strokeWidth={2}
                     aria-hidden="true"
                   />
-                  You&apos;re on the list — thank you.
+                  {t('footer.success')}
                 </p>
               ) : (
                 <div className="flex gap-2">
@@ -75,7 +77,7 @@ export function Footer() {
                     required
                     value={email}
                     onChange={(event) => setEmail(event.target.value)}
-                    placeholder="your@email.com"
+                    placeholder={t('footer.emailPlaceholder')}
                     className="min-w-0 flex-1 rounded-full border border-white/15 bg-white/5 px-4 py-2.5 text-sm text-ivory placeholder:text-ivory/40 focus:border-gold focus:outline-none"
                   />
 
@@ -83,7 +85,7 @@ export function Footer() {
                     type="submit"
                     className="rounded-full bg-gold px-5 py-2.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-jungle-deep transition-colors hover:bg-gold-light"
                   >
-                    Join
+                    {t('footer.join')}
                   </button>
                 </div>
               )}
@@ -91,7 +93,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h2 className="eyebrow mb-5 text-ivory">Destinations</h2>
+            <h2 className="eyebrow mb-5 text-ivory">{t('footer.destinations')}</h2>
             <ul className="space-y-3 text-sm">
               {FOOTER_DESTINATIONS.map((item) => (
                 <li key={item}>
@@ -107,7 +109,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h2 className="eyebrow mb-5 text-ivory">Services</h2>
+            <h2 className="eyebrow mb-5 text-ivory">{t('footer.services')}</h2>
             <ul className="space-y-3 text-sm">
               {FOOTER_SERVICES.map((item) => (
                 <li key={item}>
@@ -123,7 +125,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h2 className="eyebrow mb-5 text-ivory">Contact Us</h2>
+            <h2 className="eyebrow mb-5 text-ivory">{t('footer.contact')}</h2>
             <ul className="space-y-4 text-sm">
               <li className="flex gap-3">
                 <MapPinIcon
@@ -194,7 +196,7 @@ export function Footer() {
               href="/faq"
               className="mt-6 inline-flex items-center justify-center rounded-full border border-gold/60 px-5 py-2.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-gold-light transition-colors hover:bg-gold hover:text-jungle-deep"
             >
-              Frequently Asked Questions
+              {t('footer.faq')}
             </Link>
           </div>
         </div>
@@ -213,7 +215,7 @@ export function Footer() {
             ))}
           </ul>
           <p className="mt-6 text-xs text-ivory/50">
-            © {new Date().getFullYear()} {SITE.name}. All rights reserved.
+            © {new Date().getFullYear()} {SITE.name}. {t('footer.rights')}
           </p>
           <p className="mt-2 text-xs text-ivory/40">{SITE.license}</p>
         </div>

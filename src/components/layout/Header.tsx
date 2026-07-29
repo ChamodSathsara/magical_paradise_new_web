@@ -6,14 +6,16 @@ import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDownIcon, MenuIcon, XIcon } from "lucide-react";
 import { NavLink } from "../ui/NavLink";
-import { LANGUAGES, NAV_LINKS, SITE } from "../../data/site";
+import { NAV_LINKS, SITE } from "../../data/site";
+import { LANGUAGES, useLanguage } from "../../i18n/LanguageProvider";
 import Image from "next/image";
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
-  const [language, setLanguage] = useState(LANGUAGES[0]);
+  const { language, setLanguage, t } = useLanguage();
+  const selectedLanguage = LANGUAGES.find((item) => item.code === language) ?? LANGUAGES[0];
   const pathname = usePathname();
 
   useEffect(() => {
@@ -77,7 +79,7 @@ export function Header() {
             >
               {({ isActive }) => (
                 <>
-                  {link.label}
+                  {t(`nav.${link.label.toLowerCase()}` as Parameters<typeof t>[0])}
                   {isActive && (
                     <span className="absolute -bottom-1.5 left-0 h-px w-full bg-gold-light" />
                   )}
@@ -96,8 +98,8 @@ export function Header() {
               aria-haspopup="listbox"
               className="flex items-center gap-1.5 rounded-full border border-ivory/20 px-3 py-2 text-[11px] uppercase tracking-[0.14em] text-ivory/80 transition-colors hover:border-ivory/50 hover:text-ivory"
             >
-              <span aria-hidden="true">{language.flag}</span>
-              {language.code}
+              <span aria-hidden="true">{selectedLanguage.flag}</span>
+              {selectedLanguage.code}
               <ChevronDownIcon
                 className="h-3 w-3"
                 strokeWidth={2}
@@ -119,14 +121,14 @@ export function Header() {
                       <button
                         type="button"
                         role="option"
-                        aria-selected={lang.code === language.code}
+                        aria-selected={lang.code === language}
                         onClick={() => {
-                          setLanguage(lang);
+                          setLanguage(lang.code);
                           setLangOpen(false);
                         }}
                         className={[
                           "flex w-full items-center gap-2.5 px-4 py-2.5 text-left text-sm transition-colors hover:bg-sand",
-                          lang.code === language.code
+                          lang.code === language
                             ? "text-gold-dark"
                             : "text-jungle",
                         ].join(" ")}
@@ -147,14 +149,14 @@ export function Header() {
             rel="noreferrer noopener"
             className="hidden rounded-full bg-gold px-5 py-2.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-jungle-deep transition-colors hover:bg-gold-light md:inline-flex"
           >
-            Plan My Trip
+            {t('nav.plan')}
           </a>
 
           <button
             type="button"
             onClick={() => setMenuOpen((value) => !value)}
             aria-expanded={menuOpen}
-            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-label={menuOpen ? t('nav.close') : t('nav.menu')}
             className="flex h-10 w-10 items-center justify-center rounded-full border border-ivory/20 text-ivory lg:hidden"
           >
             {menuOpen ? (
@@ -193,23 +195,23 @@ export function Header() {
                       ].join(" ")
                     }
                   >
-                    {link.label}
+                    {t(`nav.${link.label.toLowerCase()}` as Parameters<typeof t>[0])}
                   </NavLink>
                 </motion.div>
               ))}
             </nav>
 
             <div className="mt-8">
-              <p className="eyebrow mb-3 text-ivory/50">Language</p>
+              <p className="eyebrow mb-3 text-ivory/50">{t('nav.language')}</p>
               <div className="flex flex-wrap gap-2">
                 {LANGUAGES.map((lang) => (
                   <button
                     key={lang.code}
                     type="button"
-                    onClick={() => setLanguage(lang)}
+                    onClick={() => setLanguage(lang.code)}
                     className={[
                       "rounded-full border px-4 py-2 text-xs tracking-[0.1em] transition-colors",
-                      lang.code === language.code
+                      lang.code === language
                         ? "border-gold bg-gold/15 text-gold-light"
                         : "border-white/20 text-ivory/70",
                     ].join(" ")}
@@ -229,7 +231,7 @@ export function Header() {
               rel="noreferrer noopener"
               className="mt-8 flex w-full items-center justify-center rounded-full bg-gold px-6 py-4 text-xs font-semibold uppercase tracking-[0.16em] text-jungle-deep"
             >
-              Plan My Trip
+              {t('nav.plan')}
             </a>
           </motion.div>
         )}

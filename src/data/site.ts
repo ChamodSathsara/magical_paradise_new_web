@@ -27,13 +27,6 @@ export const NAV_LINKS = [
 { label: 'Contact', to: '/contact' }];
 
 
-export const LANGUAGES = [
-{ code: 'EN', label: 'English', flag: '🇬🇧' },
-{ code: 'FR', label: 'Français', flag: '🇫🇷' },
-{ code: 'DE', label: 'Deutsch', flag: '🇩🇪' },
-{ code: 'JA', label: '日本語', flag: '🇯🇵' }];
-
-
 export const TRUST_STATS = [
 { value: '15+', label: 'Years Experience' },
 { value: '5000+', label: 'Happy Travelers' },

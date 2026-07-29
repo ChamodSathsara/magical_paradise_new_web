@@ -5,8 +5,10 @@ import Link from 'next/link';
 import { CheckIcon, ChevronLeftIcon, MapPinIcon, MessageCircleIcon, MinusIcon, PlusIcon, ShieldCheckIcon, TruckIcon } from 'lucide-react';
 import { Product, SHOP_IMAGE, formatPrice } from '../data/products';
 import { SITE } from '../data/site';
+import { useLanguage } from '../i18n/LanguageProvider';
 
 export function ProductDetail({ product }: { product: Product }) {
+  const { t } = useLanguage();
   const [quantity, setQuantity] = useState(1);
   const [option, setOption] = useState(product.options?.[0] ?? '');
   const [form, setForm] = useState({ name: '', phone: '', address: '', city: '', country: '', notes: '' });
@@ -45,7 +47,7 @@ export function ProductDetail({ product }: { product: Product }) {
     <main className="bg-ivory pb-20 pt-28 lg:pb-28">
       <div className="mx-auto max-w-content px-6">
         <Link href="/shop" className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.15em] text-jungle-muted hover:text-jungle">
-          <ChevronLeftIcon className="h-4 w-4" /> Back to shop
+          <ChevronLeftIcon className="h-4 w-4" /> {t('product.back')}
         </Link>
         <div className="mt-8 grid gap-12 lg:grid-cols-[1.05fr_.95fr] lg:gap-16">
           <div>
@@ -79,14 +81,14 @@ export function ProductDetail({ product }: { product: Product }) {
               <div className="grid gap-6 sm:grid-cols-2">
                 {product.options && (
                   <label className="text-xs font-medium uppercase tracking-[0.12em] text-jungle">
-                    Size / Option *
+                    {t('product.option')} *
                     <select value={option} onChange={(event) => setOption(event.target.value)} className={inputClass}>
                       {product.options.map((item) => <option key={item}>{item}</option>)}
                     </select>
                   </label>
                 )}
                 <div>
-                  <span className="text-xs font-medium uppercase tracking-[0.12em] text-jungle">Quantity</span>
+                  <span className="text-xs font-medium uppercase tracking-[0.12em] text-jungle">{t('product.quantity')}</span>
                   <div className="mt-2 flex h-[46px] w-fit items-center rounded-lg border border-jungle/15 bg-ivory">
                     <button type="button" onClick={() => setQuantity((value) => Math.max(1, value - 1))} className="px-4 text-jungle" aria-label="Decrease quantity"><MinusIcon className="h-4 w-4" /></button>
                     <span className="min-w-8 text-center text-sm font-medium">{quantity}</span>
@@ -99,23 +101,23 @@ export function ProductDetail({ product }: { product: Product }) {
                 <div className="flex items-start gap-3">
                   <MapPinIcon className="mt-1 h-5 w-5 text-gold-dark" />
                   <div>
-                    <h2 className="font-serif text-2xl text-jungle">Customer & delivery details</h2>
-                    <p className="mt-1 text-xs leading-5 text-jungle-muted">Complete all required fields to enable your WhatsApp order.</p>
+                    <h2 className="font-serif text-2xl text-jungle">{t('product.customerTitle')}</h2>
+                    <p className="mt-1 text-xs leading-5 text-jungle-muted">{t('product.customerHint')}</p>
                   </div>
                 </div>
                 <div className="mt-6 grid gap-5 sm:grid-cols-2">
-                  <label className="text-xs text-jungle-muted">Full name *<input required value={form.name} onChange={(e) => update('name', e.target.value)} className={inputClass} /></label>
-                  <label className="text-xs text-jungle-muted">Phone number *<input required type="tel" value={form.phone} onChange={(e) => update('phone', e.target.value)} className={inputClass} /></label>
-                  <label className="text-xs text-jungle-muted sm:col-span-2">Delivery address *<input required value={form.address} onChange={(e) => update('address', e.target.value)} className={inputClass} /></label>
-                  <label className="text-xs text-jungle-muted">City / Region *<input required value={form.city} onChange={(e) => update('city', e.target.value)} className={inputClass} /></label>
-                  <label className="text-xs text-jungle-muted">Country *<input required value={form.country} onChange={(e) => update('country', e.target.value)} className={inputClass} /></label>
-                  <label className="text-xs text-jungle-muted sm:col-span-2">Order notes (optional)<textarea rows={3} value={form.notes} onChange={(e) => update('notes', e.target.value)} className={`${inputClass} resize-none`} /></label>
+                  <label className="text-xs text-jungle-muted">{t('product.name')} *<input required value={form.name} onChange={(e) => update('name', e.target.value)} className={inputClass} /></label>
+                  <label className="text-xs text-jungle-muted">{t('product.phone')} *<input required type="tel" value={form.phone} onChange={(e) => update('phone', e.target.value)} className={inputClass} /></label>
+                  <label className="text-xs text-jungle-muted sm:col-span-2">{t('product.address')} *<input required value={form.address} onChange={(e) => update('address', e.target.value)} className={inputClass} /></label>
+                  <label className="text-xs text-jungle-muted">{t('product.city')} *<input required value={form.city} onChange={(e) => update('city', e.target.value)} className={inputClass} /></label>
+                  <label className="text-xs text-jungle-muted">{t('product.country')} *<input required value={form.country} onChange={(e) => update('country', e.target.value)} className={inputClass} /></label>
+                  <label className="text-xs text-jungle-muted sm:col-span-2">{t('product.notes')}<textarea rows={3} value={form.notes} onChange={(e) => update('notes', e.target.value)} className={`${inputClass} resize-none`} /></label>
                 </div>
               </div>
 
               <div className="mt-6 rounded-lg bg-jungle p-6 text-ivory">
                 <div className="flex items-center justify-between gap-4">
-                  <span className="text-sm text-ivory/70">Order total</span>
+                  <span className="text-sm text-ivory/70">{t('product.total')}</span>
                   <strong className="font-serif text-2xl font-normal text-gold-light">{formatPrice(product.price * quantity)}</strong>
                 </div>
                 <button
@@ -123,14 +125,14 @@ export function ProductDetail({ product }: { product: Product }) {
                   disabled={!isReady}
                   className="mt-5 flex w-full items-center justify-center gap-2 rounded-full bg-gold px-6 py-4 text-xs font-semibold uppercase tracking-[0.15em] text-jungle-deep transition enabled:hover:bg-gold-light disabled:cursor-not-allowed disabled:opacity-35"
                 >
-                  <MessageCircleIcon className="h-4 w-4" /> Purchase via WhatsApp
+                  <MessageCircleIcon className="h-4 w-4" /> {t('product.purchase')}
                 </button>
-                {!isReady && <p className="mt-3 text-center text-[11px] text-ivory/55">Add your customer and delivery details to continue.</p>}
+                {!isReady && <p className="mt-3 text-center text-[11px] text-ivory/55">{t('product.disabled')}</p>}
               </div>
             </form>
             <div className="mt-6 grid gap-3 text-xs text-jungle-muted sm:grid-cols-2">
-              <p className="flex items-center gap-2"><ShieldCheckIcon className="h-4 w-4 text-gold-dark" /> Personally confirmed order</p>
-              <p className="flex items-center gap-2"><TruckIcon className="h-4 w-4 text-gold-dark" /> Delivery arranged on WhatsApp</p>
+              <p className="flex items-center gap-2"><ShieldCheckIcon className="h-4 w-4 text-gold-dark" /> {t('product.confirmed')}</p>
+              <p className="flex items-center gap-2"><TruckIcon className="h-4 w-4 text-gold-dark" /> {t('product.delivery')}</p>
             </div>
           </div>
         </div>
