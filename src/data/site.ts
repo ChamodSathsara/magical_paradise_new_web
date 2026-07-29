@@ -22,6 +22,7 @@ export const NAV_LINKS = [
 { label: 'Destinations', to: '/destinations' },
 { label: 'Experiences', to: '/experiences' },
 { label: 'Hotels', to: '/hotels' },
+{ label: 'Shop', to: '/shop' },
 { label: 'About', to: '/about' },
 { label: 'Contact', to: '/contact' }];
 
@@ -196,6 +197,7 @@ export const FOOTER_SERVICES = [
 'Luxury Tour Packages',
 'Popular Day Tours',
 'Boutique Hotels',
+'Paradise Shop',
 'Corporate Events',
 'Airport Transfers',
 'Travel Insurance'];

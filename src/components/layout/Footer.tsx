@@ -112,7 +112,7 @@ export function Footer() {
               {FOOTER_SERVICES.map((item) => (
                 <li key={item}>
                   <Link
-                    href="/packages"
+                    href={item === "Paradise Shop" ? "/shop" : "/packages"}
                     className="transition-colors hover:text-gold-light"
                   >
                     {item}
