@@ -12,11 +12,13 @@ import { CorporatePromo } from '../components/sections/CorporatePromo';
 import { Testimonials } from '../components/sections/Testimonials';
 import { Gallery } from '../components/home/Gallery';
 import { CtaStrip } from '../components/sections/CtaStrip';
+import { TrustCredentials } from '../components/sections/TrustCredentials';
 
 export function Home() {
   return (
     <>
       <Hero />
+      <TrustCredentials />
       <Story />
       <PopularDestinations />
       <Services />

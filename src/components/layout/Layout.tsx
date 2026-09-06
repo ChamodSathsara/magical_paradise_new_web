@@ -6,6 +6,8 @@ import { Footer } from './Footer';
 import { WhatsAppButton } from './WhatsAppButton';
 import { SmoothScroll } from './SmoothScroll';
 import { LanguageProvider } from '../../i18n/LanguageProvider';
+import { AssistancePrompt } from './AssistancePrompt';
+import { PlanTripButton } from './PlanTripButton';
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -21,6 +23,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <main id="main" className="flex-1">{children}</main>
         <Footer />
         <WhatsAppButton />
+        <PlanTripButton />
+        <AssistancePrompt />
       </div>
     </LanguageProvider>
   );

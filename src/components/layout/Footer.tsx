@@ -8,9 +8,9 @@ import {
   InstagramIcon,
   MailIcon,
   MapPinIcon,
+  Music2Icon,
   PhoneIcon,
-  TwitterIcon,
-  YoutubeIcon,
+  StarIcon,
 } from "lucide-react";
 import { FOOTER_DESTINATIONS, FOOTER_SERVICES, SITE } from "../../data/site";
 import Image from "next/image";
@@ -136,6 +136,12 @@ export function Footer() {
                 {SITE.address}
               </li>
               <li className="flex gap-3">
+                <PhoneIcon className="mt-0.5 h-4 w-4 shrink-0 text-gold-light" strokeWidth={1.5} aria-hidden="true" />
+                <a href={SITE.landlineHref} className="transition-colors hover:text-gold-light">
+                  {SITE.landline}
+                </a>
+              </li>
+              <li className="flex gap-3">
                 <PhoneIcon
                   className="mt-0.5 h-4 w-4 shrink-0 text-gold-light"
                   strokeWidth={1.5}
@@ -171,8 +177,8 @@ export function Footer() {
                   label: "Instagram",
                   Icon: InstagramIcon,
                 },
-                { href: SITE.twitter, label: "X", Icon: TwitterIcon },
-                { href: SITE.youtube, label: "YouTube", Icon: YoutubeIcon },
+                { href: SITE.tiktok, label: "TikTok", Icon: Music2Icon },
+                { href: SITE.tripadvisor, label: "TripAdvisor", Icon: StarIcon },
               ].map(({ href, label, Icon: SocialIcon }) => (
                 <a
                   key={label}

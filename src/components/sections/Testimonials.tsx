@@ -1,7 +1,6 @@
 import React from 'react';
-import Link from 'next/link';
 import { QuoteIcon, StarIcon } from 'lucide-react';
-import { TESTIMONIALS } from '../../data/site';
+import { SITE, TESTIMONIALS } from '../../data/site';
 import { Reveal } from '../ui/Reveal';
 import { SectionHeading } from '../ui/SectionHeading';
 
@@ -50,12 +49,14 @@ export function Testimonials() {
         </ul>
 
         <Reveal className="mt-12 text-center">
-          <Link
-            href="/faq"
+          <a
+            href={SITE.tripadvisor}
+            target="_blank"
+            rel="noreferrer noopener"
             className="inline-flex items-center rounded-full border border-jungle/25 px-8 py-3.5 text-[11px] font-medium uppercase tracking-[0.16em] text-jungle transition-colors hover:bg-jungle hover:text-ivory">
             
             Read More Reviews
-          </Link>
+          </a>
         </Reveal>
       </div>
     </section>);

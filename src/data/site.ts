@@ -5,15 +5,17 @@ export const SITE = {
   phone: '+94774365214',
   phoneHref: 'tel:+94774365214',
   altPhone: '+94774365214',
-  email: 'hello@magicalparadise.com',
-  enquiryEmail: 'info@magicalparadise.com',
+  landline: '+94 (0) 112 239 443',
+  landlineHref: 'tel:+94112239443',
+  email: 'travel@magicalparadise.lk',
+  enquiryEmail: 'travel@magicalparadise.lk',
   whatsapp: 'https://wa.me/94774365214',
-  address: 'Colombo 03, Sri Lanka',
+  address: 'No 109/G, St Theresa Mawatha, Kandana, Sri Lanka',
   license: 'Licensed by Sri Lanka Tourism Development Authority — License No: SLTDA/2024/0847',
-  instagram: 'https://instagram.com',
-  facebook: 'https://facebook.com',
-  twitter: 'https://x.com',
-  youtube: 'https://youtube.com'
+  instagram: 'https://www.instagram.com/magicalparadise.srilanka',
+  facebook: 'https://www.facebook.com/magicalparadise.lk',
+  tiktok: 'https://www.tiktok.com/@magicalparadisesrilanka',
+  tripadvisor: 'https://www.tripadvisor.com/Attraction_Review-g12901287-d17721017-Reviews-Magical_Paradise-Kandana_Western_Province.html'
 };
 
 export const NAV_LINKS = [

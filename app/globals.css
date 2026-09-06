@@ -8,6 +8,12 @@
 
 /* END TAILWIND IMPORTS — ALL OTHER CSS MUST GO BELOW THIS LINE */
 
+@layer components {
+  .label { @apply mb-2 block text-xs font-medium uppercase tracking-[0.14em] text-jungle-muted; }
+  .field { @apply w-full rounded-lg border border-jungle/15 bg-ivory px-4 py-3 text-sm text-jungle outline-none transition focus:border-gold focus:ring-1 focus:ring-gold; }
+  .choice { @apply flex cursor-pointer gap-2.5 rounded-lg border border-jungle/10 bg-ivory p-3 text-sm leading-5 text-jungle; }
+}
+
 :root {
   --jungle: #0b2f26;
   --jungle-deep: #072019;

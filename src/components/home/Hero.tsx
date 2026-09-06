@@ -79,7 +79,7 @@ export function Hero() {
           className="mt-9 flex flex-wrap items-center gap-3">
           
           <Link
-            href="/packages"
+            href="/plan-your-trip"
             className="inline-flex items-center rounded-full bg-gold px-8 py-4 text-[12px] font-semibold uppercase tracking-[0.16em] text-jungle-deep transition-colors hover:bg-gold-light">
             
             Start Planning

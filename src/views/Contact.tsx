@@ -9,9 +9,9 @@ import {
   Loader2Icon,
   MailIcon,
   MapPinIcon,
+  Music2Icon,
   PhoneIcon,
-  TwitterIcon,
-  YoutubeIcon } from
+  StarIcon } from
 'lucide-react';
 import { PageHero } from '../components/ui/PageHero';
 import { Reveal } from '../components/ui/Reveal';
@@ -209,8 +209,8 @@ export function Contact() {
                   {[
                   { href: SITE.facebook, label: 'Facebook', Icon: FacebookIcon },
                   { href: SITE.instagram, label: 'Instagram', Icon: InstagramIcon },
-                  { href: SITE.twitter, label: 'X', Icon: TwitterIcon },
-                  { href: SITE.youtube, label: 'YouTube', Icon: YoutubeIcon }].
+                  { href: SITE.tiktok, label: 'TikTok', Icon: Music2Icon },
+                  { href: SITE.tripadvisor, label: 'TripAdvisor', Icon: StarIcon }].
                   map(({ href, label, Icon: SocialIcon }) =>
                   <a
                     key={label}
