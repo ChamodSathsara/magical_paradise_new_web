@@ -46,8 +46,8 @@ export function Header() {
           : "bg-gradient-to-b from-jungle-deep/70 to-transparent",
       ].join(" ")}
     >
-      <div className="relative mx-auto flex max-w-content items-center justify-end gap-6 px-6 py-4 xl:grid xl:grid-cols-[minmax(0,1fr)_160px_minmax(0,1fr)] xl:gap-2">
-        <nav aria-label="Main navigation, first links" className="hidden items-center justify-end gap-4 xl:flex">
+      <div className="relative mx-auto flex max-w-content items-center justify-end gap-6 px-6 py-4 xl:grid xl:grid-cols-[minmax(0,1fr)_160px_minmax(0,1fr)] xl:gap-7">
+        <nav aria-label="Main navigation, first links" className="hidden items-center justify-end gap-7 xl:flex">
           {NAV_LINKS.slice(0, 4).map((link) => (
             <DesktopNavLink key={link.to} link={link} t={t} />
           ))}
@@ -70,7 +70,7 @@ export function Header() {
         </Link>
 
         <div className="flex items-center justify-start gap-3">
-          <nav aria-label="Main navigation, remaining links" className="hidden items-center gap-4 xl:flex">
+          <nav aria-label="Main navigation, remaining links" className="hidden items-center gap-7 xl:flex">
             {NAV_LINKS.slice(4).map((link) => (
               <DesktopNavLink key={link.to} link={link} t={t} />
             ))}
