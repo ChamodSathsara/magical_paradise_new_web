@@ -1,93 +1,69 @@
 import { IMAGES } from './media';
 
-export type Experience = {
-  id: string;
-  title: string;
-  category: string;
-  description: string;
-  image: string;
-  icon: string;
-};
+export type Experience = { id:string; slug:string; title:string; category:string; shortDescription:string; description:string; image:string; gallery?:string[]; icon:string; locations:string[]; highlights?:string[]; bestFor?:string[]; season?:string; duration?:string; uniqueToSriLanka?:boolean };
+type Seed = Omit<Experience,'id'|'shortDescription'|'highlights'> & { shortDescription?:string; highlights?:string[] };
+const make = (x:Seed):Experience => ({...x,id:x.slug,shortDescription:x.shortDescription ?? x.description,highlights:x.highlights ?? ['Expert local guidance','Authentic Sri Lankan setting','Thoughtfully paced experience']});
+export const EXPERIENCE_CATEGORIES = ['Cultural, Traditional & Heritage','Wildlife, Eco & Safari','Adventure, Water & Extreme Sports','Wellness, Retreats & Unique Escapes','Nightlife, Entertainment & Luxury','Shopping & Food','Region-Specific Experiences','Only in Sri Lanka'] as const;
 
-export const EXPERIENCES: Experience[] = [
-{
-  id: 'yoga-meditation',
-  title: 'Yoga & Meditation',
-  category: 'Wellness / Spiritual',
-  description:
-  'Sri Lanka offers authentic yoga and meditation experiences influenced by ancient Vedic traditions and Buddhist mindfulness practices. Sessions take place in serene settings — hill country retreats, beachside pavilions, or jungle ashrams — combining asanas, pranayama, guided meditation, and mindfulness walks amid tea estates or ocean views.',
-  image: IMAGES.teaCountry,
-  icon: 'lotus'
-},
-{
-  id: 'weddings-in-the-sun',
-  title: 'Weddings in the Sun',
-  category: 'Romantic / Luxury',
-  description:
-  "Sri Lanka ranks among the world's most exotic wedding destinations — ceremonies on golden beaches under palm trees, in lush jungle clearings, colonial villas, or atop misty hills. Options include traditional Kandyan rituals with drummers and dancers, barefoot beach vows, or intimate Ayurveda-inspired wellness weddings.",
-  image: IMAGES.mirissa,
-  icon: 'heart'
-},
-{
-  id: 'ayurveda-spa-therapy',
-  title: 'Ayurveda & Spa Therapy',
-  category: 'Wellness / Healing',
-  description:
-  'With traditions dating back thousands of years, Sri Lankan Ayurveda blends ancient principles with indigenous herbal knowledge. Treatments include Shirodhara, herbal steam baths, body wraps, massages, and personalised dosha-balancing programs — renowned for detoxification, rejuvenation, and stress reduction.',
-  image: IMAGES.hotel,
-  icon: 'flower'
-},
-{
-  id: 'shopping-sprees',
-  title: 'Shopping Sprees',
-  category: 'Shopping / Markets',
-  description:
-  'Sri Lanka delights shoppers with precious gemstones (world-famous Ceylon sapphires and rubies), hand-blocked batiks, vibrant textiles, intricate Buddha statues, aromatic spices, pure Ceylon tea, and eco-friendly handicrafts. Markets in Colombo, Galle Fort boutiques, and roadside stalls offer bargains and authentic souvenirs.',
-  image: IMAGES.galle,
-  icon: 'bag'
-},
-{
-  id: 'delish-culinary',
-  title: 'Delish Culinary',
-  category: 'Culinary / Local Cuisine',
-  description:
-  "Sri Lankan cuisine bursts with aromatic flavours influenced by Southeast Asian, Indian, and Dutch traditions. Rice and curry, hoppers, kottu roti, fresh seafood, lamprais, and street food await. Cooking classes, spice garden visits, and farm-to-table experiences let you taste the island's bold, spiced, coconut-rich cuisine.",
-  image: IMAGES.culinary,
-  icon: 'chef'
-},
-{
-  id: 'traditional-arts-crafts',
-  title: 'Traditional Arts & Crafts',
-  category: 'Cultural / Workshops',
-  description:
-  "Rooted in one of the world's oldest civilisations, Sri Lankan arts and crafts showcase skills passed through generations — mask carving, Kandyan dance, batik printing, Dumbara mat weaving, silver filigree jewellery, and temple murals. Visit artisan villages, watch live demonstrations, or join hands-on workshops.",
-  image: IMAGES.kandy,
-  icon: 'palette'
-},
-{
-  id: 'sporting-breaks',
-  title: 'Sporting Breaks',
-  category: 'Adventure / Sports',
-  description:
-  "Sri Lanka's diverse terrain sets the stage for thrilling sports year-round — surfing the south and east coasts, white-water rafting at Kitulgala, hiking Ella Rock or Adam's Peak, mountain biking, scuba diving, golf on colonial courses, and adventure sports like zip-lining or canyoning, suiting all levels.",
-  image: IMAGES.ella,
-  icon: 'activity'
-},
-{
-  id: 'colourful-culture',
-  title: 'Colourful Culture',
-  category: 'Cultural / Festivals',
-  description:
-  'Steeped in Buddhism since the 3rd century BC, Sri Lankan culture blends ancient rituals, festivals, and daily life. Experience temple poojas, Kandyan dance and drumming, elephant processions (Perahera festival), Vesak lanterns, and multicultural vibrancy — immersive insight into harmony, devotion, and living heritage.',
-  image: IMAGES.kandy,
-  icon: 'drum'
-},
-{
-  id: 'exhilarating-adventures',
-  title: 'Exhilarating Adventures',
-  category: 'Adventure / Nature',
-  description:
-  'Dense jungles, towering mountains, giant rock fortresses, balmy oceans, and rolling hills create a paradise for adrenaline seekers. Wildlife safaris (leopards in Yala, elephants in Udawalawe), hot air ballooning over ancient cities, whale watching, kayaking lagoons, and multi-day treks combine thrills with breathtaking natural beauty.',
-  image: IMAGES.yala,
-  icon: 'mountain'
-}];
+export const EXPERIENCES:Experience[] = [
+  make({slug:'unesco-heritage-sites',title:'Explore UNESCO Heritage Sites',category:'Cultural, Traditional & Heritage',description:'Journey through monumental rock fortresses, sacred caves, living temples and preserved colonial streets that reveal the island’s layered history.',image:IMAGES.sigiriya,icon:'compass',locations:['Sigiriya','Dambulla','Kandy','Galle Fort'],bestFor:['History lovers','First-time visitors']}),
+  make({slug:'temple-visits-sacred-rituals',title:'Temple Visits & Sacred Rituals',category:'Cultural, Traditional & Heritage',description:'Visit revered places of worship with respectful local guidance and insight into rituals that shape daily life.',image:IMAGES.kandy,icon:'lotus',locations:['Kandy','Anuradhapura','Kataragama','Mihintale']}),
+  make({slug:'rural-vedda-village',title:'Rural & Vedda Village Experience',category:'Cultural, Traditional & Heritage',description:'Discover rural rhythms and indigenous heritage through sensitively arranged community encounters.',image:IMAGES.sigiriya,icon:'users',locations:['Dambana','Hiriwadunna']}),
+  make({slug:'traditional-dance-shows',title:'Traditional Dance Shows',category:'Cultural, Traditional & Heritage',description:'Experience expressive movement, ceremonial drumming and costume traditions in an evening cultural performance.',image:IMAGES.kandy,icon:'drum',locations:['Kandy','Colombo']}),
+  make({slug:'batik-painting-pottery',title:'Batik, Painting & Pottery Workshops',category:'Cultural, Traditional & Heritage',description:'Meet local makers and try creative techniques passed between generations in hands-on artisan workshops.',image:IMAGES.kandy,icon:'palette',locations:['Kandy','Matale','Galle','Ella','Udawalawe']}),
+  make({slug:'city-heritage-tours',title:'City Heritage Tours',category:'Cultural, Traditional & Heritage',description:'Walk through architecture, faith, trade and neighbourhood stories with a knowledgeable local host.',image:IMAGES.galle,icon:'compass',locations:['Colombo','Kandy','Jaffna','Batticaloa']}),
+  make({slug:'open-deck-city-experiences',title:'Open-Deck City Experiences',category:'Cultural, Traditional & Heritage',description:'See selected cities from a fresh perspective on open-deck sightseeing experiences where available.',image:IMAGES.galle,icon:'activity',locations:['Colombo and selected cities']}),
+  make({slug:'day-night-safaris',title:'Day & Night Safaris',category:'Wildlife, Eco & Safari',description:'Explore contrasting habitats with trained naturalists on responsibly planned daytime or permitted night excursions.',image:IMAGES.yala,icon:'mountain',locations:['Yala','Wilpattu','Gal Oya','Sigiriya forest areas'],bestFor:['Wildlife lovers','Nature photography']}),
+  make({slug:'whale-dolphin-watching',title:'Whale & Dolphin Watching',category:'Wildlife, Eco & Safari',description:'Head offshore with responsible operators in search of whales and dolphin pods along seasonal marine corridors.',image:IMAGES.mirissa,icon:'activity',locations:['Mirissa','Trincomalee','Kalpitiya'],season:'Seasonal; varies by coast'}),
+  make({slug:'waterfall-hikes',title:'Waterfall Hunting & Scenic Hikes',category:'Wildlife, Eco & Safari',description:'Follow highland trails through cloud forest, tea country and cascading landscapes.',image:IMAGES.ella,icon:'mountain',locations:['Ella','Nuwara Eliya','Knuckles','Deniyaya','Horton Plains']}),
+  make({slug:'birdwatching-nature-photography',title:'Birdwatching & Nature Photography',category:'Wildlife, Eco & Safari',description:'Seek endemic and migratory birdlife across wetlands, rainforest and high-elevation habitats.',image:IMAGES.yala,icon:'activity',locations:['Sinharaja','Bundala','Kumana','Horton Plains']}),
+  make({slug:'camping-under-stars',title:'Camping Under the Stars',category:'Wildlife, Eco & Safari',description:'Spend a carefully hosted night close to nature in wilderness landscapes away from city lights.',image:IMAGES.yala,icon:'mountain',locations:['Yala','Knuckles','Gal Oya']}),
+  make({slug:'hot-air-ballooning',title:'Hot Air Ballooning',category:'Wildlife, Eco & Safari',description:'Float above lakes, forest and ancient landscapes in the soft light of morning when conditions permit.',image:IMAGES.sigiriya,icon:'activity',locations:['Sigiriya','Dambulla'],season:'Seasonal and weather dependent'}),
+  make({slug:'boat-safaris',title:'Boat Safaris & Water-Based Wildlife Tours',category:'Wildlife, Eco & Safari',description:'Glide through lagoons, rivers and reservoirs to observe birds, mangroves and waterside communities.',image:IMAGES.mirissa,icon:'activity',locations:['Muthurajawela','Madu River','Koggala Lake','Bentota River','Gal Oya']}),
+  make({slug:'turtle-conservation-visits',title:'Turtle Conservation Visits',category:'Wildlife, Eco & Safari',description:'Learn about marine turtle conservation through coastal visits that prioritize responsible observation.',image:IMAGES.mirissa,icon:'heart',locations:['Rekawa','Kosgoda']}),
+  make({slug:'white-water-rafting-abseiling',title:'White Water Rafting & Abseiling',category:'Adventure, Water & Extreme Sports',description:'Take on Kitulgala’s river rapids and forested rock faces with qualified adventure teams.',image:IMAGES.ella,icon:'activity',locations:['Kitulgala']}),
+  make({slug:'zip-lining-obstacle-courses',title:'Zip Lining & Obstacle Courses',category:'Adventure, Water & Extreme Sports',description:'Fly above Ella’s green landscapes and test your balance on purpose-built aerial challenges.',image:IMAGES.ella,icon:'activity',locations:['Ella','Flying Ravana']}),
+  make({slug:'water-leisure-parks',title:'Water & Leisure Parks',category:'Adventure, Water & Extreme Sports',description:'Add an easygoing family day of pools, slides and recreation to a wider Sri Lankan journey.',image:IMAGES.mirissa,icon:'activity',locations:['Selected island locations'],bestFor:['Families','Groups']}),
+  make({slug:'paramotoring-skydiving',title:'Paramotoring & Skydiving',category:'Adventure, Water & Extreme Sports',description:'See the coastline from above with specialist operators, subject to local conditions.',image:IMAGES.mirissa,icon:'activity',locations:['Bentota'],season:'Seasonal and weather dependent'}),
+  make({slug:'kitesurfing',title:'Kitesurfing',category:'Adventure, Water & Extreme Sports',description:'Harness steady coastal winds across broad lagoons with options for newcomers and experienced riders.',image:IMAGES.mirissa,icon:'activity',locations:['Kalpitiya','Mannar'],season:'Seasonal wind conditions'}),
+  make({slug:'surfing-bodyboarding',title:'Surfing & Bodyboarding',category:'Adventure, Water & Extreme Sports',description:'Find reef, point and beach breaks along the south and east coasts with lessons tailored to your level.',image:IMAGES.mirissa,icon:'activity',locations:['Arugam Bay','Hikkaduwa','Weligama','Hiriketiya'],season:'Varies by coast'}),
+  make({slug:'sailing-yacht-cruises',title:'Sailing & Yacht Cruises',category:'Adventure, Water & Extreme Sports',description:'Cruise the coast or sheltered waterways aboard a private or small-group sailing experience.',image:IMAGES.mirissa,icon:'activity',locations:['Colombo','Mirissa','Trincomalee','Bentota']}),
+  make({slug:'cycling-mountain-biking',title:'Cycling & Mountain Biking',category:'Adventure, Water & Extreme Sports',description:'Ride quiet heritage roads, village lanes and highland trails at a pace suited to your group.',image:IMAGES.ella,icon:'activity',locations:['Sigiriya','Polonnaruwa','Anuradhapura','Ella','Nuwara Eliya','Belihuloya']}),
+  make({slug:'custom-adventure-experiences',title:'Custom Adventure Experiences',category:'Adventure, Water & Extreme Sports',description:'Combine trekking, water sports and outdoor challenges into a privately planned multi-day adventure.',image:IMAGES.ella,icon:'mountain',locations:['Across Sri Lanka']}),
+  make({slug:'ayurveda-healing-spa',title:'Ayurveda Healing & Spa Retreats',category:'Wellness, Retreats & Unique Escapes',description:'Slow down with personalized treatments, herbal rituals and restorative stays rooted in Sri Lankan wellness traditions.',image:IMAGES.hotel,icon:'flower',locations:['Kandy','Beruwala','Dambulla','Ahungalla','Hikkaduwa']}),
+  make({slug:'yoga-retreats',title:'Yoga Retreats',category:'Wellness, Retreats & Unique Escapes',description:'Practice movement, breathwork and mindfulness in peaceful coastal, forest or hill-country surroundings.',image:IMAGES.teaCountry,icon:'lotus',locations:['Ella','Arugam Bay','Bentota','Negombo','Trincomalee']}),
+  make({slug:'breakfast-on-a-boat',title:'Breakfast on a Boat',category:'Wellness, Retreats & Unique Escapes',description:'Begin the day with a private breakfast served amid calm water and an unhurried natural setting.',image:IMAGES.mirissa,icon:'chef',locations:['Bentota','Negombo','Selected lagoons']}),
+  make({slug:'forest-bathing-silence-retreats',title:'Forest Bathing & Silence Retreats',category:'Wellness, Retreats & Unique Escapes',description:'Reconnect through quiet walks, contemplation and simple wellness rituals in secluded natural surroundings.',image:IMAGES.teaCountry,icon:'lotus',locations:['Knuckles','Sinharaja','Mahiyanganaya']}),
+  make({slug:'casinos-gaming',title:'Casinos & Gaming',category:'Nightlife, Entertainment & Luxury',description:'Discover Colombo’s polished evening entertainment with private transfers and considered dining pairings.',image:IMAGES.hotel,icon:'sparkles',locations:['Colombo']}),
+  make({slug:'nightclubs-lounges',title:'Luxury Nightclubs & Lounges',category:'Nightlife, Entertainment & Luxury',description:'Enjoy stylish rooftop bars, live music and refined lounges in leading urban and resort destinations.',image:IMAGES.hotel,icon:'sparkles',locations:['Colombo','Negombo','Galle']}),
+  make({slug:'open-air-fine-dining',title:'Open-Air Fine Dining',category:'Nightlife, Entertainment & Luxury',description:'Dine under the stars in a garden, on the coast or among the hills with menus shaped around the setting.',image:IMAGES.culinary,icon:'utensils',locations:['Colombo','Galle','Ella','Kandy']}),
+  make({slug:'golf-experiences',title:'Golf Experiences',category:'Nightlife, Entertainment & Luxury',description:'Play storied and contemporary courses surrounded by city, hill-country and southern landscapes.',image:IMAGES.teaCountry,icon:'activity',locations:['Colombo','Kandy','Nuwara Eliya','Hambantota']}),
+  make({slug:'live-cricket-matches',title:'Live Cricket Match Experiences',category:'Nightlife, Entertainment & Luxury',description:'Share Sri Lanka’s passion for cricket with match-day arrangements when fixtures are available.',image:IMAGES.galle,icon:'activity',locations:['Colombo','Kandy','Galle','Hambantota'],season:'Subject to fixtures'}),
+  make({slug:'sri-lankan-food-tours',title:'Authentic Sri Lankan Food Tours',category:'Shopping & Food',description:'Taste regional curries, hoppers, seafood and sweets while learning the stories behind island kitchens.',image:IMAGES.culinary,icon:'chef',locations:['Colombo','Kandy','Jaffna','Galle']}),
+  make({slug:'street-food-walks',title:'Street Food Walks',category:'Shopping & Food',description:'Follow a local host through lively evening streets for freshly prepared snacks and beloved everyday flavours.',image:IMAGES.culinary,icon:'chef',locations:['Colombo','Kandy','Jaffna','Galle']}),
+  make({slug:'markets-boutique-shopping',title:'Local Markets & Boutique Shopping',category:'Shopping & Food',description:'Browse produce markets, independent design stores, artisan studios and heritage boutiques.',image:IMAGES.galle,icon:'bag',locations:['Colombo','Kandy','Galle','Jaffna']}),
+  make({slug:'gem-jewellery-experiences',title:'Gem & Jewellery Experiences',category:'Shopping & Food',description:'Explore Sri Lanka’s gem heritage through reputable workshops and visits focused on craft and provenance.',image:IMAGES.galle,icon:'sparkles',locations:['Ratnapura','Colombo','Kandy']}),
+  make({slug:'tea-estate-experience',title:'Tea Estate Visits & Tastings',category:'Shopping & Food',description:'Walk through highland estates, learn how Ceylon tea is made and taste contrasting regional styles.',image:IMAGES.teaCountry,icon:'leaf',locations:['Nuwara Eliya','Hatton','Ella','Haputale']}),
+  make({slug:'spice-garden-tours',title:'Spice Garden Tours',category:'Shopping & Food',description:'Discover cinnamon, pepper, cardamom and other island-grown spices with a knowledgeable garden guide.',image:IMAGES.culinary,icon:'leaf',locations:['Matale','Kandy']}),
+  make({slug:'modern-shopping',title:'Modern Shopping Experiences',category:'Shopping & Food',description:'Pair contemporary malls and local labels with relaxed cafés and convenient private transport.',image:IMAGES.hotel,icon:'bag',locations:['Colombo']}),
+  make({slug:'jaffna-experiences',title:'Jaffna Cultural Journey',category:'Region-Specific Experiences',description:'Explore Nallur Kovil, Jaffna Fort, nearby islands and the distinctive flavours of northern Tamil cuisine.',image:IMAGES.kandy,icon:'compass',locations:['Jaffna','Nallur','Northern islands']}),
+  make({slug:'batticaloa-experiences',title:'Batticaloa Lagoon & Heritage',category:'Region-Specific Experiences',description:'Combine lagoon boat rides, Dutch Fort heritage and traditional Tamil cooking in Sri Lanka’s east.',image:IMAGES.galle,icon:'compass',locations:['Batticaloa']}),
+  make({slug:'eastern-coast-experiences',title:'Eastern Coast Encounters',category:'Region-Specific Experiences',description:'Blend beaches, surfing, marine excursions and cultural encounters across the island’s east coast.',image:IMAGES.mirissa,icon:'activity',locations:['Trincomalee','Arugam Bay','Pigeon Island']}),
+  make({slug:'colombo-port-city',title:'Colombo & Port City',category:'Region-Specific Experiences',description:'Discover Galle Face, Port City, cycling routes, cafés and contemporary seaside urban leisure.',image:IMAGES.hotel,icon:'compass',locations:['Colombo','Port City']}),
+  make({slug:'pada-yathra-pilgrimage',title:'Pada Yathra Pilgrimage',category:'Only in Sri Lanka',description:'Learn about the island’s long-distance pilgrimage tradition through respectful, locally informed arrangements.',image:IMAGES.kandy,icon:'compass',locations:['Eastern and southeastern pilgrimage route'],uniqueToSriLanka:true}),
+  make({slug:'angampora',title:'Angampora – Ancient Sri Lankan Martial Art',category:'Only in Sri Lanka',description:'Encounter an indigenous martial tradition through selected cultural centres and knowledgeable practitioners.',image:IMAGES.kandy,icon:'activity',locations:['Colombo','Selected cultural centres'],uniqueToSriLanka:true}),
+  make({slug:'toddy-tapping',title:'Toddy Tapping',category:'Only in Sri Lanka',description:'Observe a traditional coastal livelihood and learn how sap is carefully collected from coconut palms.',image:IMAGES.mirissa,icon:'leaf',locations:['Selected coastal communities'],uniqueToSriLanka:true}),
+  make({slug:'kandy-esala-perahera',title:'Kandy Esala Perahera',category:'Only in Sri Lanka',description:'Experience the atmosphere surrounding Kandy’s historic annual procession with planned viewing arrangements.',image:IMAGES.kandy,icon:'drum',locations:['Kandy'],season:'Annual festival dates vary',uniqueToSriLanka:true}),
+  make({slug:'stilt-fishing-weligama',title:'Stilt Fishing in Weligama',category:'Only in Sri Lanka',description:'Learn about the iconic southern coastal fishing practice in its local setting.',image:IMAGES.mirissa,icon:'activity',locations:['Weligama','Ahangama','Koggala'],uniqueToSriLanka:true}),
+  make({slug:'forest-hermitages',title:'Forest Hermitages & Silent Monasteries',category:'Only in Sri Lanka',description:'Visit contemplative Buddhist settings with sensitivity to resident communities, customs and silence.',image:IMAGES.teaCountry,icon:'lotus',locations:['Selected forest monasteries'],uniqueToSriLanka:true}),
+  make({slug:'hela-wedakama',title:'Hela Wedakama & Indigenous Healing',category:'Only in Sri Lanka',description:'Gain a considered introduction to indigenous approaches to wellbeing and plant knowledge.',image:IMAGES.hotel,icon:'flower',locations:['Selected specialist centres'],uniqueToSriLanka:true}),
+  make({slug:'blue-whale-mirissa',title:'Blue Whale Watching in Mirissa',category:'Only in Sri Lanka',description:'Join a responsible seasonal voyage from the south coast in search of blue whales and marine life.',image:IMAGES.mirissa,icon:'activity',locations:['Mirissa'],season:'Seasonal and sea-condition dependent',uniqueToSriLanka:true}),
+  make({slug:'batik-dumbara-weaving',title:'Batik & Dumbara Weaving',category:'Only in Sri Lanka',description:'Meet makers preserving distinctive textile traditions and see the patient handwork behind each piece.',image:IMAGES.kandy,icon:'palette',locations:['Kandy','Dumbara Valley','Selected artisan centres'],uniqueToSriLanka:true}),
+  make({slug:'jaya-sri-maha-bodhi',title:'Jaya Sri Maha Bodhi Experience',category:'Only in Sri Lanka',description:'Visit Anuradhapura’s deeply revered sacred tree with context on etiquette, devotion and living heritage.',image:IMAGES.sigiriya,icon:'lotus',locations:['Anuradhapura'],uniqueToSriLanka:true}),
+  make({slug:'traditional-drum-making',title:'Traditional Drum-Making Villages',category:'Only in Sri Lanka',description:'Discover the materials, shaping and inherited knowledge behind Sri Lanka’s ceremonial drums.',image:IMAGES.kandy,icon:'drum',locations:['Selected craft villages'],uniqueToSriLanka:true}),
+  make({slug:'full-moon-poya',title:'Full Moon Poya Day Experience',category:'Only in Sri Lanka',description:'Observe the calm rhythm of a Poya day and learn about its place in Sri Lankan Buddhist life.',image:IMAGES.kandy,icon:'lotus',locations:['Across Sri Lanka'],season:'Monthly full moon day',uniqueToSriLanka:true}),
+  make({slug:'fire-walking-kataragama',title:'Fire-Walking at Kataragama',category:'Only in Sri Lanka',description:'Gain respectful cultural context for a powerful ritual tradition when ceremonies are taking place.',image:IMAGES.kandy,icon:'flame',locations:['Kataragama'],season:'Festival periods',uniqueToSriLanka:true}),
+  make({slug:'ceylon-cinnamon',title:'Ceylon Cinnamon Experience',category:'Only in Sri Lanka',description:'Follow true Ceylon cinnamon from cultivated grove to the exacting handcraft of peeling and quilling.',image:IMAGES.culinary,icon:'leaf',locations:['Southern and western Sri Lanka'],uniqueToSriLanka:true}),
+];
+
+export const getExperience = (slug:string) => EXPERIENCES.find(x => x.slug === slug);

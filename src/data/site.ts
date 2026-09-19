@@ -21,8 +21,9 @@ export const SITE = {
 export const NAV_LINKS = [
 { label: 'Home', to: '/' },
 { label: 'Packages', to: '/packages' },
+{ label: 'Day Tours', to: '/day-tours' },
 { label: 'Destinations', to: '/destinations' },
-{ label: 'Experiences', to: '/experiences' },
+{ label: 'Experience Sri Lanka', to: '/experience-sri-lanka/things-to-do' },
 { label: 'MICE', to: '/mice' },
 { label: 'Hotels', to: '/hotels' },
 { label: 'Shop', to: '/shop' },

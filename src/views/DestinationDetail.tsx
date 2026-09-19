@@ -20,9 +20,9 @@ import { GALLERY_IMAGES } from '../data/media';
 import { SITE } from '../data/site';
 import { NotFound } from './NotFound';
 
-export function DestinationDetail() {
+export function DestinationDetail({ destinationId }: { destinationId?: string } = {}) {
   const params = useParams<{ id: string }>();
-  const id = params?.id;
+  const id = destinationId ?? params?.id;
   const destination = id ? getDestination(id) : undefined;
 
   if (!destination) return <NotFound />;
