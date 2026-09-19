@@ -13,6 +13,7 @@ export const LANGUAGES: { code: LanguageCode; label: string; flag: string; local
 
 const messages = {
   EN: {
+    'nav.mice': 'MICE',
     'nav.home': 'Home', 'nav.packages': 'Packages', 'nav.destinations': 'Destinations',
     'nav.experiences': 'Experiences', 'nav.hotels': 'Hotels', 'nav.shop': 'Shop',
     'nav.about': 'About', 'nav.contact': 'Contact', 'nav.plan': 'Plan My Trip',
@@ -37,6 +38,7 @@ const messages = {
     'product.confirmed': 'Personally confirmed order', 'product.delivery': 'Delivery arranged on WhatsApp',
   },
   FR: {
+    'nav.mice': 'MICE',
     'nav.home': 'Accueil', 'nav.packages': 'Circuits', 'nav.destinations': 'Destinations',
     'nav.experiences': 'Expériences', 'nav.hotels': 'Hôtels', 'nav.shop': 'Boutique',
     'nav.about': 'À propos', 'nav.contact': 'Contact', 'nav.plan': 'Planifier mon voyage',
@@ -61,6 +63,7 @@ const messages = {
     'product.confirmed': 'Commande confirmée personnellement', 'product.delivery': 'Livraison organisée sur WhatsApp',
   },
   DE: {
+    'nav.mice': 'MICE',
     'nav.home': 'Startseite', 'nav.packages': 'Reisepakete', 'nav.destinations': 'Reiseziele',
     'nav.experiences': 'Erlebnisse', 'nav.hotels': 'Hotels', 'nav.shop': 'Shop',
     'nav.about': 'Über uns', 'nav.contact': 'Kontakt', 'nav.plan': 'Reise planen',
@@ -85,6 +88,7 @@ const messages = {
     'product.confirmed': 'Persönlich bestätigte Bestellung', 'product.delivery': 'Lieferung über WhatsApp vereinbart',
   },
   JA: {
+    'nav.mice': 'MICE',
     'nav.home': 'ホーム', 'nav.packages': 'ツアー', 'nav.destinations': '目的地',
     'nav.experiences': '体験', 'nav.hotels': 'ホテル', 'nav.shop': 'ショップ',
     'nav.about': '私たちについて', 'nav.contact': 'お問い合わせ', 'nav.plan': '旅行を計画',

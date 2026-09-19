@@ -23,6 +23,7 @@ export const NAV_LINKS = [
 { label: 'Packages', to: '/packages' },
 { label: 'Destinations', to: '/destinations' },
 { label: 'Experiences', to: '/experiences' },
+{ label: 'MICE', to: '/mice' },
 { label: 'Hotels', to: '/hotels' },
 { label: 'Shop', to: '/shop' },
 { label: 'About', to: '/about' },
