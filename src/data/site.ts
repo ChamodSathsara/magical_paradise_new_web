@@ -24,7 +24,7 @@ export const NAV_LINKS = [
 { label: 'Destinations', to: '/destinations' },
 { label: 'Experiences', to: '/experiences' },
 { label: 'MICE', to: '/mice' },
-{ label: 'Hotels', to: '/hotels' },
+{ label: 'Accommodations', to: '/hotels' },
 { label: 'Shop', to: '/shop' },
 { label: 'About', to: '/about' },
 { label: 'Contact', to: '/contact' }];
