@@ -7,52 +7,53 @@ import { SectionHeading } from '../components/ui/SectionHeading';
 import { CtaStrip } from '../components/sections/CtaStrip';
 import { IMAGES } from '../data/media';
 
-type Tour = { name: string; description: string; duration: string; season: string; nearby?: string };
+type Tour = { name: string; description: string; duration: string; season: string; nearby?: string; image: string };
 
 const AIR_TOURS: Tour[] = [
-  { name: 'Sigiriya by Air', description: 'See the iconic rock fortress from the skies on one of the island’s most scenic aerial journeys.', duration: 'Approx. 1 hour from Colombo or Negombo', season: 'December to April' },
-  { name: 'Kandy by Air', description: 'Fly into the cultural capital, surrounded by misty mountains, lakes and heritage landmarks.', duration: 'Approx. 45 minutes to 1 hour', season: 'Year-round; best December to April and July to August' },
-  { name: 'Anuradhapura by Air', description: 'Reach Sri Lanka’s ancient sacred kingdom in comfort with views across the Cultural Triangle.', duration: 'Approx. 1 hour from Colombo', season: 'May to September' },
+  { name: 'Sigiriya by Air', description: 'See the iconic rock fortress from the skies on one of the island’s most scenic aerial journeys.', duration: 'Approx. 1 hour from Colombo or Negombo', season: 'December to April', image: IMAGES.sigiriya },
+  { name: 'Kandy by Air', description: 'Fly into the cultural capital, surrounded by misty mountains, lakes and heritage landmarks.', duration: 'Approx. 45 minutes to 1 hour', season: 'Year-round; best December to April and July to August', image: IMAGES.kandy },
+  { name: 'Anuradhapura by Air', description: 'Reach Sri Lanka’s ancient sacred kingdom in comfort with views across the Cultural Triangle.', duration: 'Approx. 1 hour from Colombo', season: 'May to September', image: IMAGES.teaCountry },
 ];
 
 const NATURE_TOURS: Tour[] = [
-  { name: 'Yala National Park', description: 'Leopards, elephants, sloth bears and dramatic wilderness in Sri Lanka’s best-known national park.', duration: '2–6 hours by road depending on your starting point', season: 'February to July' },
-  { name: 'Wilpattu National Park', description: 'Natural lakes and untouched wilderness create a quieter, more exclusive safari.', duration: '3.5–7 hours by road', season: 'February to October' },
-  { name: 'Udawalawe National Park', description: 'Open grasslands and memorable sightings of large elephant herds.', duration: '2–5 hours by road', season: 'Year-round' },
-  { name: 'Minneriya National Park', description: 'Lakes, tropical forest and Asia’s spectacular seasonal gathering of wild elephants.', duration: 'Approx. 3 hours from Kandy or 5–6 hours from Colombo', season: 'July to October for the Gathering; safaris year-round' },
-  { name: 'Belihuloya', description: 'A mountain escape of waterfalls, rivers, hiking and adventure. Comfortable clothing and an extra set of clothes are recommended.', duration: '3–5 hours by road', season: 'January to April and June to September' },
-  { name: 'Knuckles Mountain Range', description: 'A guided hike through a UNESCO-listed conservation landscape; trails typically take 3–7 hours.', duration: '1.5–2 hours from Kandy; 4.5–5.5 hours from Colombo', season: 'December to April' },
-  { name: 'Sinharaja Forest Reserve', description: 'Guided rainforest trekking, endemic wildlife, birdlife and the panoramic Sinhagala rock.', duration: '2–6 hours by road', season: 'January to April and August to September' },
-  { name: 'Kitulgala', description: 'White-water rafting, rainforest trails, birdwatching and a traditional rice-and-curry lunch.', duration: '3–4 hours from Colombo or Negombo', season: 'Year-round; May to December for rafting' },
-  { name: 'Whale Watching — South Coast', description: 'Search for blue whales, sperm whales and dolphins in the warm southern waters.', duration: '3–5 hours from Colombo or Negombo', season: 'November to April' },
+  { name: 'Yala National Park', description: 'Leopards, elephants, sloth bears and dramatic wilderness in Sri Lanka’s best-known national park.', duration: '2–6 hours by road depending on your starting point', season: 'February to July', image: IMAGES.yala },
+  { name: 'Wilpattu National Park', description: 'Natural lakes and untouched wilderness create a quieter, more exclusive safari.', duration: '3.5–7 hours by road', season: 'February to October', image: IMAGES.yala },
+  { name: 'Udawalawe National Park', description: 'Open grasslands and memorable sightings of large elephant herds.', duration: '2–5 hours by road', season: 'Year-round', image: IMAGES.yala },
+  { name: 'Minneriya National Park', description: 'Lakes, tropical forest and Asia’s spectacular seasonal gathering of wild elephants.', duration: 'Approx. 3 hours from Kandy or 5–6 hours from Colombo', season: 'July to October for the Gathering; safaris year-round', image: IMAGES.sigiriya },
+  { name: 'Belihuloya', description: 'A mountain escape of waterfalls, rivers, hiking and adventure. Comfortable clothing and an extra set of clothes are recommended.', duration: '3–5 hours by road', season: 'January to April and June to September', image: IMAGES.ella },
+  { name: 'Knuckles Mountain Range', description: 'A guided hike through a UNESCO-listed conservation landscape; trails typically take 3–7 hours.', duration: '1.5–2 hours from Kandy; 4.5–5.5 hours from Colombo', season: 'December to April', image: IMAGES.teaCountry },
+  { name: 'Sinharaja Forest Reserve', description: 'Guided rainforest trekking, endemic wildlife, birdlife and the panoramic Sinhagala rock.', duration: '2–6 hours by road', season: 'January to April and August to September', image: IMAGES.teaCountry },
+  { name: 'Kitulgala', description: 'White-water rafting, rainforest trails, birdwatching and a traditional rice-and-curry lunch.', duration: '3–4 hours from Colombo or Negombo', season: 'Year-round; May to December for rafting', image: IMAGES.ella },
+  { name: 'Whale Watching — South Coast', description: 'Search for blue whales, sperm whales and dolphins in the warm southern waters.', duration: '3–5 hours from Colombo or Negombo', season: 'November to April', image: IMAGES.mirissa },
 ];
 
 const HERITAGE_TOURS: Tour[] = [
-  { name: 'Kandy', description: 'The Temple of the Tooth, lake views, traditional dance, local markets and Peradeniya Gardens.', duration: 'Approx. 3.5 hours from Colombo or Negombo', season: 'Year-round; best December to April', nearby: 'Tea factories, spice gardens, Ambuluwawa and gem museums' },
-  { name: 'Sigiriya', description: 'Climb the UNESCO-listed rock fortress and discover jungle landscapes, archaeology and village life.', duration: 'Approx. 4–5 hours from Colombo or Negombo', season: 'January to August', nearby: 'Pidurangala, Dambulla, Minneriya and village experiences' },
-  { name: 'Dambulla Cave Temple', description: 'Ancient Buddhist murals, statues and centuries-old shrines within a remarkable cave complex.', duration: 'Approx. 3.5–4 hours', season: 'Year-round; morning or late afternoon', nearby: 'Sigiriya, spice gardens and village tours' },
-  { name: 'Anuradhapura', description: 'Sri Lanka’s first ancient kingdom, with sacred temples, dagobas and monastic heritage.', duration: 'Approx. 4–5 hours', season: 'May to September', nearby: 'Mihintale, Wilpattu and cycling among the ruins' },
-  { name: 'Polonnaruwa', description: 'A medieval capital of royal palaces, stone carvings and archaeological treasures.', duration: 'Approx. 5–5.5 hours', season: 'May to September', nearby: 'Minneriya, Sigiriya and village experiences' },
+  { name: 'Kandy', description: 'The Temple of the Tooth, lake views, traditional dance, local markets and Peradeniya Gardens.', duration: 'Approx. 3.5 hours from Colombo or Negombo', season: 'Year-round; best December to April', nearby: 'Tea factories, spice gardens, Ambuluwawa and gem museums', image: IMAGES.kandy },
+  { name: 'Sigiriya', description: 'Climb the UNESCO-listed rock fortress and discover jungle landscapes, archaeology and village life.', duration: 'Approx. 4–5 hours from Colombo or Negombo', season: 'January to August', nearby: 'Pidurangala, Dambulla, Minneriya and village experiences', image: IMAGES.sigiriya },
+  { name: 'Dambulla Cave Temple', description: 'Ancient Buddhist murals, statues and centuries-old shrines within a remarkable cave complex.', duration: 'Approx. 3.5–4 hours', season: 'Year-round; morning or late afternoon', nearby: 'Sigiriya, spice gardens and village tours', image: IMAGES.sigiriya },
+  { name: 'Anuradhapura', description: 'Sri Lanka’s first ancient kingdom, with sacred temples, dagobas and monastic heritage.', duration: 'Approx. 4–5 hours', season: 'May to September', nearby: 'Mihintale, Wilpattu and cycling among the ruins', image: IMAGES.kandy },
+  { name: 'Polonnaruwa', description: 'A medieval capital of royal palaces, stone carvings and archaeological treasures.', duration: 'Approx. 5–5.5 hours', season: 'May to September', nearby: 'Minneriya, Sigiriya and village experiences', image: IMAGES.sigiriya },
 ];
 
 const COAST_TOURS: Tour[] = [
-  { name: 'Kalpitiya', description: 'Dolphins, kite surfing, sandbanks and peaceful lagoon landscapes.', duration: '3 hours from Negombo; 4 hours from Colombo', season: 'May to October', nearby: 'Lagoon cruises, Dutch Bay and seafood experiences' },
-  { name: 'Galle Fort & Bentota', description: 'Golden beaches, colonial heritage, river adventures and seaside charm.', duration: '2–3.5 hours', season: 'November to April', nearby: 'Madu River, turtle hatcheries, water sports and Galle Fort' },
-  { name: 'Mirissa', description: 'Whale watching, tropical beaches, surfing and relaxed oceanfront living.', duration: '3.5–4.5 hours', season: 'November to April', nearby: 'Coconut Tree Hill, snorkelling and beach cafés' },
-  { name: 'Hikkaduwa', description: 'Coral reefs, surfing, snorkelling, turtles and an upbeat coastal atmosphere.', duration: '2.5–3.5 hours', season: 'November to April', nearby: 'Reef snorkelling, surf lessons and river safaris' },
+  { name: 'Kalpitiya', description: 'Dolphins, kite surfing, sandbanks and peaceful lagoon landscapes.', duration: '3 hours from Negombo; 4 hours from Colombo', season: 'May to October', nearby: 'Lagoon cruises, Dutch Bay and seafood experiences', image: IMAGES.mirissa },
+  { name: 'Galle Fort & Bentota', description: 'Golden beaches, colonial heritage, river adventures and seaside charm.', duration: '2–3.5 hours', season: 'November to April', nearby: 'Madu River, turtle hatcheries, water sports and Galle Fort', image: IMAGES.galle },
+  { name: 'Mirissa', description: 'Whale watching, tropical beaches, surfing and relaxed oceanfront living.', duration: '3.5–4.5 hours', season: 'November to April', nearby: 'Coconut Tree Hill, snorkelling and beach cafés', image: IMAGES.mirissa },
+  { name: 'Hikkaduwa', description: 'Coral reefs, surfing, snorkelling, turtles and an upbeat coastal atmosphere.', duration: '2.5–3.5 hours', season: 'November to April', nearby: 'Reef snorkelling, surf lessons and river safaris', image: IMAGES.mirissa },
 ];
 
 function TourGrid({ tours }: { tours: Tour[] }) {
   return <div className="mt-12 grid gap-5 md:grid-cols-2 xl:grid-cols-3">{tours.map((tour, index) => (
     <Reveal key={tour.name} delay={(index % 3) * 0.05} className="h-full">
-      <article className="h-full rounded-xl border border-jungle/10 bg-ivory p-7 shadow-card">
-        <h3 className="font-serif text-2xl text-jungle">{tour.name}</h3>
+      <article className="group h-full overflow-hidden rounded-xl border border-jungle/10 bg-ivory shadow-card">
+        <div className="aspect-[16/9] overflow-hidden bg-sand"><img src={tour.image} alt={tour.name} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"/></div>
+        <div className="p-7"><h3 className="font-serif text-2xl text-jungle">{tour.name}</h3>
         <p className="mt-3 text-sm leading-7 text-jungle-muted">{tour.description}</p>
         <dl className="mt-6 space-y-3 border-t border-jungle/10 pt-5 text-sm">
           <div className="flex gap-3"><Clock3Icon className="mt-0.5 h-4 w-4 shrink-0 text-gold-dark"/><div><dt className="font-medium text-jungle">Travel duration</dt><dd className="text-jungle-muted">{tour.duration}</dd></div></div>
           <div className="flex gap-3"><CloudSunIcon className="mt-0.5 h-4 w-4 shrink-0 text-gold-dark"/><div><dt className="font-medium text-jungle">When to go</dt><dd className="text-jungle-muted">{tour.season}</dd></div></div>
           {tour.nearby && <div className="flex gap-3"><MapPinIcon className="mt-0.5 h-4 w-4 shrink-0 text-gold-dark"/><div><dt className="font-medium text-jungle">Nearby experiences</dt><dd className="text-jungle-muted">{tour.nearby}</dd></div></div>}
-        </dl>
+        </dl></div>
       </article>
     </Reveal>
   ))}</div>;
