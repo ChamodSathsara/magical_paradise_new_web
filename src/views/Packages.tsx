@@ -34,7 +34,7 @@ export function Packages() {
         } />
       
 
-      <section className="sticky top-[73px] z-30 w-full border-b border-jungle/10 bg-ivory/95 backdrop-blur-md">
+      <section className="sticky top-[73px] z-30 w-full border-b border-jungle/10 bg-ivory/95 backdrop-blur-md lg:top-[108px]">
         <div className="mx-auto max-w-content px-6">
           <div className="no-scrollbar flex gap-1 overflow-x-auto py-4" role="tablist" aria-label="Package categories">
             {PACKAGE_CATEGORIES.map((item) =>

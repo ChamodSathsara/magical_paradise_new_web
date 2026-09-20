@@ -65,17 +65,10 @@ export function Header() {
           : "bg-gradient-to-b from-jungle-deep/70 to-transparent",
       ].join(" ")}
     >
-      <div className="relative mx-auto flex w-full max-w-content items-center justify-end gap-6 px-6 py-4 min-[1700px]:grid min-[1700px]:max-w-[118rem] min-[1700px]:grid-cols-[minmax(0,1fr)_160px_minmax(0,1fr)] min-[1700px]:gap-6">
-        <nav aria-label="Main navigation, first links" className="hidden items-center justify-end gap-6 min-[1700px]:flex">
-          {NAV_LINKS.slice(0, 4).map((link) => (
-            <DesktopNavLink key={link.to} link={link} t={t} />
-          ))}
-        </nav>
-
-        {/* Logo */}
+      <div className="relative mx-auto flex w-full max-w-[118rem] items-center justify-end px-4 py-3 lg:flex-col lg:gap-2 lg:px-6 lg:pb-3 lg:pt-2">
         <Link
           href="/"
-          className="group absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center justify-center min-[1700px]:static min-[1700px]:translate-x-0 min-[1700px]:translate-y-0"
+          className="group absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center justify-center lg:static lg:translate-x-0 lg:translate-y-0"
           aria-label="Magical Paradise home"
         >
           <Image
@@ -84,16 +77,16 @@ export function Header() {
             width={160}
             height={48}
             priority
-            className="h-10 w-auto sm:h-12"
+            className="h-10 w-auto sm:h-12 lg:h-11"
           />
         </Link>
 
-        <div className="flex items-center justify-start gap-3">
-          <nav aria-label="Main navigation, remaining links" className="hidden items-center gap-6 min-[1700px]:flex">
-            {NAV_LINKS.slice(4).map((link) => (
+        <nav aria-label="Main navigation" className="hidden w-full items-center justify-center gap-3 lg:flex xl:gap-5">
+            {NAV_LINKS.map((link) => (
               <DesktopNavLink key={link.to} link={link} t={t} />
             ))}
-          </nav>
+        </nav>
+        <div className="flex items-center justify-start gap-3 lg:absolute lg:right-6 lg:top-3">
           <div className="relative hidden sm:block">
             <button
               type="button"
@@ -152,7 +145,7 @@ export function Header() {
             onClick={() => setMenuOpen((value) => !value)}
             aria-expanded={menuOpen}
             aria-label={menuOpen ? t('nav.close') : t('nav.menu')}
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-ivory/20 text-ivory min-[1700px]:hidden"
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-ivory/20 text-ivory lg:hidden"
           >
             {menuOpen ? (
               <XIcon className="h-5 w-5" strokeWidth={1.5} />
@@ -171,7 +164,7 @@ export function Header() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="absolute inset-x-0 top-full z-40 h-[calc(100dvh-72px)] overflow-y-auto overscroll-contain bg-jungle-deep px-6 pb-24 pt-8 sm:h-[calc(100dvh-80px)] min-[1700px]:hidden"
+            className="absolute inset-x-0 top-full z-40 h-[calc(100dvh-72px)] overflow-y-auto overscroll-contain bg-jungle-deep px-6 pb-24 pt-8 sm:h-[calc(100dvh-80px)] lg:hidden"
           >
             <nav aria-label="Mobile" className="flex flex-col">
               {NAV_LINKS.map((link, index) => (
@@ -267,7 +260,7 @@ function DesktopNavLink({ link, t }: DesktopNavLinkProps) {
     <NavLink
       to={link.to}
       className={({ isActive }) => [
-        'relative whitespace-nowrap text-[10px] uppercase tracking-[0.12em] transition-colors',
+        'relative whitespace-nowrap text-[9px] uppercase tracking-[0.08em] transition-colors xl:text-[10px] xl:tracking-[0.1em]',
         isActive ? 'text-gold-light' : 'text-ivory/80 hover:text-ivory',
       ].join(' ')}
     >

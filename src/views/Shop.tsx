@@ -25,7 +25,7 @@ export function Shop() {
         imageAlt="A curated collection of island-inspired apparel and accessories"
         locationTag={t('shop.location')}
       />
-      <section className="sticky top-[73px] z-30 border-b border-jungle/10 bg-ivory/95 backdrop-blur-md">
+      <section className="sticky top-[73px] z-30 border-b border-jungle/10 bg-ivory/95 backdrop-blur-md lg:top-[108px]">
         <div className="no-scrollbar mx-auto flex max-w-content gap-2 overflow-x-auto px-6 py-4">
           {PRODUCT_CATEGORIES.map((item) => (
             <button
