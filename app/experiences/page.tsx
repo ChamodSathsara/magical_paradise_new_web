@@ -1,2 +1,5 @@
-import { redirect } from 'next/navigation';
-export default function Page() { redirect('/experience-sri-lanka/things-to-do'); }
+import { Experiences } from '../../src/views/Experiences';
+
+export default function Page() {
+  return <Experiences />;
+}

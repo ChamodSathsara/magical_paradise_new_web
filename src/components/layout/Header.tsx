@@ -10,15 +10,6 @@ import { NAV_LINKS } from "../../data/site";
 import { LANGUAGES, useLanguage } from "../../i18n/LanguageProvider";
 import Image from "next/image";
 
-const EXPERIENCE_LINKS = [
-  { label: "Full Tourist Map", to: "/experience-sri-lanka/tourist-map" },
-  { label: "Many Faces of Sri Lanka", to: "/experience-sri-lanka/many-faces" },
-  { label: "Magical Destinations", to: "/experience-sri-lanka/magical-destinations" },
-  { label: "Things to Do", to: "/experience-sri-lanka/things-to-do" },
-  { label: "Only in Sri Lanka - Unique Experiences", to: "/experience-sri-lanka/only-in-sri-lanka" },
-  { label: "Ceylon Gems", to: "/experience-sri-lanka/ceylon-gems" },
-];
-
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -58,7 +49,7 @@ export function Header() {
       <div className="relative mx-auto flex max-w-content items-center justify-end gap-6 px-6 py-4 xl:grid xl:grid-cols-[minmax(0,1fr)_160px_minmax(0,1fr)] xl:gap-7">
         <nav aria-label="Main navigation, first links" className="hidden items-center justify-end gap-7 xl:flex">
           {NAV_LINKS.slice(0, 4).map((link) => (
-            link.label === "Experience Sri Lanka" ? <ExperienceDropdown key={link.to} pathname={pathname} /> : <DesktopNavLink key={link.to} link={link} t={t} />
+            <DesktopNavLink key={link.to} link={link} t={t} />
           ))}
         </nav>
 
@@ -81,7 +72,7 @@ export function Header() {
         <div className="flex items-center justify-start gap-3">
           <nav aria-label="Main navigation, remaining links" className="hidden items-center gap-7 xl:flex">
             {NAV_LINKS.slice(4).map((link) => (
-              link.label === "Experience Sri Lanka" ? <ExperienceDropdown key={link.to} pathname={pathname} /> : <DesktopNavLink key={link.to} link={link} t={t} />
+              <DesktopNavLink key={link.to} link={link} t={t} />
             ))}
           </nav>
           <div className="relative hidden sm:block">
@@ -171,10 +162,7 @@ export function Header() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.05 + index * 0.045, duration: 0.3 }}
                 >
-                  {link.label === "Experience Sri Lanka" ? <>
-                    <NavLink to={link.to} className={["block border-b border-white/10 py-4 font-serif text-2xl", pathname.startsWith('/experience-sri-lanka') || pathname.startsWith('/experiences/') ? "text-gold-light" : "text-ivory"].join(" ")}>Experience Sri Lanka</NavLink>
-                    <div className="border-b border-white/10 pb-4 pl-4">{EXPERIENCE_LINKS.map(item => <NavLink key={item.to} to={item.to} className={({isActive}) => `block py-2 text-sm uppercase tracking-[0.12em] ${isActive ? 'text-gold-light' : 'text-ivory/65'}`}>{item.label}</NavLink>)}</div>
-                  </> : <NavLink
+                  <NavLink
                     to={link.to}
                     className={({ isActive }) =>
                       [
@@ -184,7 +172,7 @@ export function Header() {
                     }
                   >
                     {t(`nav.${link.label.toLowerCase()}` as Parameters<typeof t>[0])}
-                  </NavLink>}
+                  </NavLink>
                 </motion.div>
               ))}
             </nav>
@@ -240,17 +228,4 @@ function DesktopNavLink({ link, t }: DesktopNavLinkProps) {
       </>}
     </NavLink>
   );
-}
-
-function ExperienceDropdown({ pathname }: { pathname: string }) {
-  const active = pathname.startsWith('/experience-sri-lanka') || pathname.startsWith('/experiences/');
-  return <div className="group relative py-2">
-    <Link href="/experience-sri-lanka/things-to-do" className={`relative inline-flex items-center gap-1 whitespace-nowrap text-[10px] uppercase tracking-[0.12em] transition-colors ${active ? 'text-gold-light' : 'text-ivory/80 hover:text-ivory'}`}>
-      Experience Sri Lanka <ChevronDownIcon className="h-3 w-3" aria-hidden="true" />
-      {active && <span className="absolute -bottom-1.5 left-0 h-px w-full bg-gold-light" />}
-    </Link>
-    <div className="invisible absolute left-1/2 top-full z-50 w-80 -translate-x-1/2 translate-y-2 rounded-lg border border-jungle/10 bg-white py-2 opacity-0 shadow-lift transition-all group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100">
-      {EXPERIENCE_LINKS.map(item => <NavLink key={item.to} to={item.to} className={({isActive}) => `block px-5 py-3 text-xs uppercase tracking-[0.12em] transition-colors hover:bg-sand ${isActive ? 'text-gold-dark' : 'text-jungle'}`}>{item.label}</NavLink>)}
-    </div>
-  </div>;
 }
