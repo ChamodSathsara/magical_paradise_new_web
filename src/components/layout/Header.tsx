@@ -18,10 +18,6 @@ const EXPERIENCE_LINKS = [
   { label: "Only in Sri Lanka - Unique Experiences", to: "/experience-sri-lanka/only-in-sri-lanka" },
   { label: "Ceylon Gems", to: "/experience-sri-lanka/ceylon-gems" },
 ];
-const GROUP_TOUR_LINKS = [
-  { label: "Guided Group Tours", to: "/group-tours/guided-group-tours" },
-  { label: "Family Escapes & Private Celebrations", to: "/group-tours/family-escapes-private-celebrations" },
-];
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -62,7 +58,7 @@ export function Header() {
       <div className="relative mx-auto flex max-w-content items-center justify-end gap-6 px-6 py-4 xl:grid xl:grid-cols-[minmax(0,1fr)_160px_minmax(0,1fr)] xl:gap-7">
         <nav aria-label="Main navigation, first links" className="hidden items-center justify-end gap-7 xl:flex">
           {NAV_LINKS.slice(0, 4).map((link) => (
-            link.label === "Experience Sri Lanka" ? <ExperienceDropdown key={link.to} pathname={pathname} /> : link.label === "Group Tours" ? <GroupToursDropdown key={link.to} pathname={pathname} /> : <DesktopNavLink key={link.to} link={link} t={t} />
+            link.label === "Experience Sri Lanka" ? <ExperienceDropdown key={link.to} pathname={pathname} /> : <DesktopNavLink key={link.to} link={link} t={t} />
           ))}
         </nav>
 
@@ -85,7 +81,7 @@ export function Header() {
         <div className="flex items-center justify-start gap-3">
           <nav aria-label="Main navigation, remaining links" className="hidden items-center gap-7 xl:flex">
             {NAV_LINKS.slice(4).map((link) => (
-              link.label === "Experience Sri Lanka" ? <ExperienceDropdown key={link.to} pathname={pathname} /> : link.label === "Group Tours" ? <GroupToursDropdown key={link.to} pathname={pathname} /> : <DesktopNavLink key={link.to} link={link} t={t} />
+              link.label === "Experience Sri Lanka" ? <ExperienceDropdown key={link.to} pathname={pathname} /> : <DesktopNavLink key={link.to} link={link} t={t} />
             ))}
           </nav>
           <div className="relative hidden sm:block">
@@ -178,9 +174,6 @@ export function Header() {
                   {link.label === "Experience Sri Lanka" ? <>
                     <NavLink to={link.to} className={["block border-b border-white/10 py-4 font-serif text-2xl", pathname.startsWith('/experience-sri-lanka') || pathname.startsWith('/experiences/') ? "text-gold-light" : "text-ivory"].join(" ")}>Experience Sri Lanka</NavLink>
                     <div className="border-b border-white/10 pb-4 pl-4">{EXPERIENCE_LINKS.map(item => <NavLink key={item.to} to={item.to} className={({isActive}) => `block py-2 text-sm uppercase tracking-[0.12em] ${isActive ? 'text-gold-light' : 'text-ivory/65'}`}>{item.label}</NavLink>)}</div>
-                  </> : link.label === "Group Tours" ? <>
-                    <NavLink to={link.to} className={["block border-b border-white/10 py-4 font-serif text-2xl", pathname.startsWith('/group-tours') ? "text-gold-light" : "text-ivory"].join(" ")}>Group Tours</NavLink>
-                    <div className="border-b border-white/10 pb-4 pl-4">{GROUP_TOUR_LINKS.map(item => <NavLink key={item.to} to={item.to} className={({isActive}) => `block py-2 text-sm uppercase tracking-[0.12em] ${isActive ? 'text-gold-light' : 'text-ivory/65'}`}>{item.label}</NavLink>)}</div>
                   </> : <NavLink
                     to={link.to}
                     className={({ isActive }) =>
@@ -260,9 +253,4 @@ function ExperienceDropdown({ pathname }: { pathname: string }) {
       {EXPERIENCE_LINKS.map(item => <NavLink key={item.to} to={item.to} className={({isActive}) => `block px-5 py-3 text-xs uppercase tracking-[0.12em] transition-colors hover:bg-sand ${isActive ? 'text-gold-dark' : 'text-jungle'}`}>{item.label}</NavLink>)}
     </div>
   </div>;
-}
-
-function GroupToursDropdown({ pathname }: { pathname: string }) {
-  const active = pathname.startsWith('/group-tours');
-  return <div className="group relative py-2"><Link href="/group-tours/guided-group-tours" className={`relative inline-flex items-center gap-1 whitespace-nowrap text-[10px] uppercase tracking-[0.12em] transition-colors ${active ? 'text-gold-light' : 'text-ivory/80 hover:text-ivory'}`}>Group Tours <ChevronDownIcon className="h-3 w-3" aria-hidden="true" />{active && <span className="absolute -bottom-1.5 left-0 h-px w-full bg-gold-light" />}</Link><div className="invisible absolute left-1/2 top-full z-50 w-80 -translate-x-1/2 translate-y-2 rounded-lg border border-jungle/10 bg-white py-2 opacity-0 shadow-lift transition-all group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100">{GROUP_TOUR_LINKS.map(item=><NavLink key={item.to} to={item.to} className={({isActive})=>`block px-5 py-3 text-xs uppercase tracking-[0.12em] transition-colors hover:bg-sand ${isActive?'text-gold-dark':'text-jungle'}`}>{item.label}</NavLink>)}</div></div>;
 }

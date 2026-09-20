@@ -22,7 +22,6 @@ export const NAV_LINKS = [
 { label: 'Home', to: '/' },
 { label: 'Packages', to: '/packages' },
 { label: 'Day Tours', to: '/day-tours' },
-{ label: 'Group Tours', to: '/group-tours/guided-group-tours' },
 { label: 'Destinations', to: '/destinations' },
 { label: 'Experience Sri Lanka', to: '/experience-sri-lanka/things-to-do' },
 { label: 'MICE', to: '/mice' },
