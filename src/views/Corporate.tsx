@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import {
   ArrowRightIcon, BriefcaseBusinessIcon, Building2Icon, CompassIcon,
-  HandHeartIcon, HeartPulseIcon, MountainIcon, PresentationIcon, UsersIcon,
+  HandHeartIcon, HeartPulseIcon, MountainIcon, PlayIcon, PresentationIcon, UsersIcon,
 } from 'lucide-react';
 import { PageHero } from '../components/ui/PageHero';
 import { Reveal } from '../components/ui/Reveal';
@@ -21,16 +21,21 @@ const PORTFOLIO = [
   { icon: BriefcaseBusinessIcon, title: 'Adventure & Challenge-Based Team Activities' },
 ];
 
-const GALLERY = [
-  { src: '/images/corporate/ksp-6693-web.jpg', alt: 'Corporate group arriving for an outdoor team experience' },
-  { src: '/images/corporate/ksp-6841-web.jpg', alt: 'Participants travelling together on a safari experience' },
-  { src: '/images/corporate/ksp-7051-web.jpg', alt: 'Safari vehicles prepared for a corporate group adventure' },
-  { src: '/images/corporate/ksp-7248-web.jpg', alt: 'Facilitator leading an interactive workshop for participants' },
-  { src: '/images/corporate/ksp-7339-web.jpg', alt: 'Participant taking part in a hands-on creative activity' },
-  { src: '/images/corporate/ksp-7443-web.jpg', alt: 'Participant enjoying a team workshop activity' },
-  { src: '/images/corporate/ksp-7505-web.jpg', alt: 'Team members sharing a joyful moment during the program' },
-  { src: '/images/corporate/ksp-6951-web.jpg', alt: 'Magical Paradise event team at the outdoor program' },
-];
+const GALLERY_REFERENCES = [
+  '6566', '6588', '6591', '6594', '6612', '6622', '6624', '6649', '6693',
+  '6695', '6713', '6840', '6841', '6850', '6795', '6825', '6934', '6942',
+  '6951', '6967', '6996', '7051', '7088', '7095', '7106', '7110', '7123',
+  '7141', '7154', '7159', '7162', '7164', '7168', '7197', '7237', '7248',
+  '7254', '7258', '7274', '7280', '7312', '7321', '7328', '7339', '7393',
+  '7415', '7443', '7452', '7496', '7505', '7498', '7380',
+] as const;
+
+const GALLERY = GALLERY_REFERENCES.map((reference) => ({
+  src: `/images/corporate/ksp-${reference}-web.jpg`,
+  alt: `Corporate team experience highlight, photo KSP ${reference}`,
+}));
+
+const CORPORATE_VIDEO = '/videos/CorporateExperiences.mp4';
 
 export function Corporate() {
   return (
@@ -110,12 +115,40 @@ export function Corporate() {
         </div>
       </section>
 
+      <section className="w-full bg-sand py-20 lg:py-28">
+        <div className="mx-auto max-w-content px-6">
+          <SectionHeading
+            eyebrow="Event Film"
+            title="The experience in motion"
+            subtitle="A dedicated space for the official Outdoor-Based Training program video."
+          />
+          <Reveal className="mx-auto mt-12 max-w-5xl">
+            <div className="relative aspect-video overflow-hidden rounded-xl border border-jungle/10 bg-jungle-deep shadow-lift">
+              {CORPORATE_VIDEO ? (
+                <video className="h-full w-full object-cover" controls preload="metadata" poster="/images/corporate/ksp-7051-web.jpg">
+                  <source src={CORPORATE_VIDEO} type="video/mp4" />
+                  Your browser does not support embedded video.
+                </video>
+              ) : (
+                <div data-video-slot className="flex h-full flex-col items-center justify-center bg-[radial-gradient(circle_at_center,rgba(212,169,65,0.16),transparent_55%)] px-6 text-center">
+                  <span className="flex h-20 w-20 items-center justify-center rounded-full border border-gold-light/50 bg-gold/10 text-gold-light">
+                    <PlayIcon className="ml-1 h-8 w-8" strokeWidth={1.4} />
+                  </span>
+                  <p className="mt-6 font-serif text-2xl text-ivory sm:text-3xl">Event video coming soon</p>
+                  <p className="mt-2 max-w-lg text-sm leading-relaxed text-ivory/60">The official program film will appear here once the final video is received.</p>
+                </div>
+              )}
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
       <section className="w-full bg-ivory py-20 lg:py-28">
         <div className="mx-auto max-w-content px-6">
           <SectionHeading eyebrow="A Glimpse into Our Work" title="People, purpose and shared adventure" subtitle="Highlights from our July 2025 corporate experience program." />
           <div className="mt-14 grid auto-rows-[220px] grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {GALLERY.map((photo, index) => (
-              <Reveal key={photo.src} delay={(index % 4) * 0.05} className={index === 0 || index === 6 ? 'sm:col-span-2' : ''}>
+              <Reveal key={photo.src} delay={(index % 4) * 0.04} className={index % 11 === 0 || index % 11 === 7 ? 'sm:col-span-2' : ''}>
                 <figure className="group relative h-full overflow-hidden rounded-lg bg-sand">
                   <Image src={photo.src} alt={photo.alt} fill sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw" className="object-cover transition-transform duration-700 group-hover:scale-105" />
                   <div className="absolute inset-0 bg-gradient-to-t from-jungle-deep/35 to-transparent" aria-hidden="true" />
