@@ -68,7 +68,7 @@ export function PackageDetail() {
             className="inline-flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.16em] text-jungle-muted transition-colors hover:text-jungle">
             
             <ArrowLeftIcon className="h-3.5 w-3.5" strokeWidth={1.75} aria-hidden="true" />
-            All Packages
+            All Sri Lanka Tours
           </Link>
 
           <div className="mt-10 grid gap-12 lg:grid-cols-[1.6fr_1fr] lg:gap-16">
@@ -76,7 +76,7 @@ export function PackageDetail() {
               <Reveal>
                 <h2 className="eyebrow text-gold-dark">Overview</h2>
                 <h3 className="mt-3 font-serif text-3xl font-light text-jungle">
-                  About This Package
+                  About This Tour
                 </h3>
                 <p className="mt-5 text-[15px] leading-relaxed text-jungle-muted">
                   {pkg.overview ?? pkg.summary}
@@ -177,11 +177,10 @@ export function PackageDetail() {
 
             <aside className="lg:sticky lg:top-28 lg:self-start">
               <div className="rounded-lg border border-jungle/10 bg-white p-7 shadow-card">
-                <p className="text-[11px] uppercase tracking-[0.16em] text-jungle-muted">
-                  Starting From
+                <p className="font-serif text-2xl text-jungle">Plan This Tour</p>
+                <p className="mt-2 text-sm leading-relaxed text-jungle-muted">
+                  Tell us your dates, interests and preferred travel style for a personalized proposal.
                 </p>
-                <p className="mt-2 font-serif text-4xl font-light text-jungle">{pkg.price}</p>
-                <p className="mt-1 text-xs text-jungle-muted">{pkg.priceNote}</p>
 
                 <p className="mt-5 inline-flex items-center gap-2 rounded-full bg-sand px-3 py-1.5 text-[11px] uppercase tracking-[0.12em] text-jungle-muted">
                   <ClockIcon className="h-3 w-3" strokeWidth={1.75} aria-hidden="true" />
@@ -195,7 +194,7 @@ export function PackageDetail() {
                     )}`}
                     className="inline-flex items-center justify-center rounded-full bg-gold px-6 py-3.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-jungle-deep transition-colors hover:bg-gold-light">
                     
-                    Book This Package
+                    Book This Tour
                   </a>
                   <Link
                     href="/contact"

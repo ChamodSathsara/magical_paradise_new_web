@@ -52,13 +52,7 @@ export function PackageCard({ pkg, className = '' }: PackageCardProps) {
         </h3>
         <p className="mt-3 flex-1 text-sm leading-relaxed text-jungle-muted">{pkg.summary}</p>
 
-        <div className="mt-6 flex items-end justify-between border-t border-jungle/10 pt-5">
-          <div>
-            <span className="block font-serif text-xl text-jungle">{pkg.price}</span>
-            <span className="text-[11px] uppercase tracking-[0.12em] text-jungle-muted/70">
-              {pkg.priceNote}
-            </span>
-          </div>
+        <div className="mt-6 flex items-center justify-end border-t border-jungle/10 pt-5">
           <Link
             href={`/packages/${pkg.id}`}
             className="inline-flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-[0.14em] text-gold-dark transition-colors hover:text-jungle">
