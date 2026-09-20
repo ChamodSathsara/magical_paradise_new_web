@@ -21,8 +21,7 @@ export const SITE = {
 export const NAV_LINKS = [
 { label: 'Home', to: '/' },
 { label: 'Packages', to: '/packages' },
-{ label: 'Destinations', to: '/destinations' },
-{ label: 'Experiences', to: '/experiences' },
+{ label: 'Experience Sri Lanka', to: '/experience-sri-lanka/things-to-do' },
 { label: 'Corporate Experiences', to: '/corporate' },
 { label: 'MICE', to: '/mice' },
 { label: 'Accommodations', to: '/hotels' },

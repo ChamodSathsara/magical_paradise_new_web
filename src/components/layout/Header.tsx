@@ -20,6 +20,15 @@ const STORY_LINKS = [
   { label: 'Magical Paradise Store', to: '/shop' },
 ] as const;
 
+const EXPERIENCE_LINKS = [
+  { label: 'Full Tourist Map', to: '/experience-sri-lanka/tourist-map' },
+  { label: 'Many Faces of Sri Lanka', to: '/experience-sri-lanka/many-faces' },
+  { label: 'Magical Destinations', to: '/experience-sri-lanka/magical-destinations' },
+  { label: 'Things to Do', to: '/experience-sri-lanka/things-to-do' },
+  { label: 'Only in Sri Lanka — Unique Experiences', to: '/experience-sri-lanka/only-in-sri-lanka' },
+  { label: 'Ceylon Gems', to: '/experience-sri-lanka/ceylon-gems' },
+] as const;
+
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -172,7 +181,18 @@ export function Header() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.05 + index * 0.045, duration: 0.3 }}
                 >
-                  {link.label === 'Our Story' ? (
+                  {link.label === 'Experience Sri Lanka' ? (
+                    <div className="border-b border-white/10 py-4">
+                      <p className="font-serif text-2xl text-gold-light">Experience Sri Lanka</p>
+                      <div className="mt-3 flex flex-col border-l border-gold/40 pl-4">
+                        {EXPERIENCE_LINKS.map((experienceLink) => (
+                          <NavLink key={experienceLink.to} to={experienceLink.to} className={({ isActive }) => `py-2 text-sm ${isActive ? 'text-gold-light' : 'text-ivory/70'}`}>
+                            {experienceLink.label}
+                          </NavLink>
+                        ))}
+                      </div>
+                    </div>
+                  ) : link.label === 'Our Story' ? (
                     <div className="border-b border-white/10 py-4">
                       <p className="font-serif text-2xl text-gold-light">Our Story</p>
                       <div className="mt-3 flex flex-col border-l border-gold/40 pl-4">
@@ -235,6 +255,10 @@ type DesktopNavLinkProps = {
 };
 
 function DesktopNavLink({ link, t }: DesktopNavLinkProps) {
+  if (link.label === 'Experience Sri Lanka') {
+    return <ExperienceDropdown />;
+  }
+
   if (link.label === 'Our Story') {
     return <StoryDropdown t={t} />;
   }
@@ -252,6 +276,28 @@ function DesktopNavLink({ link, t }: DesktopNavLinkProps) {
         {isActive && <span className="absolute -bottom-1.5 left-0 h-px w-full bg-gold-light" />}
       </>}
     </NavLink>
+  );
+}
+
+function ExperienceDropdown() {
+  const pathname = usePathname();
+  const active = pathname.startsWith('/experience-sri-lanka') || pathname.startsWith('/experiences/');
+
+  return (
+    <div className="group relative py-3">
+      <button type="button" className={`flex items-center gap-1 whitespace-nowrap text-[10px] uppercase tracking-[0.12em] transition-colors ${active ? 'text-gold-light' : 'text-ivory/80 group-hover:text-ivory'}`} aria-haspopup="true">
+        Experience Sri Lanka
+        <ChevronDownIcon className="h-3 w-3 transition-transform group-hover:rotate-180" strokeWidth={1.8} />
+      </button>
+      {active && <span className="absolute bottom-1.5 left-0 h-px w-full bg-gold-light" />}
+      <div className="invisible absolute left-1/2 top-full w-80 -translate-x-1/2 translate-y-2 rounded-lg border border-white/10 bg-jungle-deep/95 p-2 opacity-0 shadow-lift backdrop-blur-md transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100">
+        {EXPERIENCE_LINKS.map((experienceLink) => (
+          <Link key={experienceLink.to} href={experienceLink.to} className="block rounded-md px-4 py-3 text-xs tracking-wide text-ivory/75 transition-colors hover:bg-white/10 hover:text-gold-light">
+            {experienceLink.label}
+          </Link>
+        ))}
+      </div>
+    </div>
   );
 }
 

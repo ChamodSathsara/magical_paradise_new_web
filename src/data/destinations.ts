@@ -499,4 +499,4 @@ export function getDestination(id: string): Destination | undefined {
   return DESTINATIONS.find((d) => d.id === id);
 }
 
-export const MAP_DESTINATIONS = DESTINATIONS.filter((d) => d.onMap);
+export const MAP_DESTINATIONS = DESTINATIONS;
