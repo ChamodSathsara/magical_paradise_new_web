@@ -36,7 +36,17 @@ export function Footer() {
   };
 
   return (
-    <footer className="w-full bg-jungle-deep text-ivory/70">
+    <footer className="relative isolate w-full overflow-hidden bg-jungle-deep text-ivory/75">
+      <Image
+        src="/8de9dae7-2ef0-4497-8b69-866058baec8a.jpg"
+        alt=""
+        fill
+        sizes="100vw"
+        className="-z-20 object-cover object-center"
+        aria-hidden="true"
+      />
+      <div className="absolute inset-0 -z-10 bg-jungle-deep/90" aria-hidden="true" />
+      <div className="absolute inset-0 -z-10 bg-gradient-to-r from-jungle-deep via-jungle-deep/85 to-jungle-deep/65" aria-hidden="true" />
       <div className="mx-auto max-w-content px-6 py-16 lg:py-20">
         <div className="grid gap-12 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr]">
           <div>
