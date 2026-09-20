@@ -46,8 +46,8 @@ export function Header() {
           : "bg-gradient-to-b from-jungle-deep/70 to-transparent",
       ].join(" ")}
     >
-      <div className="relative mx-auto flex max-w-content items-center justify-end gap-6 px-6 py-4 xl:grid xl:grid-cols-[minmax(0,1fr)_160px_minmax(0,1fr)] xl:gap-7">
-        <nav aria-label="Main navigation, first links" className="hidden items-center justify-end gap-7 xl:flex">
+      <div className="relative mx-auto flex w-full max-w-content items-center justify-end gap-6 px-6 py-4 min-[1700px]:grid min-[1700px]:max-w-[118rem] min-[1700px]:grid-cols-[minmax(0,1fr)_160px_minmax(0,1fr)] min-[1700px]:gap-6">
+        <nav aria-label="Main navigation, first links" className="hidden items-center justify-end gap-6 min-[1700px]:flex">
           {NAV_LINKS.slice(0, 4).map((link) => (
             <DesktopNavLink key={link.to} link={link} t={t} />
           ))}
@@ -56,7 +56,7 @@ export function Header() {
         {/* Logo */}
         <Link
           href="/"
-          className="group absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center justify-center xl:static xl:translate-x-0 xl:translate-y-0"
+          className="group absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center justify-center min-[1700px]:static min-[1700px]:translate-x-0 min-[1700px]:translate-y-0"
           aria-label="Magical Paradise home"
         >
           <Image
@@ -70,7 +70,7 @@ export function Header() {
         </Link>
 
         <div className="flex items-center justify-start gap-3">
-          <nav aria-label="Main navigation, remaining links" className="hidden items-center gap-7 xl:flex">
+          <nav aria-label="Main navigation, remaining links" className="hidden items-center gap-6 min-[1700px]:flex">
             {NAV_LINKS.slice(4).map((link) => (
               <DesktopNavLink key={link.to} link={link} t={t} />
             ))}
@@ -133,7 +133,7 @@ export function Header() {
             onClick={() => setMenuOpen((value) => !value)}
             aria-expanded={menuOpen}
             aria-label={menuOpen ? t('nav.close') : t('nav.menu')}
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-ivory/20 text-ivory xl:hidden"
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-ivory/20 text-ivory min-[1700px]:hidden"
           >
             {menuOpen ? (
               <XIcon className="h-5 w-5" strokeWidth={1.5} />
@@ -152,7 +152,7 @@ export function Header() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="absolute inset-x-0 top-full z-40 h-[calc(100dvh-72px)] overflow-y-auto overscroll-contain bg-jungle-deep px-6 pb-24 pt-8 sm:h-[calc(100dvh-80px)] xl:hidden"
+            className="absolute inset-x-0 top-full z-40 h-[calc(100dvh-72px)] overflow-y-auto overscroll-contain bg-jungle-deep px-6 pb-24 pt-8 sm:h-[calc(100dvh-80px)] min-[1700px]:hidden"
           >
             <nav aria-label="Mobile" className="flex flex-col">
               {NAV_LINKS.map((link, index) => (
