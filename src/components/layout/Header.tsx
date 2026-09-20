@@ -29,6 +29,16 @@ const EXPERIENCE_LINKS = [
   { label: 'Ceylon Gems', to: '/experience-sri-lanka/ceylon-gems' },
 ] as const;
 
+const TRAVEL_GUIDE_LINKS = [
+  { label: 'Handy Travel Advice', to: '/travel-guide/handy-travel-advice' },
+  { label: 'Drone Regulations', to: '/travel-guide/drone-regulations' },
+] as const;
+
+const WHY_VISIT_LINKS = [
+  { label: '10 Good Reasons to Visit Sri Lanka', to: '/why-visit-sri-lanka/10-good-reasons' },
+  { label: 'Global Accolades', to: '/why-visit-sri-lanka/global-accolades' },
+] as const;
+
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -81,7 +91,7 @@ export function Header() {
           />
         </Link>
 
-        <nav aria-label="Main navigation" className="hidden w-full items-center justify-center gap-3 lg:flex xl:gap-5">
+        <nav aria-label="Main navigation" className="hidden w-full max-w-[108rem] flex-wrap items-center justify-center gap-x-3 gap-y-0 lg:flex xl:gap-x-5">
             {NAV_LINKS.map((link) => (
               <DesktopNavLink key={link.to} link={link} t={t} />
             ))}
@@ -185,6 +195,10 @@ export function Header() {
                         ))}
                       </div>
                     </div>
+                  ) : link.label === 'Sri Lanka Travel Guide' ? (
+                    <MobileSubmenu title="Sri Lanka Travel Guide" links={TRAVEL_GUIDE_LINKS} />
+                  ) : link.label === 'Why Should You Visit Sri Lanka' ? (
+                    <MobileSubmenu title="Why Should You Visit Sri Lanka" links={WHY_VISIT_LINKS} />
                   ) : link.label === 'Our Story' ? (
                     <div className="border-b border-white/10 py-4">
                       <p className="font-serif text-2xl text-gold-light">Our Story</p>
@@ -256,6 +270,14 @@ function DesktopNavLink({ link, t }: DesktopNavLinkProps) {
     return <StoryDropdown t={t} />;
   }
 
+  if (link.label === 'Sri Lanka Travel Guide') {
+    return <SimpleDropdown label="Sri Lanka Travel Guide" links={TRAVEL_GUIDE_LINKS} />;
+  }
+
+  if (link.label === 'Why Should You Visit Sri Lanka') {
+    return <SimpleDropdown label="Why Should You Visit Sri Lanka" links={WHY_VISIT_LINKS} />;
+  }
+
   return (
     <NavLink
       to={link.to}
@@ -269,6 +291,44 @@ function DesktopNavLink({ link, t }: DesktopNavLinkProps) {
         {isActive && <span className="absolute -bottom-1.5 left-0 h-px w-full bg-gold-light" />}
       </>}
     </NavLink>
+  );
+}
+
+type SubmenuLink = { readonly label: string; readonly to: string };
+
+function MobileSubmenu({ title, links }: { title: string; links: readonly SubmenuLink[] }) {
+  return (
+    <div className="border-b border-white/10 py-4">
+      <p className="font-serif text-2xl text-gold-light">{title}</p>
+      <div className="mt-3 flex flex-col border-l border-gold/40 pl-4">
+        {links.map((item) => (
+          <NavLink key={item.to} to={item.to} className={({ isActive }) => `py-2 text-sm ${isActive ? 'text-gold-light' : 'text-ivory/70'}`}>
+            {item.label}
+          </NavLink>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function SimpleDropdown({ label, links }: { label: string; links: readonly SubmenuLink[] }) {
+  const pathname = usePathname();
+  const active = links.some((link) => pathname === link.to);
+  return (
+    <div className="group relative py-3">
+      <button type="button" className={`flex items-center gap-1 whitespace-nowrap text-[9px] uppercase tracking-[0.08em] transition-colors xl:text-[10px] xl:tracking-[0.1em] ${active ? 'text-gold-light' : 'text-ivory/80 group-hover:text-ivory'}`} aria-haspopup="true">
+        {label}
+        <ChevronDownIcon className="h-3 w-3 transition-transform group-hover:rotate-180" strokeWidth={1.8} />
+      </button>
+      {active && <span className="absolute bottom-1.5 left-0 h-px w-full bg-gold-light" />}
+      <div className="invisible absolute left-1/2 top-full w-72 -translate-x-1/2 translate-y-2 rounded-lg border border-white/10 bg-jungle-deep/95 p-2 opacity-0 shadow-lift backdrop-blur-md transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100">
+        {links.map((item) => (
+          <Link key={item.to} href={item.to} className="block rounded-md px-4 py-3 text-xs tracking-wide text-ivory/75 transition-colors hover:bg-white/10 hover:text-gold-light">
+            {item.label}
+          </Link>
+        ))}
+      </div>
+    </div>
   );
 }
 

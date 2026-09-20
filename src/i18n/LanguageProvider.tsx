@@ -14,7 +14,7 @@ export const LANGUAGES: { code: LanguageCode; label: string; flag: string; local
 const messages = {
   EN: {
     'nav.mice': 'MICE',
-    'nav.home': 'Home', 'nav.packages': 'Packages', 'nav.sri lanka tours': 'Sri Lanka Tours', 'nav.day tours': 'Day Tours', 'nav.group tours': 'Group Tours', 'nav.destinations': 'Destinations',
+    'nav.home': 'Home', 'nav.packages': 'Packages', 'nav.sri lanka tours': 'Sri Lanka Tours', 'nav.day tours': 'Day Tours', 'nav.group tours': 'Group Tours', 'nav.maldives tours': 'Maldives Tours', 'nav.sri lanka travel guide': 'Sri Lanka Travel Guide', 'nav.why should you visit sri lanka': 'Why Should You Visit Sri Lanka', 'nav.destinations': 'Destinations',
     'nav.experiences': 'Experiences', 'nav.corporate experiences': 'Corporate Experiences', 'nav.accommodations': 'Accommodations', 'nav.shop': 'Shop', 'nav.let\'s partner': 'Let\'s Partner', 'nav.our story': 'Our Story',
     'nav.about': 'About', 'nav.contact': 'Contact', 'nav.plan': 'Plan My Trip',
     'nav.menu': 'Open menu', 'nav.close': 'Close menu', 'nav.language': 'Language',
@@ -39,7 +39,7 @@ const messages = {
   },
   FR: {
     'nav.mice': 'MICE',
-    'nav.home': 'Accueil', 'nav.packages': 'Circuits', 'nav.sri lanka tours': 'Circuits au Sri Lanka', 'nav.day tours': 'Excursions', 'nav.group tours': 'Voyages en groupe', 'nav.destinations': 'Destinations',
+    'nav.home': 'Accueil', 'nav.packages': 'Circuits', 'nav.sri lanka tours': 'Circuits au Sri Lanka', 'nav.day tours': 'Excursions', 'nav.group tours': 'Voyages en groupe', 'nav.maldives tours': 'Circuits aux Maldives', 'nav.sri lanka travel guide': 'Guide du Sri Lanka', 'nav.why should you visit sri lanka': 'Pourquoi visiter le Sri Lanka', 'nav.destinations': 'Destinations',
     'nav.experiences': 'Expériences', 'nav.corporate experiences': 'Expériences d’entreprise', 'nav.accommodations': 'Hébergements', 'nav.shop': 'Boutique', 'nav.let\'s partner': 'Devenons partenaires', 'nav.our story': 'Notre histoire',
     'nav.about': 'À propos', 'nav.contact': 'Contact', 'nav.plan': 'Planifier mon voyage',
     'nav.menu': 'Ouvrir le menu', 'nav.close': 'Fermer le menu', 'nav.language': 'Langue',
@@ -64,7 +64,7 @@ const messages = {
   },
   DE: {
     'nav.mice': 'MICE',
-    'nav.home': 'Startseite', 'nav.packages': 'Reisepakete', 'nav.sri lanka tours': 'Sri Lanka Rundreisen', 'nav.day tours': 'Tagestouren', 'nav.group tours': 'Gruppenreisen', 'nav.destinations': 'Reiseziele',
+    'nav.home': 'Startseite', 'nav.packages': 'Reisepakete', 'nav.sri lanka tours': 'Sri Lanka Rundreisen', 'nav.day tours': 'Tagestouren', 'nav.group tours': 'Gruppenreisen', 'nav.maldives tours': 'Malediven-Reisen', 'nav.sri lanka travel guide': 'Sri Lanka Reiseführer', 'nav.why should you visit sri lanka': 'Warum Sri Lanka', 'nav.destinations': 'Reiseziele',
     'nav.experiences': 'Erlebnisse', 'nav.corporate experiences': 'Firmenerlebnisse', 'nav.accommodations': 'Unterkünfte', 'nav.shop': 'Shop', 'nav.let\'s partner': 'Partner werden', 'nav.our story': 'Unsere Geschichte',
     'nav.about': 'Über uns', 'nav.contact': 'Kontakt', 'nav.plan': 'Reise planen',
     'nav.menu': 'Menü öffnen', 'nav.close': 'Menü schließen', 'nav.language': 'Sprache',
@@ -89,7 +89,7 @@ const messages = {
   },
   JA: {
     'nav.mice': 'MICE',
-    'nav.home': 'ホーム', 'nav.packages': 'ツアー', 'nav.sri lanka tours': 'スリランカツアー', 'nav.day tours': '日帰りツアー', 'nav.group tours': 'グループツアー', 'nav.destinations': '目的地',
+    'nav.home': 'ホーム', 'nav.packages': 'ツアー', 'nav.sri lanka tours': 'スリランカツアー', 'nav.day tours': '日帰りツアー', 'nav.group tours': 'グループツアー', 'nav.maldives tours': 'モルディブツアー', 'nav.sri lanka travel guide': 'スリランカ旅行ガイド', 'nav.why should you visit sri lanka': 'スリランカを訪れる理由', 'nav.destinations': '目的地',
     'nav.experiences': '体験', 'nav.corporate experiences': '企業体験', 'nav.accommodations': '宿泊施設', 'nav.shop': 'ショップ', 'nav.let\'s partner': 'パートナーシップ', 'nav.our story': '私たちの物語',
     'nav.about': '私たちについて', 'nav.contact': 'お問い合わせ', 'nav.plan': '旅行を計画',
     'nav.menu': 'メニューを開く', 'nav.close': 'メニューを閉じる', 'nav.language': '言語',
