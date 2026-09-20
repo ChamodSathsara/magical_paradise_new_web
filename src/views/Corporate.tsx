@@ -1,33 +1,97 @@
-import React from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
+import React from "react";
+import Image from "next/image";
+import Link from "next/link";
 import {
-  ArrowRightIcon, BriefcaseBusinessIcon, Building2Icon, CompassIcon,
-  HandHeartIcon, HeartPulseIcon, MountainIcon, PlayIcon, PresentationIcon, UsersIcon,
-} from 'lucide-react';
-import { PageHero } from '../components/ui/PageHero';
-import { Reveal } from '../components/ui/Reveal';
-import { SectionHeading } from '../components/ui/SectionHeading';
-import { CtaStrip } from '../components/sections/CtaStrip';
+  ArrowRightIcon,
+  BriefcaseBusinessIcon,
+  Building2Icon,
+  CompassIcon,
+  HandHeartIcon,
+  HeartPulseIcon,
+  MountainIcon,
+  PlayIcon,
+  PresentationIcon,
+  UsersIcon,
+} from "lucide-react";
+import { PageHero } from "../components/ui/PageHero";
+import { Reveal } from "../components/ui/Reveal";
+import { SectionHeading } from "../components/ui/SectionHeading";
+import { CtaStrip } from "../components/sections/CtaStrip";
+import { AutoPlayVideo } from "../components/ui/AutoPlayVideo";
 
 const PORTFOLIO = [
-  { icon: MountainIcon, title: 'Outdoor-Based Training (OBT) Programs' },
-  { icon: UsersIcon, title: 'Team-Building Retreats & Leadership Camps' },
-  { icon: CompassIcon, title: 'Corporate Day Outings & Staff Excursions' },
-  { icon: PresentationIcon, title: 'Training Programs & Workshop Arrangements' },
-  { icon: Building2Icon, title: 'Conferences, Meetings & Corporate Gatherings' },
-  { icon: HeartPulseIcon, title: 'Wellness & Employee Engagement Programs' },
-  { icon: HandHeartIcon, title: 'CSR & Community-Based Experiences' },
-  { icon: BriefcaseBusinessIcon, title: 'Adventure & Challenge-Based Team Activities' },
+  { icon: MountainIcon, title: "Outdoor-Based Training (OBT) Programs" },
+  { icon: UsersIcon, title: "Team-Building Retreats & Leadership Camps" },
+  { icon: CompassIcon, title: "Corporate Day Outings & Staff Excursions" },
+  {
+    icon: PresentationIcon,
+    title: "Training Programs & Workshop Arrangements",
+  },
+  {
+    icon: Building2Icon,
+    title: "Conferences, Meetings & Corporate Gatherings",
+  },
+  { icon: HeartPulseIcon, title: "Wellness & Employee Engagement Programs" },
+  { icon: HandHeartIcon, title: "CSR & Community-Based Experiences" },
+  {
+    icon: BriefcaseBusinessIcon,
+    title: "Adventure & Challenge-Based Team Activities",
+  },
 ];
 
 const GALLERY_REFERENCES = [
-  '6566', '6588', '6591', '6594', '6612', '6622', '6624', '6649', '6693',
-  '6695', '6713', '6840', '6841', '6850', '6795', '6825', '6934', '6942',
-  '6951', '6967', '6996', '7051', '7088', '7095', '7106', '7110', '7123',
-  '7141', '7154', '7159', '7162', '7164', '7168', '7197', '7237', '7248',
-  '7254', '7258', '7274', '7280', '7312', '7321', '7328', '7339', '7393',
-  '7415', '7443', '7452', '7496', '7505', '7498', '7380',
+  "6566",
+  "6588",
+  "6591",
+  "6594",
+  "6612",
+  "6622",
+  "6624",
+  "6649",
+  "6693",
+  "6695",
+  "6713",
+  "6840",
+  "6841",
+  "6850",
+  "6795",
+  "6825",
+  "6934",
+  "6942",
+  "6951",
+  "6967",
+  "6996",
+  "7051",
+  "7088",
+  "7095",
+  "7106",
+  "7110",
+  "7123",
+  "7141",
+  "7154",
+  "7159",
+  "7162",
+  "7164",
+  "7168",
+  "7197",
+  "7237",
+  "7248",
+  "7254",
+  "7258",
+  "7274",
+  "7280",
+  "7312",
+  "7321",
+  "7328",
+  "7339",
+  "7393",
+  "7415",
+  "7443",
+  "7452",
+  "7496",
+  "7505",
+  "7498",
+  "7380",
 ] as const;
 
 const GALLERY = GALLERY_REFERENCES.map((reference) => ({
@@ -35,7 +99,7 @@ const GALLERY = GALLERY_REFERENCES.map((reference) => ({
   alt: `Corporate team experience highlight, photo KSP ${reference}`,
 }));
 
-const CORPORATE_VIDEO = '/videos/CorporateExperiences.mp4';
+const CORPORATE_VIDEO = "/videos/CorporateExperiences.mp4";
 
 export function Corporate() {
   return (
@@ -47,9 +111,9 @@ export function Corporate() {
         image="/images/corporate/ksp-7051-web.jpg"
         imageAlt="Corporate adventure vehicles ready for a team experience"
         stats={[
-          { value: '360°', label: 'Program Planning' },
-          { value: '8', label: 'Experience Formats' },
-          { value: '15+', label: 'Years Experience' },
+          { value: "360°", label: "Program Planning" },
+          { value: "8", label: "Experience Formats" },
+          { value: "15+", label: "Years Experience" },
         ]}
       />
 
@@ -65,8 +129,19 @@ export function Corporate() {
           </Reveal>
           <Reveal delay={0.08}>
             <div className="space-y-5 text-[15px] leading-8 text-jungle-muted sm:text-base">
-              <p>At Magical Paradise, we believe that the most successful teams are built through shared experience. Beyond leisure travel, we specialize in designing and managing memorable corporate programs across Sri Lanka, tailored to inspire, engage and strengthen teams.</p>
-              <p>From team-building adventures in the great outdoors to professionally coordinated training retreats, conferences and incentive journeys, we take care of every detail so organizations can focus on their people and objectives.</p>
+              <p>
+                At Magical Paradise, we believe that the most successful teams
+                are built through shared experience. Beyond leisure travel, we
+                specialize in designing and managing memorable corporate
+                programs across Sri Lanka, tailored to inspire, engage and
+                strengthen teams.
+              </p>
+              <p>
+                From team-building adventures in the great outdoors to
+                professionally coordinated training retreats, conferences and
+                incentive journeys, we take care of every detail so
+                organizations can focus on their people and objectives.
+              </p>
             </div>
           </Reveal>
         </div>
@@ -74,7 +149,11 @@ export function Corporate() {
 
       <section className="w-full bg-sand py-20 lg:py-28">
         <div className="mx-auto max-w-content px-6">
-          <SectionHeading eyebrow="Our Portfolio" title="Corporate experiences with purpose" subtitle="Each program is customized around your people, objectives, schedule and preferred setting." />
+          <SectionHeading
+            eyebrow="Our Portfolio"
+            title="Corporate experiences with purpose"
+            subtitle="Each program is customized around your people, objectives, schedule and preferred setting."
+          />
           <ul className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {PORTFOLIO.map((item, index) => {
               const ItemIcon = item.icon;
@@ -85,7 +164,9 @@ export function Corporate() {
                       <span className="flex h-12 w-12 items-center justify-center rounded-full bg-jungle text-gold-light">
                         <ItemIcon className="h-5 w-5" strokeWidth={1.5} />
                       </span>
-                      <h3 className="mt-5 font-serif text-xl leading-snug text-jungle">{item.title}</h3>
+                      <h3 className="mt-5 font-serif text-xl leading-snug text-jungle">
+                        {item.title}
+                      </h3>
                     </div>
                   </Reveal>
                 </li>
@@ -99,16 +180,36 @@ export function Corporate() {
         <div className="mx-auto grid max-w-content items-center gap-12 px-6 lg:grid-cols-2 lg:gap-20">
           <Reveal>
             <div className="relative aspect-[4/3] overflow-hidden rounded-lg">
-              <Image src="/images/corporate/ksp-7248-web.jpg" alt="Outdoor-Based Training facilitator working with program participants" fill sizes="(min-width: 1024px) 50vw, 100vw" className="object-cover" />
+              <Image
+                src="/images/corporate/ksp-7248-web.jpg"
+                alt="Outdoor-Based Training facilitator working with program participants"
+                fill
+                sizes="(min-width: 1024px) 50vw, 100vw"
+                className="object-cover"
+              />
             </div>
           </Reveal>
           <Reveal delay={0.08}>
             <div>
-              <p className="eyebrow text-gold-light">A Glimpse into Our Work · July 2025</p>
-              <h2 className="mt-4 font-serif text-4xl font-light leading-tight sm:text-5xl">Outdoor-Based Training Program</h2>
+              <p className="eyebrow text-gold-light">
+                A Glimpse into Our Work · July 2025
+              </p>
+              <h2 className="mt-4 font-serif text-4xl font-light leading-tight sm:text-5xl">
+                Outdoor-Based Training Program
+              </h2>
               <div className="mt-7 space-y-5 text-[15px] leading-8 text-ivory/70 sm:text-base">
-                <p>Magical Paradise successfully organized and executed a comprehensive Outdoor-Based Training Program for university participants, combining experiential learning, leadership development, teamwork, problem-solving and adventure-based challenges in a dynamic outdoor environment.</p>
-                <p>The program was carefully designed to enhance collaboration, communication, resilience and leadership skills while creating a memorable and engaging experience for every participant.</p>
+                <p>
+                  Magical Paradise successfully organized and executed a
+                  comprehensive Outdoor-Based Training Program for university
+                  participants, combining experiential learning, leadership
+                  development, teamwork, problem-solving and adventure-based
+                  challenges in a dynamic outdoor environment.
+                </p>
+                <p>
+                  The program was carefully designed to enhance collaboration,
+                  communication, resilience and leadership skills while creating
+                  a memorable and engaging experience for every participant.
+                </p>
               </div>
             </div>
           </Reveal>
@@ -125,17 +226,26 @@ export function Corporate() {
           <Reveal className="mx-auto mt-12 max-w-5xl">
             <div className="relative aspect-video overflow-hidden rounded-xl border border-jungle/10 bg-jungle-deep shadow-lift">
               {CORPORATE_VIDEO ? (
-                <video className="h-full w-full object-cover" controls preload="metadata" poster="/images/corporate/ksp-7051-web.jpg">
-                  <source src={CORPORATE_VIDEO} type="video/mp4" />
-                  Your browser does not support embedded video.
-                </video>
+                <AutoPlayVideo
+                  src={CORPORATE_VIDEO}
+                  poster="/images/corporate/ksp-7051-web.jpg"
+                  className="h-full w-full object-cover"
+                />
               ) : (
-                <div data-video-slot className="flex h-full flex-col items-center justify-center bg-[radial-gradient(circle_at_center,rgba(212,169,65,0.16),transparent_55%)] px-6 text-center">
+                <div
+                  data-video-slot
+                  className="flex h-full flex-col items-center justify-center bg-[radial-gradient(circle_at_center,rgba(212,169,65,0.16),transparent_55%)] px-6 text-center"
+                >
                   <span className="flex h-20 w-20 items-center justify-center rounded-full border border-gold-light/50 bg-gold/10 text-gold-light">
                     <PlayIcon className="ml-1 h-8 w-8" strokeWidth={1.4} />
                   </span>
-                  <p className="mt-6 font-serif text-2xl text-ivory sm:text-3xl">Event video coming soon</p>
-                  <p className="mt-2 max-w-lg text-sm leading-relaxed text-ivory/60">The official program film will appear here once the final video is received.</p>
+                  <p className="mt-6 font-serif text-2xl text-ivory sm:text-3xl">
+                    Event video coming soon
+                  </p>
+                  <p className="mt-2 max-w-lg text-sm leading-relaxed text-ivory/60">
+                    The official program film will appear here once the final
+                    video is received.
+                  </p>
                 </div>
               )}
             </div>
@@ -145,13 +255,32 @@ export function Corporate() {
 
       <section className="w-full bg-ivory py-20 lg:py-28">
         <div className="mx-auto max-w-content px-6">
-          <SectionHeading eyebrow="A Glimpse into Our Work" title="People, purpose and shared adventure" subtitle="Highlights from our July 2025 corporate experience program." />
+          <SectionHeading
+            eyebrow="A Glimpse into Our Work"
+            title="People, purpose and shared adventure"
+            subtitle="Highlights from our July 2025 corporate experience program."
+          />
           <div className="mt-14 grid auto-rows-[220px] grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {GALLERY.map((photo, index) => (
-              <Reveal key={photo.src} delay={(index % 4) * 0.04} className={index % 11 === 0 || index % 11 === 7 ? 'sm:col-span-2' : ''}>
+              <Reveal
+                key={photo.src}
+                delay={(index % 4) * 0.04}
+                className={
+                  index % 11 === 0 || index % 11 === 7 ? "sm:col-span-2" : ""
+                }
+              >
                 <figure className="group relative h-full overflow-hidden rounded-lg bg-sand">
-                  <Image src={photo.src} alt={photo.alt} fill sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw" className="object-cover transition-transform duration-700 group-hover:scale-105" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-jungle-deep/35 to-transparent" aria-hidden="true" />
+                  <Image
+                    src={photo.src}
+                    alt={photo.alt}
+                    fill
+                    sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                  <div
+                    className="absolute inset-0 bg-gradient-to-t from-jungle-deep/35 to-transparent"
+                    aria-hidden="true"
+                  />
                 </figure>
               </Reveal>
             ))}
@@ -162,15 +291,29 @@ export function Corporate() {
       <section className="w-full bg-sand py-20 lg:py-24">
         <div className="mx-auto max-w-4xl px-6 text-center">
           <Reveal>
-            <p className="font-serif text-2xl font-light leading-relaxed text-jungle sm:text-3xl">Whether you want to strengthen teamwork, reward high-performing employees, conduct strategic planning or create an unforgettable team experience, we deliver professional planning and seamless execution.</p>
-            <Link href="/contact" className="mt-9 inline-flex items-center gap-3 rounded-full bg-jungle px-8 py-4 text-[12px] font-medium uppercase tracking-[0.16em] text-ivory transition-colors hover:bg-jungle-light">
-              Plan a Corporate Experience <ArrowRightIcon className="h-4 w-4" strokeWidth={1.5} />
+            <p className="font-serif text-2xl font-light leading-relaxed text-jungle sm:text-3xl">
+              Whether you want to strengthen teamwork, reward high-performing
+              employees, conduct strategic planning or create an unforgettable
+              team experience, we deliver professional planning and seamless
+              execution.
+            </p>
+            <Link
+              href="/contact"
+              className="mt-9 inline-flex items-center gap-3 rounded-full bg-jungle px-8 py-4 text-[12px] font-medium uppercase tracking-[0.16em] text-ivory transition-colors hover:bg-jungle-light"
+            >
+              Plan a Corporate Experience{" "}
+              <ArrowRightIcon className="h-4 w-4" strokeWidth={1.5} />
             </Link>
           </Reveal>
         </div>
       </section>
 
-      <CtaStrip eyebrow="Tailored for Your Organization" title="Ready to take your team beyond the boardroom?" description="Share your objectives, group size and preferred dates. We will design a purposeful corporate experience around your team." primaryLabel="Request a Proposal" />
+      <CtaStrip
+        eyebrow="Tailored for Your Organization"
+        title="Ready to take your team beyond the boardroom?"
+        description="Share your objectives, group size and preferred dates. We will design a purposeful corporate experience around your team."
+        primaryLabel="Request a Proposal"
+      />
     </>
   );
 }
