@@ -27,8 +27,7 @@ export const NAV_LINKS = [
 { label: 'MICE', to: '/mice' },
 { label: 'Accommodations', to: '/hotels' },
 { label: 'Shop', to: '/shop' },
-{ label: 'About', to: '/about' },
-{ label: 'Contact', to: '/contact' }];
+{ label: 'Our Story', to: '/about' }];
 
 
 export const TRUST_STATS = [

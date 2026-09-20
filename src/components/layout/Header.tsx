@@ -10,6 +10,12 @@ import { NAV_LINKS } from "../../data/site";
 import { LANGUAGES, useLanguage } from "../../i18n/LanguageProvider";
 import Image from "next/image";
 
+const STORY_LINKS = [
+  { label: 'About Us', to: '/about' },
+  { label: 'Contact Us', to: '/contact' },
+  { label: 'Magical Conservation — Protecting Paradise', to: '/conservation' },
+] as const;
+
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -162,17 +168,28 @@ export function Header() {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.05 + index * 0.045, duration: 0.3 }}
                 >
-                  <NavLink
-                    to={link.to}
-                    className={({ isActive }) =>
-                      [
+                  {link.label === 'Our Story' ? (
+                    <div className="border-b border-white/10 py-4">
+                      <p className="font-serif text-2xl text-gold-light">Our Story</p>
+                      <div className="mt-3 flex flex-col border-l border-gold/40 pl-4">
+                        {STORY_LINKS.map((storyLink) => (
+                          <NavLink key={storyLink.to} to={storyLink.to} className={({ isActive }) => `py-2 text-sm ${isActive ? 'text-gold-light' : 'text-ivory/70'}`}>
+                            {storyLink.label}
+                          </NavLink>
+                        ))}
+                      </div>
+                    </div>
+                  ) : (
+                    <NavLink
+                      to={link.to}
+                      className={({ isActive }) => [
                         "block border-b border-white/10 py-4 font-serif text-2xl",
                         isActive ? "text-gold-light" : "text-ivory",
-                      ].join(" ")
-                    }
-                  >
-                    {t(`nav.${link.label.toLowerCase()}` as Parameters<typeof t>[0])}
-                  </NavLink>
+                      ].join(" ")}
+                    >
+                      {t(`nav.${link.label.toLowerCase()}` as Parameters<typeof t>[0])}
+                    </NavLink>
+                  )}
                 </motion.div>
               ))}
             </nav>
@@ -214,6 +231,10 @@ type DesktopNavLinkProps = {
 };
 
 function DesktopNavLink({ link, t }: DesktopNavLinkProps) {
+  if (link.label === 'Our Story') {
+    return <StoryDropdown t={t} />;
+  }
+
   return (
     <NavLink
       to={link.to}
@@ -227,5 +248,31 @@ function DesktopNavLink({ link, t }: DesktopNavLinkProps) {
         {isActive && <span className="absolute -bottom-1.5 left-0 h-px w-full bg-gold-light" />}
       </>}
     </NavLink>
+  );
+}
+
+function StoryDropdown({ t }: { t: ReturnType<typeof useLanguage>['t'] }) {
+  const pathname = usePathname();
+  const active = STORY_LINKS.some((link) => pathname === link.to);
+
+  return (
+    <div className="group relative py-3">
+      <button
+        type="button"
+        className={`flex items-center gap-1 whitespace-nowrap text-[10px] uppercase tracking-[0.12em] transition-colors ${active ? 'text-gold-light' : 'text-ivory/80 group-hover:text-ivory'}`}
+        aria-haspopup="true"
+      >
+        {t('nav.our story' as Parameters<typeof t>[0])}
+        <ChevronDownIcon className="h-3 w-3 transition-transform group-hover:rotate-180" strokeWidth={1.8} />
+      </button>
+      {active && <span className="absolute bottom-1.5 left-0 h-px w-full bg-gold-light" />}
+      <div className="invisible absolute right-0 top-full w-72 translate-y-2 rounded-lg border border-white/10 bg-jungle-deep/95 p-2 opacity-0 shadow-lift backdrop-blur-md transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100">
+        {STORY_LINKS.map((storyLink) => (
+          <Link key={storyLink.to} href={storyLink.to} className="block rounded-md px-4 py-3 text-xs tracking-wide text-ivory/75 transition-colors hover:bg-white/10 hover:text-gold-light">
+            {storyLink.label}
+          </Link>
+        ))}
+      </div>
+    </div>
   );
 }
