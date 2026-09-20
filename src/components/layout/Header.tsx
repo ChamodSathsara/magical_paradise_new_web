@@ -14,6 +14,10 @@ const STORY_LINKS = [
   { label: 'About Us', to: '/about' },
   { label: 'Contact Us', to: '/contact' },
   { label: 'Magical Conservation — Protecting Paradise', to: '/conservation' },
+  { label: 'Philanthropy — Vino Foundation', to: '/vino-foundation' },
+  { label: 'Tour Booking Contractual Provisions', to: '/booking-provisions' },
+  { label: 'Payment Options', to: '/payment-options' },
+  { label: 'Magical Paradise Store', to: '/shop' },
 ] as const;
 
 export function Header() {
@@ -266,7 +270,7 @@ function StoryDropdown({ t }: { t: ReturnType<typeof useLanguage>['t'] }) {
         <ChevronDownIcon className="h-3 w-3 transition-transform group-hover:rotate-180" strokeWidth={1.8} />
       </button>
       {active && <span className="absolute bottom-1.5 left-0 h-px w-full bg-gold-light" />}
-      <div className="invisible absolute right-0 top-full w-72 translate-y-2 rounded-lg border border-white/10 bg-jungle-deep/95 p-2 opacity-0 shadow-lift backdrop-blur-md transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100">
+      <div className="invisible absolute right-0 top-full max-h-[75vh] w-80 translate-y-2 overflow-y-auto rounded-lg border border-white/10 bg-jungle-deep/95 p-2 opacity-0 shadow-lift backdrop-blur-md transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100">
         {STORY_LINKS.map((storyLink) => (
           <Link key={storyLink.to} href={storyLink.to} className="block rounded-md px-4 py-3 text-xs tracking-wide text-ivory/75 transition-colors hover:bg-white/10 hover:text-gold-light">
             {storyLink.label}

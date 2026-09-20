@@ -26,7 +26,7 @@ export const NAV_LINKS = [
 { label: 'Corporate Experiences', to: '/corporate' },
 { label: 'MICE', to: '/mice' },
 { label: 'Accommodations', to: '/hotels' },
-{ label: 'Shop', to: '/shop' },
+{ label: "Let's Partner", to: '/partnership' },
 { label: 'Our Story', to: '/about' }];
 
 

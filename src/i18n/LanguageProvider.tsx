@@ -15,7 +15,7 @@ const messages = {
   EN: {
     'nav.mice': 'MICE',
     'nav.home': 'Home', 'nav.packages': 'Packages', 'nav.destinations': 'Destinations',
-    'nav.experiences': 'Experiences', 'nav.corporate experiences': 'Corporate Experiences', 'nav.accommodations': 'Accommodations', 'nav.shop': 'Shop', 'nav.our story': 'Our Story',
+    'nav.experiences': 'Experiences', 'nav.corporate experiences': 'Corporate Experiences', 'nav.accommodations': 'Accommodations', 'nav.shop': 'Shop', 'nav.let\'s partner': 'Let\'s Partner', 'nav.our story': 'Our Story',
     'nav.about': 'About', 'nav.contact': 'Contact', 'nav.plan': 'Plan My Trip',
     'nav.menu': 'Open menu', 'nav.close': 'Close menu', 'nav.language': 'Language',
     'footer.inspiration': 'Travel Inspiration, Monthly', 'footer.destinations': 'Destinations',
@@ -40,7 +40,7 @@ const messages = {
   FR: {
     'nav.mice': 'MICE',
     'nav.home': 'Accueil', 'nav.packages': 'Circuits', 'nav.destinations': 'Destinations',
-    'nav.experiences': 'Expériences', 'nav.corporate experiences': 'Expériences d’entreprise', 'nav.accommodations': 'Hébergements', 'nav.shop': 'Boutique', 'nav.our story': 'Notre histoire',
+    'nav.experiences': 'Expériences', 'nav.corporate experiences': 'Expériences d’entreprise', 'nav.accommodations': 'Hébergements', 'nav.shop': 'Boutique', 'nav.let\'s partner': 'Devenons partenaires', 'nav.our story': 'Notre histoire',
     'nav.about': 'À propos', 'nav.contact': 'Contact', 'nav.plan': 'Planifier mon voyage',
     'nav.menu': 'Ouvrir le menu', 'nav.close': 'Fermer le menu', 'nav.language': 'Langue',
     'footer.inspiration': 'Inspiration voyage, chaque mois', 'footer.destinations': 'Destinations',
@@ -65,7 +65,7 @@ const messages = {
   DE: {
     'nav.mice': 'MICE',
     'nav.home': 'Startseite', 'nav.packages': 'Reisepakete', 'nav.destinations': 'Reiseziele',
-    'nav.experiences': 'Erlebnisse', 'nav.corporate experiences': 'Firmenerlebnisse', 'nav.accommodations': 'Unterkünfte', 'nav.shop': 'Shop', 'nav.our story': 'Unsere Geschichte',
+    'nav.experiences': 'Erlebnisse', 'nav.corporate experiences': 'Firmenerlebnisse', 'nav.accommodations': 'Unterkünfte', 'nav.shop': 'Shop', 'nav.let\'s partner': 'Partner werden', 'nav.our story': 'Unsere Geschichte',
     'nav.about': 'Über uns', 'nav.contact': 'Kontakt', 'nav.plan': 'Reise planen',
     'nav.menu': 'Menü öffnen', 'nav.close': 'Menü schließen', 'nav.language': 'Sprache',
     'footer.inspiration': 'Reiseinspiration, monatlich', 'footer.destinations': 'Reiseziele',
@@ -90,7 +90,7 @@ const messages = {
   JA: {
     'nav.mice': 'MICE',
     'nav.home': 'ホーム', 'nav.packages': 'ツアー', 'nav.destinations': '目的地',
-    'nav.experiences': '体験', 'nav.corporate experiences': '企業体験', 'nav.accommodations': '宿泊施設', 'nav.shop': 'ショップ', 'nav.our story': '私たちの物語',
+    'nav.experiences': '体験', 'nav.corporate experiences': '企業体験', 'nav.accommodations': '宿泊施設', 'nav.shop': 'ショップ', 'nav.let\'s partner': 'パートナーシップ', 'nav.our story': '私たちの物語',
     'nav.about': '私たちについて', 'nav.contact': 'お問い合わせ', 'nav.plan': '旅行を計画',
     'nav.menu': 'メニューを開く', 'nav.close': 'メニューを閉じる', 'nav.language': '言語',
     'footer.inspiration': '毎月の旅のインスピレーション', 'footer.destinations': '目的地',
