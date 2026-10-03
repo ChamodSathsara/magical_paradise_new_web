@@ -14,6 +14,7 @@ import { Gallery } from '../components/home/Gallery';
 import { CtaStrip } from '../components/sections/CtaStrip';
 import { TrustCredentials } from '../components/sections/TrustCredentials';
 import { CountryRepresentatives } from '../components/sections/CountryRepresentatives';
+import { TransportOptions } from '../components/sections/TransportOptions';
 
 export function Home() {
   return (
@@ -26,6 +27,7 @@ export function Home() {
       <ExperiencesPreview />
       <PackagesPreview />
       <HotelsPreview />
+      <TransportOptions />
       <IslandMap />
       <MaldivesPromo />
       <CorporatePromo />
