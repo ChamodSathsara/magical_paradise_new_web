@@ -13,6 +13,7 @@ import { Testimonials } from '../components/sections/Testimonials';
 import { Gallery } from '../components/home/Gallery';
 import { CtaStrip } from '../components/sections/CtaStrip';
 import { TrustCredentials } from '../components/sections/TrustCredentials';
+import { CountryRepresentatives } from '../components/sections/CountryRepresentatives';
 
 export function Home() {
   return (
@@ -29,6 +30,7 @@ export function Home() {
       <MaldivesPromo />
       <CorporatePromo />
       <Testimonials />
+      <CountryRepresentatives />
       <Gallery />
       <CtaStrip />
     </>);
