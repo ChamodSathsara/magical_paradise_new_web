@@ -1,20 +1,23 @@
 'use client';
 
 import { FormEvent, useMemo, useState } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { CheckIcon, ChevronLeftIcon, MapPinIcon, MessageCircleIcon, MinusIcon, PlusIcon, ShieldCheckIcon, TruckIcon } from 'lucide-react';
-import { Product, SHOP_IMAGE, formatPrice } from '../data/products';
+import { Product, formatPrice } from '../data/products';
 import { SITE } from '../data/site';
 import { useLanguage } from '../i18n/LanguageProvider';
 
 export function ProductDetail({ product }: { product: Product }) {
   const { t } = useLanguage();
   const [quantity, setQuantity] = useState(1);
-  const [option, setOption] = useState(product.options?.[0] ?? '');
+  const [size, setSize] = useState(product.sizes?.[0] ?? '');
+  const [color, setColor] = useState(product.colors?.[0] ?? '');
+  const [activeImage, setActiveImage] = useState(0);
   const [form, setForm] = useState({ name: '', phone: '', address: '', city: '', country: '', notes: '' });
   const isReady = useMemo(
-    () => Boolean(form.name.trim() && form.phone.trim() && form.address.trim() && form.city.trim() && form.country.trim() && (!product.options || option)),
-    [form, option, product.options],
+    () => Boolean(form.name.trim() && form.phone.trim() && form.address.trim() && form.city.trim() && form.country.trim() && (!product.sizes || size)),
+    [form, size, product.sizes],
   );
 
   const update = (field: keyof typeof form, value: string) => setForm((current) => ({ ...current, [field]: value }));
@@ -26,7 +29,8 @@ export function ProductDetail({ product }: { product: Product }) {
       'Hello Magical Paradise, I would like to order:',
       '',
       `Item: ${product.name}`,
-      product.options ? `Option / Size: ${option}` : '',
+      product.colors ? `Colour: ${color}` : '',
+      product.sizes ? `Size: ${size}` : '',
       `Quantity: ${quantity}`,
       `Price: ${formatPrice(product.price * quantity)}`,
       '',
@@ -51,16 +55,10 @@ export function ProductDetail({ product }: { product: Product }) {
         </Link>
         <div className="mt-8 grid gap-12 lg:grid-cols-[1.05fr_.95fr] lg:gap-16">
           <div>
-            <div className="sticky top-28 overflow-hidden rounded-lg bg-sand">
-              <div className="aspect-[4/5] overflow-hidden">
-                <img src={SHOP_IMAGE} alt={product.name} className="h-full w-full scale-[1.65] object-cover" style={{ objectPosition: product.imagePosition }} />
-              </div>
+            <div className="sticky top-28 overflow-hidden rounded-xl bg-sand">
+              <div className="relative aspect-[4/5] overflow-hidden"><Image src={product.images[activeImage]} alt={`${product.name} view ${activeImage + 1}`} fill sizes="(min-width:1024px) 50vw,100vw" className="object-cover" /></div>
               <div className="grid grid-cols-3 gap-px bg-jungle/10">
-                {[0, 1, 2].map((item) => (
-                  <button key={item} type="button" className="aspect-square overflow-hidden bg-sand" aria-label={`View ${item + 1} of ${product.name}`}>
-                    <img src={SHOP_IMAGE} alt="" className="h-full w-full scale-[1.8] object-cover opacity-90 transition hover:opacity-100" style={{ objectPosition: product.imagePosition }} />
-                  </button>
-                ))}
+                {product.images.map((image, index) => <button key={image} type="button" onClick={() => setActiveImage(index)} className={`relative aspect-square overflow-hidden bg-sand ${activeImage === index ? 'ring-2 ring-inset ring-gold' : ''}`} aria-label={`View ${index + 1} of ${product.name}`}><Image src={image} alt="" fill sizes="160px" className="object-cover opacity-90 transition hover:opacity-100" /></button>)}
               </div>
             </div>
           </div>
@@ -76,17 +74,19 @@ export function ProductDetail({ product }: { product: Product }) {
                 </li>
               ))}
             </ul>
+            {product.sizeChart && <div className="mt-8 overflow-hidden rounded-xl border border-jungle/10 bg-white p-4 shadow-card"><p className="eyebrow px-2 pb-4 text-gold-dark">Size Guide</p><div className="relative aspect-[4/3]"><Image src={product.sizeChart} alt={`${product.name} size chart`} fill sizes="(min-width:1024px) 45vw,100vw" className="object-contain" /></div></div>}
 
             <form onSubmit={purchase} className="mt-10 border-t border-jungle/10 pt-8">
               <div className="grid gap-6 sm:grid-cols-2">
-                {product.options && (
+                {product.colors && (
                   <label className="text-xs font-medium uppercase tracking-[0.12em] text-jungle">
-                    {t('product.option')} *
-                    <select value={option} onChange={(event) => setOption(event.target.value)} className={inputClass}>
-                      {product.options.map((item) => <option key={item}>{item}</option>)}
+                    Colour *
+                    <select value={color} onChange={(event) => { const value = event.target.value; setColor(value); const colorIndex = product.colors?.indexOf(value) ?? 0; setActiveImage(colorIndex * 2); }} className={inputClass}>
+                      {product.colors.map((item) => <option key={item}>{item}</option>)}
                     </select>
                   </label>
                 )}
+                {product.sizes && <label className="text-xs font-medium uppercase tracking-[0.12em] text-jungle">Size *<select value={size} onChange={(event) => setSize(event.target.value)} className={inputClass}>{product.sizes.map((item) => <option key={item}>{item}</option>)}</select></label>}
                 <div>
                   <span className="text-xs font-medium uppercase tracking-[0.12em] text-jungle">{t('product.quantity')}</span>
                   <div className="mt-2 flex h-[46px] w-fit items-center rounded-lg border border-jungle/15 bg-ivory">

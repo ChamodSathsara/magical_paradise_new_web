@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
+import Image from 'next/image';
 import { PageHero } from '../components/ui/PageHero';
 import { ProductCard } from '../components/cards/ProductCard';
 import { Reveal } from '../components/ui/Reveal';
@@ -20,7 +21,7 @@ export function Shop() {
       <PageHero
         eyebrow={t('shop.eyebrow')}
         title={t('shop.title')}
-        subtitle={t('shop.subtitle')}
+        subtitle="Island-inspired T-shirts for adults and kids, plus our reusable Magical Paradise tote bag."
         image={SHOP_IMAGE}
         imageAlt="A curated collection of island-inspired apparel and accessories"
         locationTag={t('shop.location')}
@@ -50,7 +51,7 @@ export function Shop() {
             </div>
             <p className="text-xs uppercase tracking-[0.14em] text-jungle-muted">{products.length} {t('shop.items')}</p>
           </div>
-          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {products.map((product, index) => (
               <Reveal key={product.id} delay={index * 0.05}>
                 <ProductCard product={product} />
@@ -59,7 +60,20 @@ export function Shop() {
           </div>
         </div>
       </section>
-      <section className="bg-sand py-16">
+      <section className="bg-sand py-16 lg:py-24">
+        <div className="mx-auto max-w-content px-6">
+          <div className="mx-auto max-w-3xl text-center">
+            <p className="eyebrow text-gold-dark">Find Your Fit</p>
+            <h2 className="mt-4 font-serif text-4xl font-light text-jungle">T-Shirt Size Guides</h2>
+            <p className="mt-4 text-sm leading-7 text-jungle-muted">Measure across the garment and compare the dimensions in inches before placing your order.</p>
+          </div>
+          <div className="mt-12 grid gap-6 lg:grid-cols-2">
+            <Reveal><figure className="overflow-hidden rounded-xl border border-jungle/10 bg-white p-4 shadow-card"><div className="relative aspect-[3/4]"><Image src="/images/shop/tshirt-sizes/general-sizes.jpeg" alt="General adult T-shirt size chart in inches" fill sizes="(min-width:1024px) 50vw,100vw" className="object-contain" /></div><figcaption className="px-3 pb-3 pt-5 text-center text-xs font-semibold uppercase tracking-[.14em] text-jungle">Adult / General Sizes</figcaption></figure></Reveal>
+            <Reveal delay={.06}><figure className="overflow-hidden rounded-xl border border-jungle/10 bg-white p-4 shadow-card"><div className="relative aspect-[3/4]"><Image src="/images/shop/tshirt-sizes/kids-sizes.jpeg" alt="Kids T-shirt size chart by age with measurements in inches" fill sizes="(min-width:1024px) 50vw,100vw" className="object-contain" /></div><figcaption className="px-3 pb-3 pt-5 text-center text-xs font-semibold uppercase tracking-[.14em] text-jungle">Kids Sizes</figcaption></figure></Reveal>
+          </div>
+        </div>
+      </section>
+      <section className="bg-ivory py-16">
         <div className="mx-auto max-w-3xl px-6 text-center">
           <p className="eyebrow text-gold-dark">{t('shop.meaning')}</p>
           <h2 className="mt-4 font-serif text-3xl text-jungle sm:text-4xl">{t('shop.paradise')}</h2>
