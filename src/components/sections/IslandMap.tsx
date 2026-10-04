@@ -24,15 +24,20 @@ export function IslandMap() {
       <SectionHeading eyebrow="Discover the Island" title="Explore Sri Lanka" subtitle="Discover the diverse landscapes and rich heritage of our island. Select a destination to learn more." tone="light" />
 
       <div className="mt-14 grid items-center gap-12 lg:grid-cols-[1fr_1.1fr] lg:gap-16">
-        <Reveal className="relative mx-auto w-full max-w-[22rem]">
-          <div className="relative aspect-[100/160] w-full">
+        <Reveal className="relative mx-auto w-full max-w-[24rem]">
+          <div className="relative aspect-[1122/1404] w-full">
             <Image src="/images/map.png" alt="Map of Sri Lanka with selectable destination markers" fill priority className="object-contain" sizes="(max-width: 1024px) 22rem, 22rem" />
             {MAP_DESTINATIONS.map(destination => {
               const isActive = destination.id === active.id;
               return <button key={destination.id} type="button" onClick={() => setActive(destination)} aria-pressed={isActive} className="group absolute -translate-x-1/2 -translate-y-1/2 focus:outline-none" style={{top:`${destination.map.top}%`,left:`${destination.map.left}%`}}>
                 <span className="sr-only">Show {destination.name}</span>
                 <span className={`block h-2.5 w-2.5 rounded-full ring-4 transition-all duration-300 ${isActive ? 'scale-125 bg-gold ring-gold/25' : 'bg-ivory/70 ring-transparent group-hover:bg-gold-light group-focus:bg-gold-light'}`} aria-hidden="true" />
-                <span className={`pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 whitespace-nowrap text-[10px] uppercase tracking-[0.14em] transition-colors ${isActive ? 'text-gold-light' : 'text-ivory/50 group-hover:text-ivory group-focus:text-ivory'}`}>{destination.name}</span>
+                <span
+                  className={`pointer-events-none absolute top-1/2 whitespace-nowrap text-[9px] uppercase tracking-[0.12em] transition-colors sm:text-[10px] ${destination.map.labelSide === 'left' ? 'right-4 text-right' : 'left-4 text-left'} ${isActive ? 'text-gold-light' : 'text-ivory/50 group-hover:text-ivory group-focus:text-ivory'}`}
+                  style={{transform:`translateY(calc(-50% + ${destination.map.labelOffsetY ?? 0}px))`}}
+                >
+                  {destination.name}
+                </span>
               </button>;
             })}
           </div>

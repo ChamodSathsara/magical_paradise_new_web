@@ -30,8 +30,8 @@ export function IslandMap() {
         />
 
         <div className="mt-14 grid items-center gap-12 lg:grid-cols-[1fr_1.1fr] lg:gap-16">
-          <Reveal className="relative mx-auto w-full max-w-[22rem]">
-            <div className="relative aspect-[100/160] w-full">
+          <Reveal className="relative mx-auto w-full max-w-[24rem]">
+            <div className="relative aspect-[1122/1404] w-full">
               <Image
                 src="/images/map.png"
                 alt="Map of Sri Lanka with destination markers"
@@ -67,11 +67,17 @@ export function IslandMap() {
 
                     <span
                       className={[
-                        "pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 whitespace-nowrap text-[10px] uppercase tracking-[0.14em] transition-colors",
+                        "pointer-events-none absolute top-1/2 whitespace-nowrap text-[9px] uppercase tracking-[0.12em] transition-colors sm:text-[10px]",
+                        destination.map.labelSide === "left"
+                          ? "right-4 text-right"
+                          : "left-4 text-left",
                         isActive
                           ? "text-gold-light"
                           : "text-ivory/50 group-hover:text-ivory",
                       ].join(" ")}
+                      style={{
+                        transform: `translateY(calc(-50% + ${destination.map.labelOffsetY ?? 0}px))`,
+                      }}
                     >
                       {destination.name}
                     </span>

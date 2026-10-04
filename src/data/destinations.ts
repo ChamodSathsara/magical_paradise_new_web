@@ -12,7 +12,12 @@ export type Destination = {
   highlights: string[];
   tips: string[];
   /** position on the stylised island map, as percentages */
-  map: {top: number;left: number;};
+  map: {
+    top: number;
+    left: number;
+    labelSide?: 'left' | 'right';
+    labelOffsetY?: number;
+  };
   onMap?: boolean;
 };
 
@@ -41,7 +46,7 @@ export const DESTINATIONS: Destination[] = [
   'Pair with Pidurangala Rock for the best view of Sigiriya itself.',
   'Dambulla Cave Temple is only 17 km away — perfect same-day addition.'],
 
- map: { top: 49, left: 53 },
+ map: { top: 48.8, left: 53.5, labelSide: 'left', labelOffsetY: -10 },
   onMap: true
 },
 {
@@ -66,7 +71,7 @@ export const DESTINATIONS: Destination[] = [
   'Whale watching boats leave at 6:30–7am — book the earliest slot for calmest seas.',
   'Choose licensed operators that keep a respectful distance from the whales.'],
 
-  map: { top: 84, left: 44 },
+  map: { top: 94.8, left: 45.3, labelSide: 'right', labelOffsetY: 12 },
   onMap: true
 },
 {
@@ -91,7 +96,7 @@ export const DESTINATIONS: Destination[] = [
   'Book train seats in advance — the Kandy to Ella leg sells out weeks ahead.',
   'Evenings are cool; bring a light layer even in the dry season.'],
 
-  map: { top: 68, left: 61 },
+  map: { top: 73.4, left: 61.5, labelSide: 'right', labelOffsetY: 8 },
   onMap: true
 },
 {
@@ -115,7 +120,7 @@ export const DESTINATIONS: Destination[] = [
   'The 5:30am game drive gives the best leopard odds.',
   'Bring a zoom lens, neutral clothing and a hat — jeeps are open-sided.'],
 
-  map: { top: 77, left: 73 },
+  map: { top: 84.4, left: 74.8, labelSide: 'right' },
   onMap: true
 },
 {
@@ -139,7 +144,7 @@ export const DESTINATIONS: Destination[] = [
   'Walk the ramparts an hour before sunset for the best light.',
   'The fort is compact — explore on foot rather than by vehicle.'],
 
-  map: { top: 82, left: 38 },
+  map: { top: 92.9, left: 38.2, labelSide: 'left', labelOffsetY: -12 },
   onMap: true
 },
 {
@@ -163,7 +168,7 @@ export const DESTINATIONS: Destination[] = [
   'Dress modestly for the temple — shoulders and knees covered, shoes off.',
   'Time your visit with the evening pooja for the most atmospheric experience.'],
 
-  map: { top: 61, left: 49 },
+  map: { top: 63.8, left: 49.9, labelSide: 'right', labelOffsetY: 8 },
   onMap: true
 },
 {
@@ -187,7 +192,7 @@ export const DESTINATIONS: Destination[] = [
   'Pack warm clothes — nights drop close to 10°C.',
   'April is season time; book accommodation far in advance.'],
 
-  map: { top: 66, left: 53 },
+  map: { top: 71.5, left: 54.3, labelSide: 'right', labelOffsetY: -10 },
 onMap: true,
 },
 {
@@ -211,7 +216,7 @@ onMap: true,
   'The east coast season is the mirror opposite of the south — plan May to September.',
   'Sunrise surfs are glassy and uncrowded.'],
 
-  map: { top: 68, left: 82 },
+  map: { top: 73.9, left: 83.6, labelSide: 'right' },
 onMap: true,
 },
 {
@@ -235,7 +240,7 @@ onMap: true,
   'The site is vast — hire a bicycle or keep your vehicle for the day.',
   'White clothing is customary at the sacred precincts.'],
 
-  map: { top: 43, left: 43 },
+  map: { top: 40.8, left: 43.4, labelSide: 'left' },
 onMap: true,
 },
 {
@@ -259,7 +264,7 @@ onMap: true,
   'Great first or last beach stop — only 2 hours from Colombo.',
   'The lagoon side is calmer for families than the open beach.'],
 
-  map: { top: 74, left: 34 }
+  map: { top: 83.5, left: 32.1, labelSide: 'left' }
 },
 {
   id: 'polonnaruwa',
@@ -282,7 +287,7 @@ onMap: true,
   'Cycling is the best way to cover the site — hire bikes at the entrance.',
   'Start at 7am before the dry-zone heat builds.'],
 
-  map: { top: 34, left: 63 }
+  map: { top: 49.2, left: 60.7, labelSide: 'right', labelOffsetY: -8 }
 },
 {
   id: 'kitulgala',
@@ -305,7 +310,7 @@ onMap: true,
   'Wear quick-dry clothing and secure footwear for rafting.',
   'Rain is frequent — waterproof your camera and valuables.'],
 
-  map: { top: 57, left: 42 }
+  map: { top: 70.6, left: 43.8, labelSide: 'left', labelOffsetY: -10 }
 },
 {
   id: 'jaffna',
@@ -328,7 +333,7 @@ onMap: true,
   'The Colombo–Jaffna express train is a comfortable, scenic alternative to driving.',
   'Temples require removing shirts for men in some inner sanctums — check locally.'],
 
-  map: { top: 8, left: 45 }
+  map: { top: 10.3, left: 32.8, labelSide: 'right' }
 },
 {
   id: 'negombo',
@@ -351,7 +356,7 @@ onMap: true,
   'Only 10 km from Bandaranaike International Airport — ideal for arrival night.',
   'Visit the fish market before 7am to see the catch come in.'],
 
-  map: { top: 47, left: 33 }
+  map: { top: 65.7, left: 27.5, labelSide: 'left' }
 },
 {
   id: 'wilpattu',
@@ -374,7 +379,7 @@ onMap: true,
   'Far quieter than Yala — fewer jeeps, longer sightings.',
   'Full-day safaris are worthwhile given the park size.'],
 
-  map: { top: 20, left: 36 }
+  map: { top: 37.7, left: 31.9, labelSide: 'left' }
 },
 {
   id: 'haputale',
@@ -397,7 +402,7 @@ onMap: true,
   "Reach Lipton's Seat before 7am — cloud rolls in quickly after.",
   'A quieter, more local alternative to Ella.'],
 
-  map: { top: 70, left: 56 }
+  map: { top: 75.6, left: 58.8, labelSide: 'left', labelOffsetY: 10 }
 },
 {
   id: 'weligama',
@@ -420,7 +425,7 @@ onMap: true,
   'One of the safest places in Sri Lanka to learn to surf.',
   'Mirissa and Galle are both under 30 minutes away.'],
 
-  map: { top: 84, left: 42 }
+  map: { top: 94.2, left: 44.2, labelSide: 'left', labelOffsetY: 12 }
 },
 {
   id: 'dambulla',
@@ -443,7 +448,7 @@ onMap: true,
   'There is a steep stair climb to the caves — go early or late.',
   'Shoes must be removed at the top; socks help on hot stone.'],
 
-  map: { top: 38, left: 51 }
+  map: { top: 50.7, left: 53.8, labelSide: 'right', labelOffsetY: 10 }
 },
 {
   id: 'hatton',
@@ -466,7 +471,7 @@ onMap: true,
   "The Adam's Peak season runs December to May — climb overnight for sunrise.",
   "Horton Plains needs an early start to see World's End before cloud cover."],
 
-  map: { top: 58, left: 47 }
+  map: { top: 72.8, left: 48.9, labelSide: 'left', labelOffsetY: 8 }
 },
 {
   id: 'colombo',
@@ -490,7 +495,7 @@ onMap: true,
   'Street food at Galle Face Green is a must at dusk.'],
 
  // colombo
-map: { top: 67, left: 28 },
+map: { top: 72, left: 28.2, labelSide: 'left' },
   onMap: true
 }];
 
