@@ -185,19 +185,19 @@ export const CORPORATE_SERVICES = [
 const;
 
 export const FOOTER_DESTINATIONS = [
-'Sigiriya & Cultural Triangle',
-'Kandy & Hill Country',
-'Ella & Nuwara Eliya',
-'Galle & South Coast',
-'Yala National Park',
-'Maldives Extensions'];
+{ label: 'Sigiriya & Cultural Triangle', to: '/destinations/sigiriya' },
+{ label: 'Kandy & Hill Country', to: '/destinations/kandy' },
+{ label: 'Ella & Nuwara Eliya', to: '/destinations/nuwara-eliya' },
+{ label: 'Galle & South Coast', to: '/destinations/galle' },
+{ label: 'Yala National Park', to: '/destinations/yala' },
+{ label: 'Maldives Extensions', to: '/maldives-tours' }];
 
 
 export const FOOTER_SERVICES = [
-'Luxury Tour Packages',
-'Popular Day Tours',
-'Boutique Hotels',
-'Paradise Shop',
-'Corporate Events',
-'Airport Transfers',
-'Travel Insurance'];
+{ label: 'Culture & Heritage', to: '/experience-sri-lanka/things-to-do?category=culture-heritage' },
+{ label: 'Wildlife & Safari', to: '/experience-sri-lanka/things-to-do?category=wildlife-safari' },
+{ label: 'Adventure', to: '/experience-sri-lanka/things-to-do?category=adventure' },
+{ label: 'Wellness', to: '/experience-sri-lanka/things-to-do?category=wellness' },
+{ label: 'Food & Shopping', to: '/experience-sri-lanka/things-to-do?category=food-shopping' },
+{ label: 'Luxury & Entertainment', to: '/experience-sri-lanka/things-to-do?category=luxury-entertainment' },
+{ label: 'Only in Sri Lanka', to: '/experience-sri-lanka/things-to-do?category=only-in-sri-lanka' }];

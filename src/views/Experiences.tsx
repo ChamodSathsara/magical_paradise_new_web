@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { PageHero } from '../components/ui/PageHero';
 import { ExperienceCard } from '../components/cards/ExperienceCard';
 import { Reveal } from '../components/ui/Reveal';
@@ -8,9 +8,23 @@ import { EXPERIENCES } from '../data/experiences';
 import { IMAGES } from '../data/media';
 
 const FILTERS = [['All','All'],['Culture & Heritage','Cultural, Traditional & Heritage'],['Wildlife & Safari','Wildlife, Eco & Safari'],['Adventure','Adventure, Water & Extreme Sports'],['Wellness','Wellness, Retreats & Unique Escapes'],['Food & Shopping','Shopping & Food'],['Luxury & Entertainment','Nightlife, Entertainment & Luxury'],['Regional','Region-Specific Experiences'],['Only in Sri Lanka','Only in Sri Lanka']];
+const CATEGORY_QUERIES: Record<string, string> = {
+  'culture-heritage': 'Cultural, Traditional & Heritage',
+  'wildlife-safari': 'Wildlife, Eco & Safari',
+  adventure: 'Adventure, Water & Extreme Sports',
+  wellness: 'Wellness, Retreats & Unique Escapes',
+  'food-shopping': 'Shopping & Food',
+  'luxury-entertainment': 'Nightlife, Entertainment & Luxury',
+  regional: 'Region-Specific Experiences',
+  'only-in-sri-lanka': 'Only in Sri Lanka',
+};
 
 export function Experiences() {
   const [filter,setFilter] = useState('All');
+  useEffect(() => {
+    const category = new URLSearchParams(window.location.search).get('category');
+    if (category && CATEGORY_QUERIES[category]) setFilter(CATEGORY_QUERIES[category]);
+  }, []);
   const visible = filter === 'All' ? EXPERIENCES : EXPERIENCES.filter(item => item.category === filter);
   return <>
     <PageHero eyebrow="Curated Encounters" title="Things to Do" subtitle="Discover Sri Lanka through cultural traditions, wildlife encounters, adventure, wellness, food, coastal escapes and rare experiences found only on the island." image={IMAGES.culinary} imageAlt="A Sri Lankan rice and curry spread with fresh spices" stats={[{value:`${EXPERIENCES.length}+`,label:'Experiences'},{value:'8',label:'Categories'},{value:'1',label:'Extraordinary Island'}]} />

@@ -103,15 +103,19 @@ export function Footer() {
           </div>
 
           <div>
-            <h2 className="eyebrow mb-5 text-ivory">{t('footer.destinations')}</h2>
+            <h2 className="eyebrow mb-5 text-ivory">
+              <Link href="/destinations" className="transition-colors hover:text-gold-light">
+                {t('footer.destinations')}
+              </Link>
+            </h2>
             <ul className="space-y-3 text-sm">
               {FOOTER_DESTINATIONS.map((item) => (
-                <li key={item}>
+                <li key={item.to}>
                   <Link
-                    href="/destinations"
+                    href={item.to}
                     className="transition-colors hover:text-gold-light"
                   >
-                    {item}
+                    {item.label}
                   </Link>
                 </li>
               ))}
@@ -119,15 +123,19 @@ export function Footer() {
           </div>
 
           <div>
-            <h2 className="eyebrow mb-5 text-ivory">{t('footer.services')}</h2>
+            <h2 className="eyebrow mb-5 text-ivory">
+              <Link href="/experience-sri-lanka/things-to-do" className="transition-colors hover:text-gold-light">
+                Things to Do
+              </Link>
+            </h2>
             <ul className="space-y-3 text-sm">
               {FOOTER_SERVICES.map((item) => (
-                <li key={item}>
+                <li key={item.to}>
                   <Link
-                    href={item === "Paradise Shop" ? "/shop" : "/packages"}
+                    href={item.to}
                     className="transition-colors hover:text-gold-light"
                   >
-                    {item}
+                    {item.label}
                   </Link>
                 </li>
               ))}
