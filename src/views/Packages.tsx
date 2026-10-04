@@ -1,119 +1,84 @@
 'use client';
 
-import React, { useMemo, useState } from 'react';
+import { useState } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
+import { ChevronDownIcon, ClockIcon, HeadphonesIcon, MapPinIcon, PlaneIcon, ShieldCheckIcon, SparklesIcon, TicketCheckIcon, UsersIcon, UtensilsIcon, CarIcon, HotelIcon, MessageCircleIcon } from 'lucide-react';
+import { AnimatePresence, motion } from 'framer-motion';
 import { PageHero } from '../components/ui/PageHero';
-import { PackageCard } from '../components/cards/PackageCard';
 import { Reveal } from '../components/ui/Reveal';
+import { SectionHeading } from '../components/ui/SectionHeading';
 import { IMAGES } from '../data/media';
-import { PACKAGE_CATEGORIES, packagesByCategory } from '../data/packages';
 import { SITE } from '../data/site';
 
-type CategoryId = (typeof PACKAGE_CATEGORIES)[number]['id'];
+type JourneyDay = { day: string; route: string; time?: string; theme: string; description: string; activities: string[]; stay: string };
+type JourneyStop = { name: string; days: string; preview: string; image: string; alt: string; entries: JourneyDay[] };
+
+const journey: JourneyStop[] = [
+  { name: 'Colombo', days: 'Day 01', preview: 'Where your story begins', image: IMAGES.galle, alt: 'Colombo and Sri Lanka’s vibrant western coast', entries: [{ day: 'Day 01', route: 'Welcome to Sri Lanka — Colombo', time: 'Approx. 1 hour', theme: 'Where your story begins', description: 'Sri Lanka’s vibrant capital is a lively blend of colonial heritage, modern attractions, colourful markets and oceanfront promenades.', activities: ['Explore Independence Square and city highlights', 'Visit Gangaramaya Temple', 'Enjoy an evening at Galle Face Green'], stay: 'A stylish city hotel' }] },
+  { name: 'Dambulla', days: 'Days 02–03', preview: 'From city streets to ancient lands', image: IMAGES.sigiriya, alt: 'Sigiriya Rock Fortress in Sri Lanka’s Cultural Triangle', entries: [
+    { day: 'Day 02', route: 'Colombo → Dambulla', time: 'Approx. 3.5–4 hours', theme: 'From city streets to ancient lands', description: 'Journey into Sri Lanka’s Cultural Triangle, where history and nature come together among forests, lakes and iconic heritage sites.', activities: ['Visit Dambulla Cave Temple', 'Jeep safari at Minneriya or Kaudulla National Park, seasonally', 'Relax at the resort'], stay: 'A tranquil nature retreat surrounded by lush greenery' },
+    { day: 'Day 03', route: 'Dambulla', theme: 'Where history meets wonder', description: 'A full day among the ancient and natural wonders of the Cultural Triangle.', activities: ['Seasonal hot-air balloon ride', 'Kayaking', 'Climb Sigiriya Rock Fortress', 'Village experience with a traditional catamaran ride'], stay: 'Another peaceful evening in the Cultural Triangle' },
+  ] },
+  { name: 'Kandy', days: 'Days 04–05', preview: 'Into the heart of the island', image: IMAGES.kandy, alt: 'Temple of the Sacred Tooth Relic in Kandy', entries: [
+    { day: 'Day 04', route: 'Dambulla → Kandy', time: 'Approx. 2.5–3 hours', theme: 'Into the heart of the island', description: 'Travel through scenic countryside to Sri Lanka’s cultural capital, nestled among misty hills and rich traditions.', activities: ['Temple of the Sacred Tooth Relic', 'Traditional Kandyan cultural dance', 'Gem museum or gemstone experience'], stay: 'A charming hill-city hotel' },
+    { day: 'Day 05', route: 'Kandy', theme: 'A day steeped in culture and charm', description: 'Spend another day discovering Sri Lanka’s last royal kingdom.', activities: ['Explore the Royal Botanical Gardens', 'Shopping in Kandy'], stay: 'Another relaxing night in Kandy' },
+  ] },
+  { name: 'Nuwara Eliya', days: 'Days 06–07', preview: 'Little England moments', image: IMAGES.teaCountry, alt: 'Tea plantations in Nuwara Eliya', entries: [
+    { day: 'Day 06', route: 'Kandy → Nuwara Eliya', time: 'Approx. 2.5–3 hours', theme: 'Into the picturesque hill country', description: 'Known as Little England, this cool mountain town is filled with tea plantations, waterfalls and colonial elegance.', activities: ['Visit a tea estate and factory', 'Hakgala Botanical Garden', 'Gregory Lake', 'Victoria Park'], stay: 'A cosy mountain retreat surrounded by rolling tea hills' },
+    { day: 'Day 07', route: 'Nuwara Eliya', theme: 'Little England moments', description: 'Breathe in the fresh hill-country air and explore its wild open landscapes.', activities: ['Hike in Horton Plains National Park', 'Visit Moon Plains'], stay: 'Another refreshing night in the cool hill country' },
+  ] },
+  { name: 'Ella', days: 'Days 08–09', preview: 'Where mountains slow you down', image: IMAGES.ella, alt: 'Train crossing Nine Arches Bridge in Ella', entries: [
+    { day: 'Day 08', route: 'Nuwara Eliya → Ella', time: 'Approx. 3.5-hour train journey', theme: 'Hop on board the train', description: 'Travel from Nanu Oya to Ella on one of the world’s most scenic rail journeys, arriving in a relaxed mountain village of waterfalls and tea estates.', activities: ['Nine Arches Bridge', 'Little Adam’s Peak'], stay: 'A peaceful hillside retreat' },
+    { day: 'Day 09', route: 'Ella', theme: 'Where mountains slow you down', description: 'A day of highland adventure and relaxed panoramic moments.', activities: ['Flying Ravana Zipline', 'Lipton’s Seat tuk-tuk ride', 'Relax at an Ella café with panoramic views'], stay: 'Another memorable night among the misty mountains' },
+  ] },
+  { name: 'Yala', days: 'Day 10', preview: 'Hitting the wild sanctuary', image: IMAGES.yala, alt: 'Sri Lankan leopard in Yala National Park', entries: [{ day: 'Day 10', route: 'Ella → Yala', time: 'Approx. 2.5–3 hours', theme: 'Hitting the wild sanctuary', description: 'Journey from the cool hills to Sri Lanka’s untamed wilderness, home to leopards, elephants, sloth bears, crocodiles and hundreds of bird species.', activities: ['Afternoon jeep safari in Yala National Park', 'Wildlife photography', 'Campfire, subject to accommodation'], stay: 'A unique safari lodge immersed in nature' }] },
+  { name: 'Weligama', days: 'Days 11–13', preview: 'From wild to the waves', image: IMAGES.mirissa, alt: 'Golden southern beach near Weligama', entries: [
+    { day: 'Day 11', route: 'Yala → Weligama', time: 'Approx. 2.5–3 hours', theme: 'From wild to the waves', description: 'Leave the wilderness for a lively southern beach town known for golden shores, gentle waves and a relaxed coastal atmosphere.', activities: ['Relax by the beach', 'Surfing', 'Sunset shoreline walk'], stay: 'A beachfront resort perfect for families' },
+    { day: 'Days 12–13', route: 'Weligama', theme: 'Days by the endless blue', description: 'Two unhurried days to enjoy the coast, family experiences and southern heritage.', activities: ['Seasonal whale watching', 'Visit Galle Fort', 'Turtle hatchery experience', 'Cinnamon experience', 'Family beach activities', 'Spa or leisure time'], stay: 'Weligama' },
+  ] },
+  { name: 'Negombo', days: 'Days 14–15', preview: 'The perfect final chapter', image: IMAGES.hotel, alt: 'Relaxed coastal stay before departure', entries: [
+    { day: 'Day 14', route: 'Weligama → Negombo', time: 'Approx. 2.5–3 hours', theme: 'The perfect final chapter by the coast', description: 'Travel north to the fishing town of Negombo, known for canals, colourful boats, seafood and easy airport access.', activities: ['Visit the fish market', 'Canal or lagoon boat ride and high tea', 'Last-minute shopping and beach relaxation'], stay: 'A comfortable seaside hotel' },
+    { day: 'Day 15', route: 'Negombo → Airport', time: 'Approx. 30 minutes', theme: 'Until the island calls again', description: 'After breakfast, transfer to the airport with hearts full of unforgettable memories. Until we meet again — Ayubowan!', activities: ['Breakfast', 'Private airport transfer', 'Departure assistance'], stay: 'Departure' },
+  ] },
+];
+
+const highlights = ['Sigiriya Rock Fortress', 'Wildlife Safari', 'Scenic Train Journey', 'Tea Estate Experience', 'Kandyan Culture', 'Flying Ravana Zipline', 'Whale Watching', 'Surfing', 'Galle Fort', 'Beach Relaxation'];
+const inclusions = [
+  { icon: UsersIcon, title: 'Handpicked Guides & Drivers', text: 'English-speaking professionals, with other languages available on request.' },
+  { icon: CarIcon, title: 'Private & Comfortable Travel', text: 'Safe, reliable and seamless transportation throughout the journey.' },
+  { icon: HotelIcon, title: 'Handpicked Accommodation', text: 'Carefully selected stays chosen for comfort, character and location.' },
+  { icon: TicketCheckIcon, title: 'Entrance Fees', text: 'Entrance tickets for attractions included in the itinerary.' },
+  { icon: UtensilsIcon, title: 'Your Choice of Meal Plan', text: 'Choose the meal plan that best suits your travel style.' },
+  { icon: PlaneIcon, title: 'Airport Transfers', text: 'Arrival and departure transfers according to the itinerary.' },
+  { icon: HeadphonesIcon, title: '24/7 Guest Support', text: 'Our team is available whenever you need us throughout your stay.' },
+  { icon: SparklesIcon, title: 'Personal Travel Consultant', text: 'Dedicated assistance before and during your journey, including thoughtful extras.' },
+];
 
 export function Packages() {
-  const [active, setActive] = useState<CategoryId>('all');
+  const [openStop, setOpenStop] = useState(0);
+  return <>
+    <PageHero eyebrow="Sri Lanka Tours" title="Family Adventure Through Sri Lanka" subtitle="A 15-day journey of discovery, wildlife and coastal bliss — created for lifelong family memories." image={IMAGES.ella} imageAlt="Family adventure through Sri Lanka’s scenic hill country" locationTag="15 Days · 14 Nights" stats={[{ value: '15', label: 'Days' }, { value: '8', label: 'Main Stops' }, { value: 'Private', label: 'Travel Style' }]}>
+      <div className="mt-9 flex flex-wrap gap-3"><a href="#journey" className="rounded-full bg-gold px-8 py-4 text-xs font-semibold uppercase tracking-[.16em] text-jungle-deep">Explore the Journey</a><Link href="/plan-your-trip" className="rounded-full border border-ivory/35 bg-white/10 px-8 py-4 text-xs font-medium uppercase tracking-[.16em] text-ivory">Plan This Journey</Link></div>
+    </PageHero>
 
-  const category = PACKAGE_CATEGORIES.find((item) => item.id === active) ?? PACKAGE_CATEGORIES[0];
-  const results = useMemo(() => packagesByCategory(active), [active]);
+    <section className="bg-ivory py-12"><div className="mx-auto grid max-w-content gap-4 px-6 sm:grid-cols-2 lg:grid-cols-4">{[
+      [ClockIcon,'Duration','15 Days / 14 Nights'], [UsersIcon,'Tour Type','Family Adventure'], [CarIcon,'Travel Style','Private Tour'], [ShieldCheckIcon,'Support','24/7 Guest Support']
+    ].map(([Icon,label,value])=><Reveal key={String(label)}><div className="flex items-center gap-4 border-b border-jungle/10 py-4 lg:border-b-0 lg:border-r lg:px-4"><Icon className="h-6 w-6 text-gold-dark"/><div><p className="text-[10px] uppercase tracking-[.15em] text-jungle-muted">{String(label)}</p><p className="mt-1 font-serif text-xl text-jungle">{String(value)}</p></div></div></Reveal>)}</div></section>
 
-  return (
-    <>
-      <PageHero
-        eyebrow="Sri Lanka & Maldives"
-        title="Travel Packages"
-        subtitle="Handcrafted itineraries for every kind of traveller — from sunrise-to-sunset day trips to grand island escapes."
-        image={IMAGES.ella}
-        imageAlt="A train crossing the Nine Arch Bridge through Ella's tea country"
-        locationTag="Sri Lanka & Maldives"
-        stats={[
-        { value: '50+', label: 'Packages' },
-        { value: '4.9★', label: 'Rating' },
-        { value: '2,000+', label: 'Happy Guests' }]
-        } />
-      
+    <section className="bg-sand py-20 lg:py-28"><div className="mx-auto grid max-w-content gap-12 px-6 lg:grid-cols-[.75fr_1.25fr] lg:gap-20"><Reveal><div><p className="eyebrow text-gold-dark">One Extraordinary Island</p><h2 className="mt-4 font-serif text-4xl font-light text-jungle sm:text-5xl">Culture, wildlife, mountains and the sea</h2></div></Reveal><Reveal delay={.08}><div className="space-y-5 text-[15px] leading-8 text-jungle-muted"><p>Create lifelong family memories across Sri Lanka’s most iconic destinations. From ancient kingdoms and majestic mountains to exciting safaris and sun-kissed beaches, every stop offers something magical for every member of the family.</p><p>Meet gentle giants, ride one of the world’s most scenic trains, explore lush tea plantations and unwind on the southern coast before completing your island adventure.</p></div></Reveal></div></section>
 
-      <section className="sticky top-[73px] z-30 w-full border-b border-jungle/10 bg-ivory/95 backdrop-blur-md lg:top-[108px]">
-        <div className="mx-auto max-w-content px-6">
-          <div className="no-scrollbar flex gap-1 overflow-x-auto py-4" role="tablist" aria-label="Package categories">
-            {PACKAGE_CATEGORIES.map((item) =>
-            <button
-              key={item.id}
-              type="button"
-              role="tab"
-              aria-selected={item.id === active}
-              onClick={() => setActive(item.id)}
-              className={[
-              'relative shrink-0 rounded-full px-5 py-2.5 text-[11px] font-medium uppercase tracking-[0.14em] transition-colors',
-              item.id === active ? 'text-ivory' : 'text-jungle-muted hover:text-jungle'].
-              join(' ')}>
-              
-                {item.id === active &&
-              <motion.span
-                layoutId="package-tab"
-                className="absolute inset-0 rounded-full bg-jungle"
-                transition={{ type: 'spring', stiffness: 380, damping: 32 }} />
+    <section id="journey" className="scroll-mt-24 bg-ivory py-20 lg:py-28"><div className="mx-auto max-w-content px-6"><SectionHeading eyebrow="Colombo to the Coast" title="Your Journey Through Sri Lanka" subtitle="Select a destination to reveal its days, experiences, travel times and stay."/><div className="mt-14 grid gap-10 lg:grid-cols-[280px_1fr]">
+      <nav className="space-y-1" aria-label="Tour route">{journey.map((stop,index)=><button key={stop.name} onClick={()=>setOpenStop(index)} className={`relative flex w-full items-center gap-4 rounded-lg px-4 py-4 text-left transition ${openStop===index?'bg-jungle text-ivory':'hover:bg-sand text-jungle'}`}><span className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs ${openStop===index?'bg-gold text-jungle-deep':'bg-sand text-gold-dark'}`}>{index+1}</span><span><strong className="block font-serif text-xl font-normal">{stop.name}</strong><small className={openStop===index?'text-ivory/60':'text-jungle-muted'}>{stop.days}</small></span><ChevronDownIcon className={`ml-auto h-4 w-4 transition ${openStop===index?'rotate-[-90deg]':''}`}/></button>)}</nav>
+      <div><AnimatePresence mode="wait"><motion.article key={openStop} initial={{opacity:0,y:12}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-8}} transition={{duration:.25}} className="overflow-hidden rounded-xl border border-jungle/10 bg-white shadow-card"><div className="relative h-64 sm:h-80"><Image src={journey[openStop].image} alt={journey[openStop].alt} fill sizes="(min-width:1024px) 65vw,100vw" className="object-cover"/><div className="absolute inset-0 bg-gradient-to-t from-jungle-deep/80 via-transparent to-transparent"/><div className="absolute bottom-6 left-6 text-ivory"><p className="eyebrow text-gold-light">{journey[openStop].days}</p><h3 className="mt-2 font-serif text-4xl">{journey[openStop].name}</h3><p className="mt-1 text-sm text-ivory/75">{journey[openStop].preview}</p></div></div><div className="divide-y divide-jungle/10">{journey[openStop].entries.map(entry=><div key={entry.day} className="p-7 sm:p-9"><div className="flex flex-wrap items-start justify-between gap-4"><div><p className="eyebrow text-gold-dark">{entry.day}</p><h4 className="mt-2 font-serif text-2xl text-jungle">{entry.route}</h4></div>{entry.time&&<span className="inline-flex items-center gap-2 rounded-full bg-sand px-4 py-2 text-[10px] uppercase tracking-wider text-jungle-muted"><ClockIcon className="h-3.5 w-3.5"/>{entry.time}</span>}</div><p className="mt-5 font-serif text-xl italic text-jungle">{entry.theme}</p><p className="mt-3 text-sm leading-7 text-jungle-muted">{entry.description}</p><h5 className="mt-6 text-[10px] font-semibold uppercase tracking-[.16em] text-gold-dark">Things to do</h5><ul className="mt-3 grid gap-2 sm:grid-cols-2">{entry.activities.map(x=><li key={x} className="flex gap-2 text-sm text-jungle-muted"><MapPinIcon className="mt-1 h-3.5 w-3.5 shrink-0 text-gold-dark"/>{x}</li>)}</ul><p className="mt-6 border-t border-jungle/10 pt-5 text-sm text-jungle"><strong>Stay:</strong> <span className="text-jungle-muted">{entry.stay}</span></p></div>)}</div></motion.article></AnimatePresence></div>
+    </div></div></section>
 
-              }
-                <span className="relative">{item.label}</span>
-              </button>
-            )}
-          </div>
-        </div>
-      </section>
+    <section className="bg-jungle py-20 lg:py-28"><div className="mx-auto max-w-content px-6"><SectionHeading eyebrow="Unforgettable Moments" title="Journey Highlights" tone="light"/><div className="mt-12 grid grid-cols-2 gap-px overflow-hidden rounded-xl bg-ivory/15 md:grid-cols-5">{highlights.map((x,i)=><Reveal key={x} delay={(i%5)*.03}><div className="flex min-h-32 items-end bg-jungle-deep/30 p-5"><span className="font-serif text-lg leading-tight text-ivory"><span className="mb-3 block text-sm text-gold-light">{String(i+1).padStart(2,'0')}</span>{x}</span></div></Reveal>)}</div></div></section>
 
-      <section className="w-full bg-ivory py-16 lg:py-20">
-        <div className="mx-auto max-w-content px-6">
-          <div className="flex flex-wrap items-end justify-between gap-4">
-            <h2 className="font-serif text-2xl font-light text-jungle sm:text-3xl">
-              {category.headline}
-            </h2>
-            <p className="text-[11px] uppercase tracking-[0.16em] text-jungle-muted">
-              {results.length} {results.length === 1 ? 'package' : 'packages'}
-            </p>
-          </div>
+    <section className="bg-sand py-20 lg:py-28"><div className="mx-auto max-w-content px-6"><SectionHeading eyebrow="Thoughtfully Arranged" title="What’s Included" subtitle="The essentials are carefully coordinated, with flexibility to tailor, upgrade or add experiences in advance."/><div className="mt-12 grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">{inclusions.map((x,i)=><Reveal key={x.title} delay={(i%4)*.04}><div><x.icon className="h-7 w-7 text-gold-dark" strokeWidth={1.5}/><h3 className="mt-5 font-serif text-xl text-jungle">{x.title}</h3><p className="mt-3 text-sm leading-7 text-jungle-muted">{x.text}</p></div></Reveal>)}</div></div></section>
 
-          <ul className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {results.map((pkg, index) =>
-            <li key={pkg.id}>
-                <Reveal delay={index % 3 * 0.05} className="h-full">
-                  <PackageCard pkg={pkg} className="h-full" />
-                </Reveal>
-              </li>
-            )}
-          </ul>
-        </div>
-      </section>
+    <section className="bg-ivory py-20 lg:py-28"><div className="mx-auto grid max-w-content gap-10 px-6 lg:grid-cols-[1fr_.8fr] lg:items-center"><Reveal><div><p className="eyebrow text-gold-dark">Personalised Travel</p><h2 className="mt-4 font-serif text-4xl text-jungle sm:text-5xl">Your Journey, Your Way</h2><p className="mt-6 max-w-2xl text-[15px] leading-8 text-jungle-muted">From the hotels you stay in to the experiences you enjoy, many elements of your holiday can be personalised. Tell us what matters to you, and we’ll create a journey around it.</p></div></Reveal><Reveal delay={.08}><div className="flex flex-wrap gap-3 lg:justify-end"><Link href="/plan-your-trip" className="rounded-full bg-jungle px-8 py-4 text-xs font-semibold uppercase tracking-[.16em] text-ivory">Customize This Journey</Link><a href={SITE.whatsapp} target="_blank" rel="noreferrer noopener" className="inline-flex items-center gap-2 rounded-full border border-jungle/20 px-8 py-4 text-xs font-semibold uppercase tracking-[.16em] text-jungle"><MessageCircleIcon className="h-4 w-4"/>WhatsApp</a></div></Reveal></div></section>
 
-      <section className="w-full bg-jungle py-20">
-        <div className="mx-auto max-w-content px-6 text-center">
-          <Reveal>
-            <h2 className="font-serif text-3xl font-light text-ivory sm:text-4xl">
-              Can&apos;t find your perfect trip?
-            </h2>
-            <p className="mx-auto mt-5 max-w-xl text-[15px] leading-relaxed text-ivory/70">
-              We craft fully bespoke itineraries tailored to your dates, budget, and travel dreams.
-            </p>
-            <div className="mt-9 flex flex-wrap justify-center gap-3">
-              <Link
-                href="/contact"
-                className="inline-flex items-center rounded-full bg-gold px-8 py-4 text-[12px] font-semibold uppercase tracking-[0.16em] text-jungle-deep transition-colors hover:bg-gold-light">
-                
-                Build a Custom Tour
-              </Link>
-              <a
-                href={SITE.whatsapp}
-                target="_blank"
-                rel="noreferrer noopener"
-                className="inline-flex items-center rounded-full border border-ivory/30 px-8 py-4 text-[12px] font-medium uppercase tracking-[0.16em] text-ivory transition-colors hover:bg-ivory hover:text-jungle">
-                
-                Talk to an Expert
-              </a>
-            </div>
-          </Reveal>
-        </div>
-      </section>
-    </>);
-
+    <section className="bg-jungle-deep py-20"><div className="mx-auto max-w-4xl px-6 text-center"><Reveal><p className="eyebrow text-gold-light">Ready to Experience Sri Lanka?</p><h2 className="mt-4 font-serif text-4xl text-ivory sm:text-5xl">Begin your family’s island story</h2><p className="mx-auto mt-6 max-w-2xl text-[15px] leading-8 text-ivory/70">Share your travel dates, family interests and preferred pace. Our specialist will shape this journey around you.</p><div className="mt-9 flex flex-wrap justify-center gap-3"><Link href="/contact" className="rounded-full bg-gold px-8 py-4 text-xs font-semibold uppercase tracking-[.16em] text-jungle-deep">Enquire Now</Link><Link href="/plan-your-trip" className="rounded-full border border-ivory/30 px-8 py-4 text-xs font-medium uppercase tracking-[.16em] text-ivory">Customize This Tour</Link></div></Reveal></div></section>
+  </>;
 }
