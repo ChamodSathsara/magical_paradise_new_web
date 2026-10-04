@@ -15,6 +15,7 @@ import { CtaStrip } from '../components/sections/CtaStrip';
 import { TrustCredentials } from '../components/sections/TrustCredentials';
 import { CountryRepresentatives } from '../components/sections/CountryRepresentatives';
 import { TransportOptions } from '../components/sections/TransportOptions';
+import { SriLankaToursPreview } from '../components/home/SriLankaToursPreview';
 
 export function Home() {
   return (
@@ -26,6 +27,7 @@ export function Home() {
       <Services />
       <ExperiencesPreview />
       <PackagesPreview />
+      <SriLankaToursPreview />
       <HotelsPreview />
       <TransportOptions />
       <IslandMap />
