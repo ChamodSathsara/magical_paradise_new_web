@@ -134,6 +134,8 @@ export function IslandMap() {
                   >
                     View Packages
                   </Link>
+
+                  {/* update test */}
                   <Link
                     href={`/destinations/${active.id}`}
                     className="inline-flex items-center rounded-full border border-ivory/30 px-6 py-3 text-[11px] font-medium uppercase tracking-[0.16em] text-ivory transition-colors hover:bg-ivory hover:text-jungle"
