@@ -1,8 +1,8 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
-import { ArrowLeftIcon, ArrowRightIcon, ClockIcon, FileTextIcon, MailIcon, MessageCircleIcon } from 'lucide-react';
+import { ArrowLeftIcon, ArrowRightIcon, ChevronDownIcon, ClockIcon, FileTextIcon, MailIcon, MessageCircleIcon } from 'lucide-react';
 import { PageHero } from '../components/ui/PageHero';
 import { DOCUMENT_PACKAGES, type DocumentPackage, type DocumentParagraphBlock } from '../data/documentPackages';
 import { SITE } from '../data/site';
@@ -51,6 +51,65 @@ function ParagraphBlock({ block, index, previous }: { block: DocumentParagraphBl
   return <p className={`whitespace-pre-line text-[15px] leading-8 text-jungle-muted ${centered}`}>{text}</p>;
 }
 
+type PackageBlock = DocumentPackage['blocks'][number];
+type ContentUnit =
+  | { type: 'block'; block: PackageBlock; index: number }
+  | { type: 'day'; key: string; title: string; blocks: PackageBlock[] };
+
+function buildContentUnits(pkg: DocumentPackage): ContentUnit[] {
+  const units: ContentUnit[] = [];
+  let activeDay: Extract<ContentUnit, { type: 'day' }> | null = null;
+  pkg.blocks.forEach((block, index) => {
+    if (block.type === 'paragraph' && dayHeading.test(block.text)) {
+      if (activeDay) units.push(activeDay);
+      activeDay = { type: 'day', key: `${pkg.id}-day-${index}`, title: block.text, blocks: [] };
+      return;
+    }
+    if (activeDay && block.type === 'paragraph' && packageHeading.test(block.text)) {
+      units.push(activeDay);
+      activeDay = null;
+    }
+    if (activeDay) activeDay.blocks.push(block);
+    else units.push({ type: 'block', block, index });
+  });
+  if (activeDay) units.push(activeDay);
+  return units;
+}
+
+function imageForDay(text: string) {
+  const value = text.toLowerCase();
+  if (/galle|mirissa|weligama|bentota|beach|ocean|coast|tangalle|trincomalee|pasikuda|arugam/.test(value)) return '/8de9dae7-2ef0-4497-8b69-866058baec8a.jpg';
+  if (/yala|wilpattu|udawalawe|safari|wild|sinharaja|elephant|bird/.test(value)) return '/3aaa188a-cac8-4da0-93ad-bc14a5dedf10.jpg';
+  if (/ella|nuwara|hatton|haputale|tea|kandy|mountain|pekoe|knuckles/.test(value)) return '/30e010b1-2b6c-4f87-81a5-d45d39aae23c.jpg';
+  if (/sigiriya|dambulla|anuradhapura|polonnaruwa|temple|heritage|jaffna/.test(value)) return '/2408852f-e87c-4499-a3f7-22b850828253.jpg';
+  if (/colombo|negombo|city|airport/.test(value)) return '/fde84b0e-681a-4cc6-bbd3-09d72e9f4537.jpg';
+  return '/ff704484-a0b3-4483-b004-584fb344461f.jpg';
+}
+
+function TableBlock({ block }: { block: Extract<PackageBlock, { type: 'table' }> }) {
+  return (
+    <div className="my-8 overflow-x-auto rounded-xl border border-jungle/10">
+      <table className="min-w-full border-collapse text-left text-sm">
+        <tbody>
+          {block.rows.map((row, rowIndex) => (
+            <tr key={rowIndex} className={rowIndex === 0 ? 'bg-jungle text-ivory' : 'border-t border-jungle/10 even:bg-sand/60'}>
+              {row.map((cell, cellIndex) => {
+                const Cell = rowIndex === 0 ? 'th' : 'td';
+                return <Cell key={cellIndex} className="min-w-40 whitespace-pre-line px-4 py-3 align-top leading-6">{cell}</Cell>;
+              })}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+function RenderBlock({ block, index, previous }: { block: PackageBlock; index: number; previous?: DocumentParagraphBlock }) {
+  if (block.type === 'table') return <TableBlock block={block} />;
+  return <ParagraphBlock block={block} index={index} previous={previous} />;
+}
+
 export function DocumentPackageDetail({ pkg }: { pkg: DocumentPackage }) {
   const currentIndex = DOCUMENT_PACKAGES.findIndex((item) => item.id === pkg.id);
   const previousPackage = currentIndex > 0 ? DOCUMENT_PACKAGES[currentIndex - 1] : undefined;
@@ -58,6 +117,18 @@ export function DocumentPackageDetail({ pkg }: { pkg: DocumentPackage }) {
   const paragraphs = pkg.blocks.filter((block): block is DocumentParagraphBlock => block.type === 'paragraph');
   const subtitle = paragraphs[0]?.text ?? pkg.name;
   const duration = durationFrom(pkg);
+  const units = buildContentUnits(pkg);
+  const firstDay = units.find((unit): unit is Extract<ContentUnit, { type: 'day' }> => unit.type === 'day');
+  const [openDays, setOpenDays] = useState<Set<string>>(() => new Set(firstDay ? [firstDay.key] : []));
+
+  const toggleDay = (key: string) => {
+    setOpenDays((current) => {
+      const next = new Set(current);
+      if (next.has(key)) next.delete(key);
+      else next.add(key);
+      return next;
+    });
+  };
 
   return (
     <>
@@ -81,27 +152,35 @@ export function DocumentPackageDetail({ pkg }: { pkg: DocumentPackage }) {
                 <h1 className="mt-3 font-serif text-3xl leading-tight text-jungle">{pkg.name}</h1>
               </div>
               <div className="space-y-4 px-6 py-8 sm:px-9 sm:py-10">
-                {pkg.blocks.map((block, index) => {
-                  if (block.type === 'table') {
-                    return (
-                      <div key={index} className="my-8 overflow-x-auto rounded-xl border border-jungle/10">
-                        <table className="min-w-full border-collapse text-left text-sm">
-                          <tbody>
-                            {block.rows.map((row, rowIndex) => (
-                              <tr key={rowIndex} className={rowIndex === 0 ? 'bg-jungle text-ivory' : 'border-t border-jungle/10 even:bg-sand/60'}>
-                                {row.map((cell, cellIndex) => {
-                                  const Cell = rowIndex === 0 ? 'th' : 'td';
-                                  return <Cell key={cellIndex} className="min-w-40 whitespace-pre-line px-4 py-3 align-top leading-6">{cell}</Cell>;
-                                })}
-                              </tr>
-                            ))}
-                          </tbody>
-                        </table>
-                      </div>
-                    );
+                {units.map((unit, unitIndex) => {
+                  if (unit.type === 'block') {
+                    const previousUnit = unitIndex > 0 ? units[unitIndex - 1] : undefined;
+                    const previous = previousUnit?.type === 'block' && previousUnit.block.type === 'paragraph' ? previousUnit.block : undefined;
+                    return <RenderBlock key={unit.index} block={unit.block} index={unit.index} previous={previous} />;
                   }
-                  const previous = index > 0 && pkg.blocks[index - 1].type === 'paragraph' ? pkg.blocks[index - 1] as DocumentParagraphBlock : undefined;
-                  return <ParagraphBlock key={index} block={block} index={index} previous={previous} />;
+
+                  const open = openDays.has(unit.key);
+                  const searchText = [unit.title, ...unit.blocks.filter((block): block is DocumentParagraphBlock => block.type === 'paragraph').slice(0, 4).map((block) => block.text)].join(' ');
+                  return (
+                    <section key={unit.key} className="my-5 overflow-hidden rounded-xl border border-jungle/10 bg-ivory shadow-sm">
+                      <button type="button" onClick={() => toggleDay(unit.key)} aria-expanded={open} aria-controls={`${unit.key}-content`} className={`flex w-full items-center gap-4 px-5 py-5 text-left transition sm:px-6 ${open ? 'bg-jungle text-ivory' : 'bg-white text-jungle hover:bg-sand'}`}>
+                        <span className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-xs font-bold ${open ? 'bg-gold text-jungle-deep' : 'bg-sand text-gold-dark'}`}>{String(unitIndex + 1).padStart(2, '0')}</span>
+                        <span className="font-serif text-xl leading-tight sm:text-2xl">{unit.title}</span>
+                        <ChevronDownIcon className={`ml-auto h-5 w-5 shrink-0 transition-transform duration-300 ${open ? 'rotate-180 text-gold-light' : 'text-gold-dark'}`} />
+                      </button>
+                      {open && (
+                        <div id={`${unit.key}-content`} className="border-t border-jungle/10 bg-white">
+                          <img src={imageForDay(searchText)} alt={`${unit.title} itinerary`} loading="lazy" className="aspect-[16/7] w-full object-cover" />
+                          <div className="space-y-4 p-5 sm:p-7">
+                            {unit.blocks.map((block, blockIndex) => {
+                              const previous = blockIndex > 0 && unit.blocks[blockIndex - 1].type === 'paragraph' ? unit.blocks[blockIndex - 1] as DocumentParagraphBlock : undefined;
+                              return <RenderBlock key={blockIndex} block={block} index={blockIndex + 5} previous={previous} />;
+                            })}
+                          </div>
+                        </div>
+                      )}
+                    </section>
+                  );
                 })}
               </div>
             </article>

@@ -23,7 +23,7 @@ export type DocumentPackage = {
 export const DOCUMENT_PACKAGES: DocumentPackage[] = [
   {
     "id": "2-tour-packages-bird-watching-tours",
-    "name": "2  tour packages-Bird Watching Tours",
+    "name": "Bird Watching Tours",
     "sourceFile": "2  tour packages-Bird Watching Tours.docx",
     "title": "Tour package 01",
     "image": "/3aaa188a-cac8-4da0-93ad-bc14a5dedf10.jpg",
@@ -1474,7 +1474,7 @@ export const DOCUMENT_PACKAGES: DocumentPackage[] = [
   },
   {
     "id": "2-tour-packages-luxury-travel-itinerary",
-    "name": "2 tour packages- Luxury travel itinerary",
+    "name": "Luxury travel itinerary",
     "sourceFile": "2 tour packages- Luxury travel itinerary.docx",
     "title": "Tour Package 01",
     "image": "/30e010b1-2b6c-4f87-81a5-d45d39aae23c.jpg",
@@ -3345,7 +3345,7 @@ export const DOCUMENT_PACKAGES: DocumentPackage[] = [
   },
   {
     "id": "3-tour-packages-mini-vacay",
-    "name": "3 tour packages - Mini Vacay",
+    "name": "Mini Vacay",
     "sourceFile": "3 tour packages - Mini Vacay.docx",
     "title": "Tour package 01",
     "image": "/ff704484-a0b3-4483-b004-584fb344461f.jpg",
