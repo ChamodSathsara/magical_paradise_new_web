@@ -19,6 +19,7 @@ const STORY_LINKS = [
   { label: 'Tour Booking Contractual Provisions', to: '/booking-provisions' },
   { label: 'Payment Options', to: '/payment-options' },
   { label: 'Magical Paradise Store', to: '/shop' },
+  { label: 'Let’s Partner', to: '/partnership' },
 ] as const;
 
 const EXPERIENCE_LINKS = [
@@ -28,11 +29,15 @@ const EXPERIENCE_LINKS = [
   { label: 'Things to Do', to: '/experience-sri-lanka/things-to-do' },
   { label: 'Only in Sri Lanka — Unique Experiences', to: '/experience-sri-lanka/only-in-sri-lanka' },
   { label: 'Ceylon Gems', to: '/experience-sri-lanka/ceylon-gems' },
+  { label: 'MICE', to: '/mice' },
+  { label: 'Accommodations', to: '/hotels' },
 ] as const;
 
 const TRAVEL_GUIDE_LINKS = [
   { label: 'Handy Travel Advice', to: '/travel-guide/handy-travel-advice' },
   { label: 'Drone Regulations', to: '/travel-guide/drone-regulations' },
+  { label: '10 Good Reasons to Visit Sri Lanka', to: '/why-visit-sri-lanka/10-good-reasons' },
+  { label: 'Global Accolades', to: '/why-visit-sri-lanka/global-accolades' },
 ] as const;
 
 const WHY_VISIT_LINKS = [
@@ -338,11 +343,16 @@ function PackagesDropdown() {
         <ChevronDownIcon className="h-3 w-3 transition-transform group-hover:rotate-180" strokeWidth={1.8} />
       </button>
       {active && <span className="absolute bottom-1.5 left-0 h-px w-full bg-gold-light" />}
-      <div className="invisible absolute left-1/2 top-full max-h-[76vh] w-[44rem] -translate-x-1/2 translate-y-2 overflow-y-auto rounded-xl border border-white/10 bg-jungle-deep/95 p-3 opacity-0 shadow-lift backdrop-blur-md transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100">
-        <div className="grid grid-cols-2 gap-1">
+      <div className="invisible absolute left-1/2 top-full max-h-[78vh] w-[min(92vw,76rem)] -translate-x-1/2 translate-y-3 overflow-y-auto rounded-2xl border border-gold/25 bg-gradient-to-br from-jungle-deep/98 via-jungle-deep/98 to-jungle/95 p-4 opacity-0 shadow-2xl backdrop-blur-xl transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100">
+        <div className="mb-3 flex items-end justify-between border-b border-white/10 px-2 pb-3">
+          <div><p className="text-[9px] font-semibold uppercase tracking-[0.2em] text-gold-light">Explore Sri Lanka</p><p className="mt-1 font-serif text-xl text-ivory">Signature Packages</p></div>
+          <span className="rounded-full border border-gold/25 px-3 py-1 text-[9px] uppercase tracking-[0.14em] text-ivory/55">{DOCUMENT_PACKAGES.length} journeys</span>
+        </div>
+        <div className="grid grid-cols-2 gap-1.5 lg:grid-cols-3 xl:grid-cols-4">
           {DOCUMENT_PACKAGES.map((pkg) => (
-            <Link key={pkg.id} href={`/packages/${pkg.id}`} className="rounded-md px-3 py-2.5 text-[11px] leading-5 tracking-wide text-ivory/75 transition-colors hover:bg-white/10 hover:text-gold-light">
-              {pkg.name}
+            <Link key={pkg.id} href={`/packages/${pkg.id}`} className="group/item flex min-h-14 items-center gap-3 rounded-xl border border-transparent px-3 py-2.5 text-[11px] leading-5 tracking-wide text-ivory/75 transition-all hover:border-gold/20 hover:bg-white/10 hover:text-gold-light">
+              <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-gold/55 transition-transform group-hover/item:scale-150" />
+              <span>{pkg.name}</span>
             </Link>
           ))}
         </div>
@@ -376,10 +386,11 @@ function SimpleDropdown({ label, links }: { label: string; links: readonly Subme
         <ChevronDownIcon className="h-3 w-3 transition-transform group-hover:rotate-180" strokeWidth={1.8} />
       </button>
       {active && <span className="absolute bottom-1.5 left-0 h-px w-full bg-gold-light" />}
-      <div className="invisible absolute left-1/2 top-full w-72 -translate-x-1/2 translate-y-2 rounded-lg border border-white/10 bg-jungle-deep/95 p-2 opacity-0 shadow-lift backdrop-blur-md transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100">
+      <div className="invisible absolute left-1/2 top-full w-80 -translate-x-1/2 translate-y-3 rounded-2xl border border-gold/25 bg-gradient-to-br from-jungle-deep/98 to-jungle/95 p-3 opacity-0 shadow-2xl backdrop-blur-xl transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100">
+        <p className="mb-2 border-b border-white/10 px-3 pb-3 font-serif text-lg text-ivory">{label}</p>
         {links.map((item) => (
-          <Link key={item.to} href={item.to} className="block rounded-md px-4 py-3 text-xs tracking-wide text-ivory/75 transition-colors hover:bg-white/10 hover:text-gold-light">
-            {item.label}
+          <Link key={item.to} href={item.to} className="group/item flex items-center gap-3 rounded-xl border border-transparent px-3 py-3 text-xs tracking-wide text-ivory/75 transition-all hover:border-gold/20 hover:bg-white/10 hover:text-gold-light">
+            <span className="h-1.5 w-1.5 rounded-full bg-gold/55 transition-transform group-hover/item:scale-150" />{item.label}
           </Link>
         ))}
       </div>
@@ -398,10 +409,11 @@ function ExperienceDropdown() {
         <ChevronDownIcon className="h-3 w-3 transition-transform group-hover:rotate-180" strokeWidth={1.8} />
       </button>
       {active && <span className="absolute bottom-1.5 left-0 h-px w-full bg-gold-light" />}
-      <div className="invisible absolute left-1/2 top-full w-80 -translate-x-1/2 translate-y-2 rounded-lg border border-white/10 bg-jungle-deep/95 p-2 opacity-0 shadow-lift backdrop-blur-md transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100">
+      <div className="invisible absolute left-1/2 top-full w-96 -translate-x-1/2 translate-y-3 rounded-2xl border border-gold/25 bg-gradient-to-br from-jungle-deep/98 to-jungle/95 p-3 opacity-0 shadow-2xl backdrop-blur-xl transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100">
+        <p className="mb-2 border-b border-white/10 px-3 pb-3 font-serif text-lg text-ivory">Experience Sri Lanka</p>
         {EXPERIENCE_LINKS.map((experienceLink) => (
-          <Link key={experienceLink.to} href={experienceLink.to} className="block rounded-md px-4 py-3 text-xs tracking-wide text-ivory/75 transition-colors hover:bg-white/10 hover:text-gold-light">
-            {experienceLink.label}
+          <Link key={experienceLink.to} href={experienceLink.to} className="group/item flex items-center gap-3 rounded-xl border border-transparent px-3 py-3 text-xs tracking-wide text-ivory/75 transition-all hover:border-gold/20 hover:bg-white/10 hover:text-gold-light">
+            <span className="h-1.5 w-1.5 rounded-full bg-gold/55 transition-transform group-hover/item:scale-150" />{experienceLink.label}
           </Link>
         ))}
       </div>
@@ -424,10 +436,11 @@ function StoryDropdown({ t }: { t: ReturnType<typeof useLanguage>['t'] }) {
         <ChevronDownIcon className="h-3 w-3 transition-transform group-hover:rotate-180" strokeWidth={1.8} />
       </button>
       {active && <span className="absolute bottom-1.5 left-0 h-px w-full bg-gold-light" />}
-      <div className="invisible absolute right-0 top-full max-h-[75vh] w-80 translate-y-2 overflow-y-auto rounded-lg border border-white/10 bg-jungle-deep/95 p-2 opacity-0 shadow-lift backdrop-blur-md transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100">
+      <div className="invisible absolute right-0 top-full max-h-[75vh] w-96 translate-y-3 overflow-y-auto rounded-2xl border border-gold/25 bg-gradient-to-br from-jungle-deep/98 to-jungle/95 p-3 opacity-0 shadow-2xl backdrop-blur-xl transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100">
+        <p className="mb-2 border-b border-white/10 px-3 pb-3 font-serif text-lg text-ivory">Our Story</p>
         {STORY_LINKS.map((storyLink) => (
-          <Link key={storyLink.to} href={storyLink.to} className="block rounded-md px-4 py-3 text-xs tracking-wide text-ivory/75 transition-colors hover:bg-white/10 hover:text-gold-light">
-            {storyLink.label}
+          <Link key={storyLink.to} href={storyLink.to} className="group/item flex items-center gap-3 rounded-xl border border-transparent px-3 py-3 text-xs tracking-wide text-ivory/75 transition-all hover:border-gold/20 hover:bg-white/10 hover:text-gold-light">
+            <span className="h-1.5 w-1.5 rounded-full bg-gold/55 transition-transform group-hover/item:scale-150" />{storyLink.label}
           </Link>
         ))}
       </div>

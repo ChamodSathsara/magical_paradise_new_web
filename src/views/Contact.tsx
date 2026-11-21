@@ -32,7 +32,7 @@ const QUICK_CARDS = [
 {
   title: 'Call Us',
   value: SITE.altPhone,
-  note: 'Mon–Sat, 8am–8pm',
+  note: 'Available 24 hours',
   href: SITE.phoneHref,
   Icon: PhoneIcon
 },
@@ -46,7 +46,7 @@ const QUICK_CARDS = [
 {
   title: 'Visit Us',
   value: SITE.address,
-  note: 'Open for walk-ins by appointment',
+  note: '',
   Icon: MapPinIcon
 },
 {

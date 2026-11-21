@@ -11,7 +11,7 @@ export const SITE = {
   enquiryEmail: 'travel@magicalparadise.lk',
   whatsapp: 'https://wa.me/94774365214',
   address: 'No 109/G, St Theresa Mawatha, Kandana, Sri Lanka',
-  license: 'Licensed by Sri Lanka Tourism Development Authority — License No: SLTDA/2024/0847',
+  license: 'SLTDA Registered: SLTDA/SQA/TA/02146 · Licence: TA/2026/0447 · Valid to 31 December 2026',
   instagram: 'https://www.instagram.com/magicalparadise.srilanka',
   facebook: 'https://www.facebook.com/magicalparadise.lk',
   tiktok: 'https://www.tiktok.com/@magicalparadisesrilanka',
@@ -26,24 +26,20 @@ export const NAV_LINKS = [
 { label: 'Group Tours', to: '/group-tours' },
 { label: 'Maldives Tours', to: '/maldives-tours' },
 { label: 'Sri Lanka Travel Guide', to: '/travel-guide/handy-travel-advice' },
-{ label: 'Why Should You Visit Sri Lanka', to: '/why-visit-sri-lanka/10-good-reasons' },
 { label: 'Experience Sri Lanka', to: '/experience-sri-lanka/things-to-do' },
 { label: 'Corporate Experiences', to: '/corporate' },
-{ label: 'MICE', to: '/mice' },
-{ label: 'Accommodations', to: '/hotels' },
-{ label: "Let's Partner", to: '/partnership' },
 { label: 'Our Story', to: '/about' }];
 
 
 export const TRUST_STATS = [
-{ value: '15+', label: 'Years Experience' },
+{ value: '9+', label: 'Years Experience' },
 { value: '5000+', label: 'Happy Travelers' },
 { value: '200+', label: 'Curated Tours' },
-{ value: '4.9', label: 'TripAdvisor Rating' }];
+{ value: '5.0', label: 'TripAdvisor Rating' }];
 
 
 export const STORY_PARAGRAPHS = [
-"Founded over 15 years ago, Magical Paradise was born out of a deep passion for Sri Lanka's unparalleled beauty and rich heritage. We started as a small team of local experts who wanted to share the authentic soul of our island with the world.",
+"Established in 2017, Magical Paradise was born from a deep passion for Sri Lanka's beauty and rich heritage. We began as a family-led team of local experts who wanted to share the authentic soul of our island with the world.",
 "Today, we are recognized as one of the premier luxury destination management companies in Sri Lanka. We don't just sell tours; we craft personalized journeys that immerse you in the culture, nature, and warmth of our people.",
 'Our commitment goes beyond luxury. We are dedicated to sustainable tourism practices that protect our environment and uplift local communities, ensuring that the magic of Sri Lanka endures for generations to come.'];
 

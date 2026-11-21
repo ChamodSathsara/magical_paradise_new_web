@@ -113,7 +113,7 @@ export function Corporate() {
         stats={[
           { value: "360°", label: "Program Planning" },
           { value: "8", label: "Experience Formats" },
-          { value: "15+", label: "Years Experience" },
+          { value: "9+", label: "Years Experience" },
         ]}
       />
 

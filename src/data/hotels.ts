@@ -26,7 +26,7 @@ export const HOTELS: Hotel[] = [
   name: 'Langdale by Amaya',
   location: 'Nuwara Eliya',
   stars: 5,
-  tagline: 'Cliff-top luxury overlooking the Indian Ocean',
+  tagline: 'Colonial charm among Nuwara Eliya tea plantations',
   description:
   'A luxury boutique hotel nestled amid breathtaking landscapes and lush tea plantations in the Nuwara Eliya hills, offering colonial charm, elegant rooms, and an outdoor heated infinity pool.',
   image: IMAGES.teaCountry
@@ -35,8 +35,8 @@ export const HOTELS: Hotel[] = [
   id: 'arika-villa',
   name: 'Arika Villa',
   location: 'Dambulla',
-  stars: 5,
-  tagline: 'Historic grandeur within 17th-century walls',
+  stars: 4,
+  tagline: 'A peaceful garden villa near Dambulla',
   description:
   'A luxury boutique hotel set in a peaceful tropical garden with comfortable air-conditioned rooms and private terraces, an outdoor pool, and a restaurant serving Sri Lankan and Western cuisine.',
   image: IMAGES.sigiriya
@@ -64,8 +64,8 @@ export const HOTELS: Hotel[] = [
   id: 'the-grand-hotel',
   name: 'The Grand Hotel',
   location: 'Nuwara Eliya',
-  stars: 5,
-  tagline: 'Historic grandeur within 17th-century walls',
+  stars: 4,
+  tagline: 'Historic highland grandeur beside the golf course',
   description:
   'A historic four-star hotel built in the style of an Elizabethan-era manor house, blending old-world charm with modern comforts — spa, heated indoor pool, multiple restaurants, close to the Nuwara Eliya Golf Club.',
   image: IMAGES.teaCountry
@@ -74,7 +74,7 @@ export const HOTELS: Hotel[] = [
   id: 'nest-wood-bungalow',
   name: 'Nest Wood Bungalow',
   location: 'Kalawana',
-  stars: 5,
+  stars: 4,
   description:
   'A charming cabin near the Sinharaja Forest Reserve offering an intimate escape into nature, with a pool and restaurant — ideal for wilderness and tranquility seekers.',
   image: IMAGES.ella

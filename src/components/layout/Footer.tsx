@@ -17,6 +17,7 @@ import Image from "next/image";
 import { useLanguage } from "../../i18n/LanguageProvider";
 
 const LEGAL_LINKS = [
+  { label: "Privacy Policy", to: "/privacy-policy" },
   { label: "FAQ", to: "/faq" },
   { label: "Contact Us", to: "/contact" },
   { label: "Corporate & Groups", to: "/corporate" },
@@ -100,6 +101,7 @@ export function Footer() {
                 </div>
               )}
             </form>
+            <p className="mt-3 max-w-sm text-[11px] leading-5 text-ivory/55">By subscribing, you agree to our <Link href="/privacy-policy" className="underline hover:text-gold-light">Privacy Policy</Link>. You can unsubscribe at any time.</p>
           </div>
 
           <div>

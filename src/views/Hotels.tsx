@@ -2,6 +2,7 @@
 
 import React, { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
+import { SearchIcon } from 'lucide-react';
 import { PageHero } from '../components/ui/PageHero';
 import { HotelCard } from '../components/cards/HotelCard';
 import { Reveal } from '../components/ui/Reveal';
@@ -15,13 +16,17 @@ export function Hotels() {
     []
   );
   const [location, setLocation] = useState('All Locations');
+  const [query, setQuery] = useState('');
 
   const results = useMemo(
-    () =>
-    location === 'All Locations' ?
-    HOTELS :
-    HOTELS.filter((hotel) => hotel.location === location),
-    [location]
+    () => {
+      const term = query.trim().toLowerCase();
+      return HOTELS.filter((hotel) =>
+        (location === 'All Locations' || hotel.location === location) &&
+        (!term || hotel.name.toLowerCase().includes(term))
+      );
+    },
+    [location, query]
   );
 
   return (
@@ -41,6 +46,11 @@ export function Hotels() {
 
       <section className="w-full bg-ivory py-16 lg:py-20">
         <div className="mx-auto max-w-content px-6">
+          <label className="relative mb-7 block max-w-md">
+            <span className="sr-only">Search hotels by name</span>
+            <SearchIcon className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-jungle-muted" />
+            <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search by hotel name" className="w-full rounded-full border border-jungle/15 bg-white py-3.5 pl-11 pr-4 text-sm text-jungle outline-none transition focus:border-gold" />
+          </label>
           <div
             className="no-scrollbar flex gap-1 overflow-x-auto pb-2"
             role="tablist"
@@ -79,6 +89,7 @@ export function Hotels() {
               </li>
             )}
           </ul>
+          {!results.length && <p className="mt-10 rounded-lg bg-sand p-8 text-center text-sm text-jungle-muted">No hotels match that name and location.</p>}
         </div>
       </section>
 

@@ -35,12 +35,12 @@ export const FAQS: FaqCategory[] = [
   {
     question: 'What payment methods do you accept?',
     answer:
-    'We accept international bank transfers and all major credit cards (Visa, Mastercard, Amex) through a secure payment gateway. Prices can be quoted in USD, EUR, GBP or LKR.'
+    'We accept international bank transfers and all major credit cards (Visa, Mastercard, Amex) through a secure payment gateway. Prices can be quoted in USD, EUR, GBP, AUD or LKR.'
   },
   {
     question: 'Do I need to pay a deposit, and how much?',
     answer:
-    'A 25% deposit confirms your booking and secures hotel allocations. The balance is due 30 days before arrival. Peak-season villa bookings may require a larger deposit, which we always confirm in writing first.'
+    'A 50% advance payment is generally required to confirm your booking and secure hotel allocations. The full balance must be settled at least 31 days before arrival unless a different written schedule is agreed.'
   },
   {
     question: 'Is my payment protected if my trip is cancelled?',

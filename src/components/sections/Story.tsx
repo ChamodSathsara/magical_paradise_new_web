@@ -20,7 +20,7 @@ export function Story() {
               
             </div>
             <div className="absolute -bottom-6 -right-4 hidden w-44 rounded-lg bg-jungle p-6 text-ivory sm:block lg:-right-8">
-              <span className="font-serif text-4xl text-gold-light">15+</span>
+              <span className="font-serif text-4xl text-gold-light">9+</span>
               <p className="mt-2 text-[11px] uppercase tracking-[0.16em] text-ivory/70">
                 Years crafting island journeys
               </p>

@@ -15,7 +15,7 @@ export function About() {
   return (
     <>
       <PageHero
-        eyebrow="Since 2009"
+        eyebrow="Established in 2017"
         title="About Us"
         subtitle="Born from a passion for Sri Lanka's unparalleled beauty — crafting unforgettable journeys for over 15 years."
         image={IMAGES.kandy}

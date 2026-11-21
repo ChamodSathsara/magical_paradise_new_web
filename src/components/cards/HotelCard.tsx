@@ -44,7 +44,7 @@ export function HotelCard({ hotel }: {hotel: Hotel;}) {
           )}`}
           className="mt-6 inline-flex w-fit items-center justify-center rounded-full border border-jungle/20 px-5 py-2.5 text-[11px] font-medium uppercase tracking-[0.14em] text-jungle transition-colors hover:border-jungle hover:bg-jungle hover:text-ivory">
           
-          View Hotel
+          Enquire About This Hotel
         </a>
       </div>
     </article>);
