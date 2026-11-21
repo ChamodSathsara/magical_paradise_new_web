@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { ArrowLeftIcon, ArrowRightIcon, ChevronDownIcon, ClockIcon, FileTextIcon, MailIcon, MessageCircleIcon } from 'lucide-react';
+import { ArrowLeftIcon, ArrowRightIcon, CalendarDaysIcon, ChevronDownIcon, ClockIcon, FileTextIcon, MailIcon, MessageCircleIcon } from 'lucide-react';
 import { PageHero } from '../components/ui/PageHero';
 import { DOCUMENT_PACKAGES, type DocumentPackage, type DocumentParagraphBlock } from '../data/documentPackages';
 import { SITE } from '../data/site';
@@ -164,7 +164,7 @@ export function DocumentPackageDetail({ pkg }: { pkg: DocumentPackage }) {
                   return (
                     <section key={unit.key} className="my-5 overflow-hidden rounded-xl border border-jungle/10 bg-ivory shadow-sm">
                       <button type="button" onClick={() => toggleDay(unit.key)} aria-expanded={open} aria-controls={`${unit.key}-content`} className={`flex w-full items-center gap-4 px-5 py-5 text-left transition sm:px-6 ${open ? 'bg-jungle text-ivory' : 'bg-white text-jungle hover:bg-sand'}`}>
-                        <span className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-xs font-bold ${open ? 'bg-gold text-jungle-deep' : 'bg-sand text-gold-dark'}`}>{String(unitIndex + 1).padStart(2, '0')}</span>
+                        <span className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full ${open ? 'bg-gold text-jungle-deep' : 'bg-sand text-gold-dark'}`} aria-hidden="true"><CalendarDaysIcon className="h-4 w-4" strokeWidth={1.8} /></span>
                         <span className="font-serif text-xl leading-tight sm:text-2xl">{unit.title}</span>
                         <ChevronDownIcon className={`ml-auto h-5 w-5 shrink-0 transition-transform duration-300 ${open ? 'rotate-180 text-gold-light' : 'text-gold-dark'}`} />
                       </button>
