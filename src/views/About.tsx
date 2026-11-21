@@ -1,7 +1,8 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { MailIcon, PhoneIcon } from 'lucide-react';
-import { PageHero } from '../components/ui/PageHero';
+import { AboutParallaxHero } from '../components/sections/AboutParallaxHero';
 import { Story } from '../components/sections/Story';
 import { Services } from '../components/sections/Services';
 import { Testimonials } from '../components/sections/Testimonials';
@@ -11,13 +12,22 @@ import { SectionHeading } from '../components/ui/SectionHeading';
 import { IMAGES } from '../data/media';
 import { SITE, WHY_US } from '../data/site';
 
+const ABOUT_GALLERY = [
+  { src: '/images/about/local-guide-family-safari.jpg', alt: 'A Magical Paradise local guide sharing a family safari moment' },
+  { src: '/images/about/local-guide-young-traveller.jpg', alt: 'A local guide welcoming a young traveller in Sri Lanka' },
+  { src: '/images/about/guide-botanical-garden.jpg', alt: 'A guide and young traveller at a Sri Lankan botanical garden' },
+  { src: '/images/about/family-nature-experience.jpg', alt: 'A family enjoying a guided nature experience in Sri Lanka' },
+  { src: '/images/about/family-sigiriya-experience.jpg', alt: 'A family and local guide exploring near Sigiriya' },
+  { src: '/images/about/local-guide-authentic-moment.jpg', alt: 'A local guide sharing an authentic Sri Lankan moment with a young guest' },
+] as const;
+
 export function About() {
   return (
     <>
-      <PageHero
+      <AboutParallaxHero
         eyebrow="Established in 2017"
         title="About Us"
-        subtitle="Born from a passion for Sri Lanka's unparalleled beauty — crafting unforgettable journeys for over 15 years."
+        subtitle="Born from a passion for Sri Lanka's unparalleled beauty — crafting unforgettable journeys with local care since 2017."
         image={IMAGES.kandy}
         imageAlt="The Temple of the Sacred Tooth Relic in Kandy at dusk">
         
@@ -35,7 +45,7 @@ export function About() {
             Contact Us
           </Link>
         </div>
-      </PageHero>
+      </AboutParallaxHero>
 
       <section className="w-full bg-ivory py-20 lg:py-28">
         <div className="mx-auto grid max-w-content gap-12 px-6 lg:grid-cols-[0.9fr_1.1fr] lg:gap-20">
@@ -67,6 +77,22 @@ export function About() {
               <p>These personal journeys inspire everything we curate. We share places we have felt, moments we have lived and stories worth remembering—going beyond being a DMC to become storytellers of Sri Lanka.</p>
             </div>
           </Reveal>
+        </div>
+      </section>
+
+      <section className="w-full bg-ivory py-20 lg:py-28">
+        <div className="mx-auto max-w-content px-6">
+          <SectionHeading eyebrow="Journeys Shared Together" title="The people behind every memorable experience" subtitle="Real moments with our local team and the families who discover Sri Lanka with us." />
+          <div className="mt-12 grid auto-rows-[260px] gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:auto-rows-[300px]">
+            {ABOUT_GALLERY.map((photo, index) => (
+              <Reveal key={photo.src} delay={index * 0.04} className={index === 2 || index === 3 ? 'sm:col-span-2 lg:col-span-1' : ''}>
+                <figure className="group relative h-full overflow-hidden rounded-2xl bg-sand shadow-card">
+                  <Image src={photo.src} alt={photo.alt} fill sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" className="object-cover transition-transform duration-700 group-hover:scale-[1.03]" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-jungle-deep/25 via-transparent to-transparent" aria-hidden="true" />
+                </figure>
+              </Reveal>
+            ))}
+          </div>
         </div>
       </section>
 

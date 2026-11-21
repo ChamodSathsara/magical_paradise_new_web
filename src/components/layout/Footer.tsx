@@ -13,6 +13,7 @@ import {
   StarIcon,
 } from "lucide-react";
 import { FOOTER_DESTINATIONS, FOOTER_SERVICES, SITE } from "../../data/site";
+import { DOCUMENT_PACKAGES } from "../../data/documentPackages";
 import Image from "next/image";
 import { useLanguage } from "../../i18n/LanguageProvider";
 
@@ -23,6 +24,16 @@ const LEGAL_LINKS = [
   { label: "Corporate & Groups", to: "/corporate" },
   { label: "Partner Registration", to: "/partnership" },
 ];
+
+const FEATURED_PACKAGE_NAMES = [
+  'Bird Watching Tours',
+  'Luxury travel itinerary',
+  'Mini Vacay',
+  '5 Days of Romance in Paradise',
+  'UNESCO Heritage Journey',
+  'The Grand Sri Lankan Journey',
+];
+const FEATURED_PACKAGES = DOCUMENT_PACKAGES.filter((pkg) => FEATURED_PACKAGE_NAMES.includes(pkg.name));
 
 export function Footer() {
   const { t } = useLanguage();
@@ -49,7 +60,7 @@ export function Footer() {
       <div className="absolute inset-0 -z-10 bg-jungle-deep/90" aria-hidden="true" />
       <div className="absolute inset-0 -z-10 bg-gradient-to-r from-jungle-deep via-jungle-deep/85 to-jungle-deep/65" aria-hidden="true" />
       <div className="mx-auto max-w-content px-6 py-16 lg:py-20">
-        <div className="grid gap-12 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr]">
+        <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-[1.35fr_.8fr_.9fr_1fr_1.1fr]">
           <div>
             {/* Logo */}
             <Image
@@ -142,6 +153,20 @@ export function Footer() {
                 </li>
               ))}
             </ul>
+          </div>
+
+          <div>
+            <h2 className="eyebrow mb-5 text-ivory">
+              <Link href="/packages" className="transition-colors hover:text-gold-light">Featured Packages</Link>
+            </h2>
+            <ul className="space-y-3 text-sm">
+              {FEATURED_PACKAGES.map((pkg) => (
+                <li key={pkg.id}>
+                  <Link href={`/packages/${pkg.id}`} className="transition-colors hover:text-gold-light">{pkg.name}</Link>
+                </li>
+              ))}
+            </ul>
+            <Link href="/packages" className="mt-5 inline-flex text-[11px] font-semibold uppercase tracking-[.14em] text-gold-light hover:text-gold">View All Packages →</Link>
           </div>
 
           <div>

@@ -23,8 +23,8 @@ export default {
         ivory: '#fffdf8',
       },
       fontFamily: {
-        serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        serif: ['Montserrat', 'system-ui', 'sans-serif'],
+        sans: ['Poppins', 'system-ui', 'sans-serif'],
       },
       maxWidth: {
         // NOTE: the original vite project's config had this value accidentally

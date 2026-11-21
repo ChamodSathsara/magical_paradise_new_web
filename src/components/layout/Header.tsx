@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
@@ -46,6 +46,7 @@ const WHY_VISIT_LINKS = [
 ] as const;
 
 export function Header() {
+  const headerRef = useRef<HTMLElement>(null);
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
@@ -72,8 +73,22 @@ export function Header() {
     };
   }, [menuOpen]);
 
+  useEffect(() => {
+    const header = headerRef.current;
+    if (!header) return;
+    const updateHeight = () => document.documentElement.style.setProperty('--site-header-height', `${header.getBoundingClientRect().height}px`);
+    updateHeight();
+    const observer = new ResizeObserver(updateHeight);
+    observer.observe(header);
+    window.addEventListener('resize', updateHeight);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('resize', updateHeight);
+    };
+  }, []);
+
   return (
-    <header
+    <header ref={headerRef}
       className={[
         "fixed inset-x-0 top-0 z-50 transition-colors duration-300",
         scrolled || menuOpen
@@ -311,9 +326,24 @@ type SubmenuLink = { readonly label: string; readonly to: string };
 function usePageScrollLock(locked: boolean) {
   useEffect(() => {
     if (!locked) return;
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    return () => { document.body.style.overflow = previousOverflow; };
+    const preventBackgroundScroll = (event: WheelEvent | TouchEvent) => {
+      const target = event.target as HTMLElement | null;
+      if (!target?.closest('[data-dropdown-scroll]')) event.preventDefault();
+    };
+    const preventScrollKeys = (event: KeyboardEvent) => {
+      if (['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', ' '].includes(event.key)) {
+        const target = event.target as HTMLElement | null;
+        if (!target?.closest('[data-dropdown-scroll]') && !target?.matches('input, textarea, select')) event.preventDefault();
+      }
+    };
+    document.addEventListener('wheel', preventBackgroundScroll, { passive: false });
+    document.addEventListener('touchmove', preventBackgroundScroll, { passive: false });
+    document.addEventListener('keydown', preventScrollKeys);
+    return () => {
+      document.removeEventListener('wheel', preventBackgroundScroll);
+      document.removeEventListener('touchmove', preventBackgroundScroll);
+      document.removeEventListener('keydown', preventScrollKeys);
+    };
   }, [locked]);
 }
 
@@ -355,7 +385,7 @@ function PackagesDropdown() {
         <ChevronDownIcon className="h-3 w-3 transition-transform group-hover:rotate-180" strokeWidth={1.8} />
       </button>
       {active && <span className="absolute bottom-1.5 left-0 h-px w-full bg-gold-light" />}
-      <div className={`${dismissed ? 'hidden' : 'invisible'} fixed left-1/2 top-[9.25rem] max-h-[calc(100vh-10.25rem)] w-[min(94vw,80rem)] -translate-x-1/2 translate-y-2 overflow-y-auto overscroll-contain rounded-2xl border border-gold/25 bg-gradient-to-br from-jungle-deep/98 via-jungle-deep/98 to-jungle/95 p-4 opacity-0 shadow-2xl backdrop-blur-xl transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100`}>
+      <div data-dropdown-scroll className={`${dismissed ? 'hidden' : 'invisible'} fixed left-1/2 top-[var(--site-header-height)] z-[60] max-h-[calc(100vh_-_var(--site-header-height)_-_1rem)] w-[min(94vw,80rem)] -translate-x-1/2 translate-y-2 overflow-y-auto overscroll-contain rounded-b-2xl border border-gold/25 bg-[#071f19] p-4 opacity-0 shadow-2xl transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100`}>
         <div className="mb-3 flex items-end justify-between border-b border-white/10 px-2 pb-3">
           <div><p className="text-[9px] font-semibold uppercase tracking-[0.2em] text-gold-light">Explore Sri Lanka</p><p className="mt-1 font-serif text-xl text-ivory">Signature Packages</p></div>
           <span className="rounded-full border border-gold/25 px-3 py-1 text-[9px] uppercase tracking-[0.14em] text-ivory/55">{DOCUMENT_PACKAGES.length} journeys</span>
@@ -401,7 +431,7 @@ function SimpleDropdown({ label, links }: { label: string; links: readonly Subme
         <ChevronDownIcon className="h-3 w-3 transition-transform group-hover:rotate-180" strokeWidth={1.8} />
       </button>
       {active && <span className="absolute bottom-1.5 left-0 h-px w-full bg-gold-light" />}
-      <div className={`${dismissed ? 'hidden' : 'invisible'} absolute left-1/2 top-full w-80 -translate-x-1/2 translate-y-3 rounded-2xl border border-gold/25 bg-gradient-to-br from-jungle-deep/98 to-jungle/95 p-3 opacity-0 shadow-2xl backdrop-blur-xl transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100`}>
+      <div data-dropdown-scroll className={`${dismissed ? 'hidden' : 'invisible'} absolute left-1/2 top-full max-h-[calc(100vh-10rem)] w-80 -translate-x-1/2 translate-y-3 overflow-y-auto overscroll-contain rounded-2xl border border-gold/25 bg-gradient-to-br from-jungle-deep/98 to-jungle/95 p-3 opacity-0 shadow-2xl backdrop-blur-xl transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100`}>
         <p className="mb-2 border-b border-white/10 px-3 pb-3 font-serif text-lg text-ivory">{label}</p>
         {links.map((item) => (
           <Link key={item.to} href={item.to} onClick={() => setDismissed(true)} className="group/item flex items-center gap-3 rounded-xl border border-transparent px-3 py-3 text-xs tracking-wide text-ivory/75 transition-all hover:border-gold/20 hover:bg-white/10 hover:text-gold-light">
@@ -427,7 +457,7 @@ function ExperienceDropdown() {
         <ChevronDownIcon className="h-3 w-3 transition-transform group-hover:rotate-180" strokeWidth={1.8} />
       </button>
       {active && <span className="absolute bottom-1.5 left-0 h-px w-full bg-gold-light" />}
-      <div className={`${dismissed ? 'hidden' : 'invisible'} absolute left-1/2 top-full w-96 -translate-x-1/2 translate-y-3 rounded-2xl border border-gold/25 bg-gradient-to-br from-jungle-deep/98 to-jungle/95 p-3 opacity-0 shadow-2xl backdrop-blur-xl transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100`}>
+      <div data-dropdown-scroll className={`${dismissed ? 'hidden' : 'invisible'} absolute left-1/2 top-full max-h-[calc(100vh-10rem)] w-96 -translate-x-1/2 translate-y-3 overflow-y-auto overscroll-contain rounded-2xl border border-gold/25 bg-gradient-to-br from-jungle-deep/98 to-jungle/95 p-3 opacity-0 shadow-2xl backdrop-blur-xl transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100`}>
         <p className="mb-2 border-b border-white/10 px-3 pb-3 font-serif text-lg text-ivory">Experience Sri Lanka</p>
         {EXPERIENCE_LINKS.map((experienceLink) => (
           <Link key={experienceLink.to} href={experienceLink.to} onClick={() => setDismissed(true)} className="group/item flex items-center gap-3 rounded-xl border border-transparent px-3 py-3 text-xs tracking-wide text-ivory/75 transition-all hover:border-gold/20 hover:bg-white/10 hover:text-gold-light">
@@ -457,7 +487,7 @@ function StoryDropdown({ t }: { t: ReturnType<typeof useLanguage>['t'] }) {
         <ChevronDownIcon className="h-3 w-3 transition-transform group-hover:rotate-180" strokeWidth={1.8} />
       </button>
       {active && <span className="absolute bottom-1.5 left-0 h-px w-full bg-gold-light" />}
-      <div className={`${dismissed ? 'hidden' : 'invisible'} absolute right-0 top-full max-h-[75vh] w-96 translate-y-3 overflow-y-auto rounded-2xl border border-gold/25 bg-gradient-to-br from-jungle-deep/98 to-jungle/95 p-3 opacity-0 shadow-2xl backdrop-blur-xl transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100`}>
+      <div data-dropdown-scroll className={`${dismissed ? 'hidden' : 'invisible'} absolute right-0 top-full max-h-[calc(100vh-10rem)] w-96 translate-y-3 overflow-y-auto overscroll-contain rounded-2xl border border-gold/25 bg-gradient-to-br from-jungle-deep/98 to-jungle/95 p-3 opacity-0 shadow-2xl backdrop-blur-xl transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100`}>
         <p className="mb-2 border-b border-white/10 px-3 pb-3 font-serif text-lg text-ivory">Our Story</p>
         {STORY_LINKS.map((storyLink) => (
           <Link key={storyLink.to} href={storyLink.to} onClick={() => setDismissed(true)} className="group/item flex items-center gap-3 rounded-xl border border-transparent px-3 py-3 text-xs tracking-wide text-ivory/75 transition-all hover:border-gold/20 hover:bg-white/10 hover:text-gold-light">
