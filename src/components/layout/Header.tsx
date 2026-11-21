@@ -7,6 +7,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDownIcon, MenuIcon, XIcon } from "lucide-react";
 import { NavLink } from "../ui/NavLink";
 import { NAV_LINKS } from "../../data/site";
+import { DOCUMENT_PACKAGES } from "../../data/documentPackages";
 import { LANGUAGES, useLanguage } from "../../i18n/LanguageProvider";
 import Image from "next/image";
 
@@ -195,6 +196,8 @@ export function Header() {
                         ))}
                       </div>
                     </div>
+                  ) : link.label === 'Packages' ? (
+                    <MobilePackagesMenu />
                   ) : link.label === 'Sri Lanka Travel Guide' ? (
                     <MobileSubmenu title="Sri Lanka Travel Guide" links={TRAVEL_GUIDE_LINKS} />
                   ) : link.label === 'Why Should You Visit Sri Lanka' ? (
@@ -262,6 +265,10 @@ type DesktopNavLinkProps = {
 };
 
 function DesktopNavLink({ link, t }: DesktopNavLinkProps) {
+  if (link.label === 'Packages') {
+    return <PackagesDropdown />;
+  }
+
   if (link.label === 'Experience Sri Lanka') {
     return <ExperienceDropdown />;
   }
@@ -295,6 +302,54 @@ function DesktopNavLink({ link, t }: DesktopNavLinkProps) {
 }
 
 type SubmenuLink = { readonly label: string; readonly to: string };
+
+function MobilePackagesMenu() {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="border-b border-white/10 py-4">
+      <button type="button" onClick={() => setOpen((value) => !value)} aria-expanded={open} className="flex w-full items-center justify-between text-left">
+        <span className="font-serif text-2xl text-gold-light">Packages</span>
+        <ChevronDownIcon className={`h-5 w-5 text-gold-light transition-transform ${open ? 'rotate-180' : ''}`} />
+      </button>
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden">
+            <div className="mt-3 flex flex-col border-l border-gold/40 pl-4">
+              {DOCUMENT_PACKAGES.map((pkg) => (
+                <NavLink key={pkg.id} to={`/packages/${pkg.id}`} className={({ isActive }) => `py-2.5 pr-2 text-sm leading-5 ${isActive ? 'text-gold-light' : 'text-ivory/70'}`}>
+                  {pkg.name}
+                </NavLink>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
+function PackagesDropdown() {
+  const pathname = usePathname();
+  const active = pathname.startsWith('/packages/');
+  return (
+    <div className="group relative py-3">
+      <button type="button" className={`flex items-center gap-1 whitespace-nowrap text-[9px] uppercase tracking-[0.08em] transition-colors xl:text-[10px] xl:tracking-[0.1em] ${active ? 'text-gold-light' : 'text-ivory/80 group-hover:text-ivory'}`} aria-haspopup="true">
+        Packages
+        <ChevronDownIcon className="h-3 w-3 transition-transform group-hover:rotate-180" strokeWidth={1.8} />
+      </button>
+      {active && <span className="absolute bottom-1.5 left-0 h-px w-full bg-gold-light" />}
+      <div className="invisible absolute left-1/2 top-full max-h-[76vh] w-[44rem] -translate-x-1/2 translate-y-2 overflow-y-auto rounded-xl border border-white/10 bg-jungle-deep/95 p-3 opacity-0 shadow-lift backdrop-blur-md transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100">
+        <div className="grid grid-cols-2 gap-1">
+          {DOCUMENT_PACKAGES.map((pkg) => (
+            <Link key={pkg.id} href={`/packages/${pkg.id}`} className="rounded-md px-3 py-2.5 text-[11px] leading-5 tracking-wide text-ivory/75 transition-colors hover:bg-white/10 hover:text-gold-light">
+              {pkg.name}
+            </Link>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 function MobileSubmenu({ title, links }: { title: string; links: readonly SubmenuLink[] }) {
   return (

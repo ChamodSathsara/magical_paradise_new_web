@@ -21,6 +21,7 @@ export const SITE = {
 export const NAV_LINKS = [
 { label: 'Home', to: '/' },
 { label: 'Sri Lanka Tours', to: '/packages' },
+{ label: 'Packages', to: '/packages' },
 { label: 'Day Tours', to: '/day-tours' },
 { label: 'Group Tours', to: '/group-tours' },
 { label: 'Maldives Tours', to: '/maldives-tours' },

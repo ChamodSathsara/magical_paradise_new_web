@@ -1,14 +1,17 @@
 'use client';
 
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
+import Image from 'next/image';
 import {
   CalendarDaysIcon,
   ChevronRightIcon,
   Clock3Icon,
   ExternalLinkIcon,
+  MapPinIcon,
   NavigationIcon,
   SearchIcon,
   SparklesIcon,
+  XIcon,
 } from 'lucide-react';
 import { PageHero } from '../components/ui/PageHero';
 import { CtaStrip } from '../components/sections/CtaStrip';
@@ -28,7 +31,22 @@ const findDestination = (value: string) => {
 
 export function TouristMap() {
   const [selected, setSelected] = useState<MagicalDestination>(MAGICAL_DESTINATIONS[0]);
+  const [preview, setPreview] = useState<MagicalDestination | null>(null);
   const [query, setQuery] = useState('');
+
+  useEffect(() => {
+    if (!preview) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setPreview(null);
+    };
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', onKeyDown);
+    };
+  }, [preview]);
 
   const filtered = useMemo(() => {
     const term = query.trim().toLowerCase();
@@ -81,7 +99,7 @@ export function TouristMap() {
 
   const chooseNearby = (nearby: string) => {
     const match = findDestination(nearby);
-    if (match) choose(match);
+    if (match) setPreview(match);
   };
 
   return (
@@ -131,20 +149,13 @@ export function TouristMap() {
               <div className="relative grid items-center gap-8 overflow-hidden rounded-2xl bg-jungle-deep p-6 shadow-2xl lg:grid-cols-[minmax(18rem,0.85fr)_1.15fr] lg:p-10">
                 <img src={selected.images[1]} alt="" aria-hidden="true" className="absolute inset-0 h-full w-full object-cover opacity-30 transition-opacity duration-700" />
                 <div className="absolute inset-0 bg-gradient-to-r from-jungle-deep/95 via-jungle-deep/90 to-jungle/75" />
-                <div className="relative overflow-hidden rounded-xl border border-ivory/20 bg-white shadow-2xl">
-                  <iframe
-                    key={selected.id}
-                    src={googleMapEmbedUrl}
-                    title={`Google Map showing ${selected.name} and nearby destinations`}
-                    loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
-                    className="aspect-[4/5] w-full border-0 sm:aspect-square lg:aspect-[4/5]"
-                    allowFullScreen
-                  />
-                  <div className="absolute inset-x-3 bottom-3 rounded-lg bg-jungle-deep/90 p-3 text-ivory shadow-lg backdrop-blur-sm">
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-gold-light">Map locations</p>
-                    <p className="mt-1 text-xs leading-5">{selected.name} + {nearbyMapDestinations.length} nearby destinations</p>
-                  </div>
+                <div className="relative mx-auto aspect-[1122/1404] w-full max-w-[25rem]">
+                  <Image src="/images/map.png" alt={`Map showing ${selected.name} in Sri Lanka`} fill priority className="object-contain" sizes="(max-width: 1024px) 90vw, 25rem" />
+                  <button type="button" aria-label={`${selected.name} map location`} className="absolute -translate-x-1/2 -translate-y-1/2" style={{ top: `${selected.map.top}%`, left: `${selected.map.left}%` }}>
+                    <span className="absolute left-1/2 top-1/2 h-9 w-9 -translate-x-1/2 -translate-y-1/2 animate-ping rounded-full bg-gold/35" />
+                    <span className="relative flex h-7 w-7 items-center justify-center rounded-full bg-gold text-jungle-deep shadow-lg ring-4 ring-ivory/25"><MapPinIcon className="h-4 w-4" fill="currentColor" /></span>
+                    <span className="absolute left-1/2 top-9 -translate-x-1/2 whitespace-nowrap rounded bg-jungle px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-ivory shadow-lg">{selected.name}</span>
+                  </button>
                 </div>
 
                 <div className="relative text-ivory">
@@ -154,13 +165,9 @@ export function TouristMap() {
                   <div className="mt-6 flex flex-wrap gap-2">
                     {selected.perfectFor.map((item) => <span key={item} className="rounded-full border border-ivory/20 px-3 py-1.5 text-[10px] uppercase tracking-[0.12em] text-ivory/80">{item}</span>)}
                   </div>
-                  <a href={googleDirectionsUrl} target="_blank" rel="noreferrer" className="mt-7 inline-flex items-center gap-2 rounded-full bg-gold px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-jungle-deep transition hover:bg-gold-light">
-                    View all locations in Google Maps <ExternalLinkIcon className="h-3.5 w-3.5" />
+                  <a href={`https://www.google.com/maps/search/?api=1&query=${selected.lat},${selected.lng}`} target="_blank" rel="noreferrer" className="mt-7 inline-flex items-center gap-2 rounded-full bg-gold px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-jungle-deep transition hover:bg-gold-light">
+                    Open in Google Maps <ExternalLinkIcon className="h-3.5 w-3.5" />
                   </a>
-                  <div className="mt-5 flex flex-wrap gap-2">
-                    <span className="inline-flex items-center gap-1.5 rounded-full bg-gold px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.1em] text-jungle-deep"><NavigationIcon className="h-3 w-3" />{selected.name}</span>
-                    {nearbyMapDestinations.map((destination) => <button key={destination.id} type="button" onClick={() => choose(destination)} className="rounded-full border border-ivory/25 bg-jungle-deep/50 px-3 py-1.5 text-[10px] uppercase tracking-[0.1em] text-ivory transition hover:border-gold hover:text-gold-light">{destination.name}</button>)}
-                  </div>
                 </div>
               </div>
 
@@ -187,6 +194,21 @@ export function TouristMap() {
                 <section className="mt-6 rounded-xl border border-jungle/10 bg-white p-6 shadow-card">
                   <div className="flex items-center gap-3"><Clock3Icon className="h-5 w-5 text-gold-dark" /><h3 className="font-serif text-2xl text-jungle">Nearby Destinations</h3></div>
                   <p className="mt-2 text-xs leading-5 text-jungle-muted">Travel times are approximate and may vary depending on traffic, weather and road conditions.</p>
+                  <div className="relative mt-5 overflow-hidden rounded-xl border border-jungle/10 bg-sand shadow-card">
+                    <iframe
+                      key={`nearby-${selected.id}`}
+                      src={googleMapEmbedUrl}
+                      title={`Google Map showing ${selected.name} and nearby destinations`}
+                      loading="lazy"
+                      referrerPolicy="no-referrer-when-downgrade"
+                      className="aspect-[16/9] w-full border-0"
+                      allowFullScreen
+                    />
+                    <div className="absolute bottom-3 left-3 right-3 flex flex-wrap items-center justify-between gap-3 rounded-lg bg-jungle-deep/90 p-3 text-ivory shadow-lg backdrop-blur-sm">
+                      <span className="inline-flex items-center gap-2 text-xs"><NavigationIcon className="h-3.5 w-3.5 text-gold-light" />{selected.name} + {nearbyMapDestinations.length} nearby locations</span>
+                      <a href={googleDirectionsUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-gold-light hover:text-white">Open route <ExternalLinkIcon className="h-3 w-3" /></a>
+                    </div>
+                  </div>
                   <div className="mt-5 grid gap-3 sm:grid-cols-2">
                     {selected.nearby.map((nearby) => {
                       const targetName = destinationName(nearby);
@@ -203,6 +225,72 @@ export function TouristMap() {
           </div>
         </div>
       </section>
+
+      {preview && (
+        <div
+          className="fixed inset-0 z-[100] flex items-start justify-center overflow-y-auto overscroll-contain bg-jungle-deep/80 p-4 backdrop-blur-sm sm:p-6"
+          role="presentation"
+          onMouseDown={(event) => {
+            if (event.currentTarget === event.target) setPreview(null);
+          }}
+        >
+          <section
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="nearby-dialog-title"
+            tabIndex={-1}
+            onWheel={(event) => event.stopPropagation()}
+            className="relative my-auto max-h-[calc(100vh-2rem)] w-full max-w-5xl touch-pan-y overflow-y-auto overscroll-contain rounded-2xl bg-ivory shadow-2xl sm:max-h-[calc(100vh-3rem)]"
+          >
+            <button
+              type="button"
+              onClick={() => setPreview(null)}
+              aria-label="Close destination details"
+              className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-jungle-deep/85 text-ivory shadow-lg transition hover:bg-gold hover:text-jungle-deep"
+            >
+              <XIcon className="h-5 w-5" />
+            </button>
+
+            <div className="grid gap-2 sm:grid-cols-2">
+              {preview.images.slice(0, 2).map((src, index) => (
+                <img
+                  key={`${preview.id}-dialog-${src}`}
+                  src={src}
+                  alt={`${preview.name} travel view ${index + 1}`}
+                  className="aspect-[16/10] h-full w-full object-cover first:rounded-tl-2xl sm:first:rounded-tr-none sm:[&:nth-child(2)]:rounded-tr-2xl"
+                />
+              ))}
+            </div>
+
+            <div className="p-6 sm:p-8 lg:p-10">
+              <p className="eyebrow text-gold-dark">Nearby Destination</p>
+              <h2 id="nearby-dialog-title" className="mt-2 font-serif text-3xl font-light text-jungle sm:text-4xl">{preview.name}</h2>
+              <p className="mt-5 text-sm leading-7 text-jungle-muted sm:text-[15px]">{preview.description}</p>
+
+              <div className="mt-7 grid gap-6 lg:grid-cols-[0.75fr_1.25fr]">
+                <div className="rounded-xl bg-sand p-5">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.15em] text-gold-dark">Best Time to Visit</p>
+                  <p className="mt-2 text-sm leading-6 text-jungle">{preview.bestTime}</p>
+                  <div className="mt-5 flex flex-wrap gap-2">
+                    {preview.perfectFor.map((item) => <span key={item} className="rounded-full bg-white px-3 py-1.5 text-[10px] uppercase tracking-[0.1em] text-jungle-muted">{item}</span>)}
+                  </div>
+                </div>
+                <div className="rounded-xl border border-jungle/10 bg-white p-5">
+                  <h3 className="font-serif text-xl text-jungle">Top Attractions</h3>
+                  <ul className="mt-4 grid gap-2.5 sm:grid-cols-2">
+                    {preview.attractions.map((attraction) => <li key={attraction} className="flex gap-2.5 text-sm leading-6 text-jungle-muted"><span className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-gold" />{attraction}</li>)}
+                  </ul>
+                </div>
+              </div>
+
+              <div className="mt-7 flex flex-wrap gap-3">
+                <button type="button" onClick={() => { setPreview(null); choose(preview); }} className="rounded-full bg-jungle px-6 py-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-ivory transition hover:bg-jungle-light">Select this destination</button>
+                <a href={`https://www.google.com/maps/search/?api=1&query=${preview.lat},${preview.lng}`} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-full border border-jungle/20 px-6 py-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-jungle transition hover:border-gold hover:bg-sand">Open in Google Maps <ExternalLinkIcon className="h-3.5 w-3.5" /></a>
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
 
       <CtaStrip eyebrow="Bespoke Planning" title="Turn the map into your Sri Lankan journey" description="Tell us which destinations inspire you and we will connect them around your dates, interests and preferred pace." primaryLabel="Start Planning" primaryTo="/plan-your-trip" />
     </>

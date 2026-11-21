@@ -17,8 +17,10 @@ import { PackageCard } from '../components/cards/PackageCard';
 import { Reveal } from '../components/ui/Reveal';
 import { GALLERY_IMAGES } from '../data/media';
 import { PACKAGES, getPackage } from '../data/packages';
+import { getDocumentPackage } from '../data/documentPackages';
 import { SITE } from '../data/site';
 import { NotFound } from './NotFound';
+import { DocumentPackageDetail } from './DocumentPackageDetail';
 
 const DEFAULT_INCLUDES = [
 'Private air-conditioned vehicle with English-speaking chauffeur guide',
@@ -39,8 +41,10 @@ const DEFAULT_EXCLUDES = [
 export function PackageDetail() {
   const params = useParams<{ id: string }>();
   const id = params?.id;
+  const documentPackage = id ? getDocumentPackage(id) : undefined;
   const pkg = id ? getPackage(id) : undefined;
 
+  if (documentPackage) return <DocumentPackageDetail pkg={documentPackage} />;
   if (!pkg) return <NotFound />;
 
   const related = PACKAGES.filter(
