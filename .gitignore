@@ -2,7 +2,10 @@ node_modules
 .next
 out
 build
-.env*.local
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
 .DS_Store
 *.tsbuildinfo
 next-env.d.ts
