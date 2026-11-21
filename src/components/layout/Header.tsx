@@ -308,6 +308,15 @@ function DesktopNavLink({ link, t }: DesktopNavLinkProps) {
 
 type SubmenuLink = { readonly label: string; readonly to: string };
 
+function usePageScrollLock(locked: boolean) {
+  useEffect(() => {
+    if (!locked) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => { document.body.style.overflow = previousOverflow; };
+  }, [locked]);
+}
+
 function MobilePackagesMenu() {
   const [open, setOpen] = useState(false);
   return (
@@ -336,21 +345,24 @@ function MobilePackagesMenu() {
 function PackagesDropdown() {
   const pathname = usePathname();
   const active = pathname.startsWith('/packages/');
+  const [dismissed, setDismissed] = useState(false);
+  const [hovered, setHovered] = useState(false);
+  usePageScrollLock(hovered && !dismissed);
   return (
-    <div className="group relative py-3">
+    <div className="group relative py-3" onMouseEnter={() => setHovered(true)} onMouseLeave={() => { setHovered(false); setDismissed(false); }}>
       <button type="button" className={`flex items-center gap-1 whitespace-nowrap text-[9px] uppercase tracking-[0.08em] transition-colors xl:text-[10px] xl:tracking-[0.1em] ${active ? 'text-gold-light' : 'text-ivory/80 group-hover:text-ivory'}`} aria-haspopup="true">
         Packages
         <ChevronDownIcon className="h-3 w-3 transition-transform group-hover:rotate-180" strokeWidth={1.8} />
       </button>
       {active && <span className="absolute bottom-1.5 left-0 h-px w-full bg-gold-light" />}
-      <div className="invisible absolute left-1/2 top-full max-h-[78vh] w-[min(92vw,76rem)] -translate-x-1/2 translate-y-3 overflow-y-auto rounded-2xl border border-gold/25 bg-gradient-to-br from-jungle-deep/98 via-jungle-deep/98 to-jungle/95 p-4 opacity-0 shadow-2xl backdrop-blur-xl transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100">
+      <div className={`${dismissed ? 'hidden' : 'invisible'} fixed left-1/2 top-[9.25rem] max-h-[calc(100vh-10.25rem)] w-[min(94vw,80rem)] -translate-x-1/2 translate-y-2 overflow-y-auto overscroll-contain rounded-2xl border border-gold/25 bg-gradient-to-br from-jungle-deep/98 via-jungle-deep/98 to-jungle/95 p-4 opacity-0 shadow-2xl backdrop-blur-xl transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100`}>
         <div className="mb-3 flex items-end justify-between border-b border-white/10 px-2 pb-3">
           <div><p className="text-[9px] font-semibold uppercase tracking-[0.2em] text-gold-light">Explore Sri Lanka</p><p className="mt-1 font-serif text-xl text-ivory">Signature Packages</p></div>
           <span className="rounded-full border border-gold/25 px-3 py-1 text-[9px] uppercase tracking-[0.14em] text-ivory/55">{DOCUMENT_PACKAGES.length} journeys</span>
         </div>
         <div className="grid grid-cols-2 gap-1.5 lg:grid-cols-3 xl:grid-cols-4">
           {DOCUMENT_PACKAGES.map((pkg) => (
-            <Link key={pkg.id} href={`/packages/${pkg.id}`} className="group/item flex min-h-14 items-center gap-3 rounded-xl border border-transparent px-3 py-2.5 text-[11px] leading-5 tracking-wide text-ivory/75 transition-all hover:border-gold/20 hover:bg-white/10 hover:text-gold-light">
+            <Link key={pkg.id} href={`/packages/${pkg.id}`} onClick={() => setDismissed(true)} className="group/item flex min-h-12 items-center gap-3 rounded-xl border border-transparent px-3 py-2 text-[11px] leading-4 tracking-wide text-ivory/75 transition-all hover:border-gold/20 hover:bg-white/10 hover:text-gold-light focus-visible:border-gold/40 focus-visible:bg-white/10 focus-visible:outline-none">
               <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-gold/55 transition-transform group-hover/item:scale-150" />
               <span>{pkg.name}</span>
             </Link>
@@ -379,17 +391,20 @@ function MobileSubmenu({ title, links }: { title: string; links: readonly Submen
 function SimpleDropdown({ label, links }: { label: string; links: readonly SubmenuLink[] }) {
   const pathname = usePathname();
   const active = links.some((link) => pathname === link.to);
+  const [dismissed, setDismissed] = useState(false);
+  const [hovered, setHovered] = useState(false);
+  usePageScrollLock(hovered && !dismissed);
   return (
-    <div className="group relative py-3">
+    <div className="group relative py-3" onMouseEnter={() => setHovered(true)} onMouseLeave={() => { setHovered(false); setDismissed(false); }}>
       <button type="button" className={`flex items-center gap-1 whitespace-nowrap text-[9px] uppercase tracking-[0.08em] transition-colors xl:text-[10px] xl:tracking-[0.1em] ${active ? 'text-gold-light' : 'text-ivory/80 group-hover:text-ivory'}`} aria-haspopup="true">
         {label}
         <ChevronDownIcon className="h-3 w-3 transition-transform group-hover:rotate-180" strokeWidth={1.8} />
       </button>
       {active && <span className="absolute bottom-1.5 left-0 h-px w-full bg-gold-light" />}
-      <div className="invisible absolute left-1/2 top-full w-80 -translate-x-1/2 translate-y-3 rounded-2xl border border-gold/25 bg-gradient-to-br from-jungle-deep/98 to-jungle/95 p-3 opacity-0 shadow-2xl backdrop-blur-xl transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100">
+      <div className={`${dismissed ? 'hidden' : 'invisible'} absolute left-1/2 top-full w-80 -translate-x-1/2 translate-y-3 rounded-2xl border border-gold/25 bg-gradient-to-br from-jungle-deep/98 to-jungle/95 p-3 opacity-0 shadow-2xl backdrop-blur-xl transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100`}>
         <p className="mb-2 border-b border-white/10 px-3 pb-3 font-serif text-lg text-ivory">{label}</p>
         {links.map((item) => (
-          <Link key={item.to} href={item.to} className="group/item flex items-center gap-3 rounded-xl border border-transparent px-3 py-3 text-xs tracking-wide text-ivory/75 transition-all hover:border-gold/20 hover:bg-white/10 hover:text-gold-light">
+          <Link key={item.to} href={item.to} onClick={() => setDismissed(true)} className="group/item flex items-center gap-3 rounded-xl border border-transparent px-3 py-3 text-xs tracking-wide text-ivory/75 transition-all hover:border-gold/20 hover:bg-white/10 hover:text-gold-light">
             <span className="h-1.5 w-1.5 rounded-full bg-gold/55 transition-transform group-hover/item:scale-150" />{item.label}
           </Link>
         ))}
@@ -401,18 +416,21 @@ function SimpleDropdown({ label, links }: { label: string; links: readonly Subme
 function ExperienceDropdown() {
   const pathname = usePathname();
   const active = pathname.startsWith('/experience-sri-lanka') || pathname.startsWith('/experiences/');
+  const [dismissed, setDismissed] = useState(false);
+  const [hovered, setHovered] = useState(false);
+  usePageScrollLock(hovered && !dismissed);
 
   return (
-    <div className="group relative py-3">
+    <div className="group relative py-3" onMouseEnter={() => setHovered(true)} onMouseLeave={() => { setHovered(false); setDismissed(false); }}>
       <button type="button" className={`flex items-center gap-1 whitespace-nowrap text-[10px] uppercase tracking-[0.12em] transition-colors ${active ? 'text-gold-light' : 'text-ivory/80 group-hover:text-ivory'}`} aria-haspopup="true">
         Experience Sri Lanka
         <ChevronDownIcon className="h-3 w-3 transition-transform group-hover:rotate-180" strokeWidth={1.8} />
       </button>
       {active && <span className="absolute bottom-1.5 left-0 h-px w-full bg-gold-light" />}
-      <div className="invisible absolute left-1/2 top-full w-96 -translate-x-1/2 translate-y-3 rounded-2xl border border-gold/25 bg-gradient-to-br from-jungle-deep/98 to-jungle/95 p-3 opacity-0 shadow-2xl backdrop-blur-xl transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100">
+      <div className={`${dismissed ? 'hidden' : 'invisible'} absolute left-1/2 top-full w-96 -translate-x-1/2 translate-y-3 rounded-2xl border border-gold/25 bg-gradient-to-br from-jungle-deep/98 to-jungle/95 p-3 opacity-0 shadow-2xl backdrop-blur-xl transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100`}>
         <p className="mb-2 border-b border-white/10 px-3 pb-3 font-serif text-lg text-ivory">Experience Sri Lanka</p>
         {EXPERIENCE_LINKS.map((experienceLink) => (
-          <Link key={experienceLink.to} href={experienceLink.to} className="group/item flex items-center gap-3 rounded-xl border border-transparent px-3 py-3 text-xs tracking-wide text-ivory/75 transition-all hover:border-gold/20 hover:bg-white/10 hover:text-gold-light">
+          <Link key={experienceLink.to} href={experienceLink.to} onClick={() => setDismissed(true)} className="group/item flex items-center gap-3 rounded-xl border border-transparent px-3 py-3 text-xs tracking-wide text-ivory/75 transition-all hover:border-gold/20 hover:bg-white/10 hover:text-gold-light">
             <span className="h-1.5 w-1.5 rounded-full bg-gold/55 transition-transform group-hover/item:scale-150" />{experienceLink.label}
           </Link>
         ))}
@@ -424,9 +442,12 @@ function ExperienceDropdown() {
 function StoryDropdown({ t }: { t: ReturnType<typeof useLanguage>['t'] }) {
   const pathname = usePathname();
   const active = STORY_LINKS.some((link) => pathname === link.to);
+  const [dismissed, setDismissed] = useState(false);
+  const [hovered, setHovered] = useState(false);
+  usePageScrollLock(hovered && !dismissed);
 
   return (
-    <div className="group relative py-3">
+    <div className="group relative py-3" onMouseEnter={() => setHovered(true)} onMouseLeave={() => { setHovered(false); setDismissed(false); }}>
       <button
         type="button"
         className={`flex items-center gap-1 whitespace-nowrap text-[10px] uppercase tracking-[0.12em] transition-colors ${active ? 'text-gold-light' : 'text-ivory/80 group-hover:text-ivory'}`}
@@ -436,10 +457,10 @@ function StoryDropdown({ t }: { t: ReturnType<typeof useLanguage>['t'] }) {
         <ChevronDownIcon className="h-3 w-3 transition-transform group-hover:rotate-180" strokeWidth={1.8} />
       </button>
       {active && <span className="absolute bottom-1.5 left-0 h-px w-full bg-gold-light" />}
-      <div className="invisible absolute right-0 top-full max-h-[75vh] w-96 translate-y-3 overflow-y-auto rounded-2xl border border-gold/25 bg-gradient-to-br from-jungle-deep/98 to-jungle/95 p-3 opacity-0 shadow-2xl backdrop-blur-xl transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100">
+      <div className={`${dismissed ? 'hidden' : 'invisible'} absolute right-0 top-full max-h-[75vh] w-96 translate-y-3 overflow-y-auto rounded-2xl border border-gold/25 bg-gradient-to-br from-jungle-deep/98 to-jungle/95 p-3 opacity-0 shadow-2xl backdrop-blur-xl transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100`}>
         <p className="mb-2 border-b border-white/10 px-3 pb-3 font-serif text-lg text-ivory">Our Story</p>
         {STORY_LINKS.map((storyLink) => (
-          <Link key={storyLink.to} href={storyLink.to} className="group/item flex items-center gap-3 rounded-xl border border-transparent px-3 py-3 text-xs tracking-wide text-ivory/75 transition-all hover:border-gold/20 hover:bg-white/10 hover:text-gold-light">
+          <Link key={storyLink.to} href={storyLink.to} onClick={() => setDismissed(true)} className="group/item flex items-center gap-3 rounded-xl border border-transparent px-3 py-3 text-xs tracking-wide text-ivory/75 transition-all hover:border-gold/20 hover:bg-white/10 hover:text-gold-light">
             <span className="h-1.5 w-1.5 rounded-full bg-gold/55 transition-transform group-hover/item:scale-150" />{storyLink.label}
           </Link>
         ))}
